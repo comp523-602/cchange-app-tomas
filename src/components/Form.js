@@ -63,7 +63,6 @@ class Form extends Component {
 		// Make request
 		Requests.makeRequest(address, body, function (error, response) {
 			if (error) {
-				console.log(response);
 				self.setState({
 					buttonText: 'Submit',
 					errorMessage: response.message,
@@ -76,10 +75,6 @@ class Form extends Component {
 				if (self.props.form.onSuccess) self.props.form.onSuccess(response);
 			}
 		})
-	}
-
-	startLoading() {
-
 	}
 }
 

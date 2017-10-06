@@ -4,12 +4,13 @@ import React, { Component } from 'react';
 import Form from './../components/Form';
 import Authentication from './../modules/Authentication';
 
-var signupForm = {
-	title: 'Sign Up',
+// Setup charitySignupForm
+var charitySignupForm = {
+	title: 'Create a new cChange charity',
 	fields: {
 		name: {
 			type: 'text',
-			name: 'Name',
+			name: 'Your Name',
 			value: '',
 		},
 		email: {
@@ -23,28 +24,41 @@ var signupForm = {
 			name: 'Password',
 			value: '',
 		},
+		charityName: {
+			key: 'charityName',
+			type: 'text',
+			name: 'Charity Name',
+			value: '',
+		},
 	},
-	address: 'user.create',
+	address: 'user.create.charity',
 	body: function (fields) {
-		return {
+		var base = {
 			'name': fields.name.state.value,
 			'email': fields.email.state.value,
 			'password': fields.password.state.value,
+			'charityName': fields.charityName.state.value,
 		};
+		base.charityToken = this.charityToken;
+		return base;
 	},
 	onSuccess: function (response) {
 		Authentication.goToLandingPage();
 	},
 };
 
-class SignupView extends Component {
+class CharitySignupView extends Component {
 	render() {
+
+		// Add charityToken to charitySignupForm from route parameters
+		charitySignupForm.charityToken = this.props.match.params.charityToken;
+
 		return (
 			<div className="container">
-				<Form form={signupForm} />
+				<Form form={charitySignupForm} />
 			</div>
 		);
   	}
 }
 
-export default SignupView;
+export default CharitySignupView;

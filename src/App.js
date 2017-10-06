@@ -7,6 +7,7 @@ import { Route } from 'react-router-dom';
 import HomeView from './views/HomeView';
 import LoginView from './views/LoginView';
 import SignupView from './views/SignupView';
+import CharitySignupView from './views/CharitySignupView';
 import CampaignsView from './views/CampaignsView';
 import CharitiesView from './views/CharitiesView';
 import PostsView from './views/PostsView';
@@ -15,6 +16,7 @@ import CharityView from './views/CharityView';
 import CampaignView from './views/CampaignView';
 import UpdateView from './views/UpdateView';
 import PostView from './views/PostView';
+import LogoutView from './views/LogoutView';
 
 // Import components
 import Header from './components/Header';
@@ -28,6 +30,7 @@ class App extends Component {
 					<Route exact path="/" component={HomeView} />
 					<Route path="/login" component={LoginView} />
 					<Route path="/signup" component={SignupView} />
+					<Route path="/charitySignup/:charityToken" component={CharitySignupView} />
 					<Route path="/campaigns" component={CampaignsView} />
 					<Route path="/charities" component={CharitiesView} />
 					<Route path="/posts" component={PostsView} />
@@ -36,6 +39,7 @@ class App extends Component {
 					<Route path="/campaign/:guid" component={CampaignView} />
 					<Route path="/update/:guid" component={UpdateView} />
 					<Route path="/post/:guid" component={PostView} />
+					<Route path="/logout" component={LogoutView} />
 				</div>
 			</div>
 		);

@@ -2,11 +2,13 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Form from './../components/Form';
+import Authentication from './../modules/Authentication';
 
 var loginView = {
 	title: 'Log In',
 	fields: {
 		email: {
+			key: 'email',
 			type: 'email',
 			name: 'Email',
 			value: '',
@@ -26,7 +28,7 @@ var loginView = {
 		}
 	},
 	onSuccess: function (response) {
-
+		Authentication.goToLandingPage();
 	},
 };
 

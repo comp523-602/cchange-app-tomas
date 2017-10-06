@@ -16,7 +16,9 @@ class Field extends Component {
 		return (
 			<div className="field">
 				<span>{this.props.field.name}</span>
-				<input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} />
+				{ this.props.field.type === 'textarea' ?
+					<textarea value={this.state.value} onChange={this.handleChange}></textarea> :
+					<input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} /> }
 			</div>
 		);
   	}
