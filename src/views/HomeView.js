@@ -2,14 +2,14 @@
 // Import dependencies
 import React, { Component } from 'react';
 
-class Login extends Component {
+class HomeView extends Component {
 	render() {
 		return (
 			<div className="container">
-				<h1>Login</h1>
+				<h1>Home</h1>
 			</div>
 		);
   	}
 }
 
-export default Login;
+export default HomeView;

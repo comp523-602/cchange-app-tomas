@@ -2,14 +2,15 @@
 // Import dependencies
 import React, { Component } from 'react';
 
-class Signup extends Component {
+class CharityView extends Component {
 	render() {
+		console.log(this.props);
 		return (
 			<div className="container">
-				<h1>Signup</h1>
+				<h1>Charity</h1>
 			</div>
 		);
   	}
 }
 
-export default Signup;
+export default CharityView;

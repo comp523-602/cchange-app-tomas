@@ -4,8 +4,18 @@
 html, body {font-family:'Helvetica', 'Arial', sans-serif};
 div {box-sizing:border-box;}
 
+/* View */
+.view {padding-bottom:30px;}
+
+/* SPACING ================================================================== */
+
+/* Row */
+.row {margin-top:30px;}
+
 /* Container */
 .container {position:relative; max-width:640px; margin:0px auto; text-align:left;}
+
+/* COMPONENTS =============================================================== */
 
 /* Header */
 header {background:#f1f1f1;}
@@ -17,3 +27,14 @@ header .logo {display:inline-block; margin-right:20px; font-weight:bold;}
 header .navigation {display:inline-block; margin-right:20px;}
 header .usermenu {display:inline-block; float:right; text-align:right;}
 header .usermenu a {margin-right:0px; margin-left:15px;}
+
+/* Form */
+form {}
+form .submit {border:0px; margin-top:20px;
+	background:#333; color:white; padding:4px 8px; font-size:16px;}
+form .errorMessage {margin-top:20px; font-style:italic;}
+
+/* Field */
+.field {display:block; margin-top:20px; width:100%; max-width:320px;}
+.field span {display:block; font-size:16px; margin-bottom:6px;}
+.field input {width:100%; padding:4px 8px; font-size:16px;}

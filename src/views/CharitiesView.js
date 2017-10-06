@@ -2,14 +2,14 @@
 // Import dependencies
 import React, { Component } from 'react';
 
-class Home extends Component {
+class CharitiesView extends Component {
 	render() {
 		return (
 			<div className="container">
-				<h1>Home</h1>
+				<h1>Charities</h1>
 			</div>
 		);
   	}
 }
 
-export default Home;
+export default CharitiesView;

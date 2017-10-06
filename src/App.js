@@ -4,10 +4,17 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
 // Import views
-import Home from './views/Home';
-import Login from './views/Login';
-import Signup from './views/Signup';
-import Charity from './views/Charity';
+import HomeView from './views/HomeView';
+import LoginView from './views/LoginView';
+import SignupView from './views/SignupView';
+import CampaignsView from './views/CampaignsView';
+import CharitiesView from './views/CharitiesView';
+import PostsView from './views/PostsView';
+import UserView from './views/UserView';
+import CharityView from './views/CharityView';
+import CampaignView from './views/CampaignView';
+import UpdateView from './views/UpdateView';
+import PostView from './views/PostView';
 
 // Import components
 import Header from './components/Header';
@@ -18,10 +25,17 @@ class App extends Component {
 			<div className="app">
 				<Header />
 				<div className="view">
-					<Route exact path="/" component={Home} />
-					<Route path="/login" component={Login} />
-					<Route path="/signup" component={Signup} />
-					<Route path="/charity/:guid" component={Charity} />
+					<Route exact path="/" component={HomeView} />
+					<Route path="/login" component={LoginView} />
+					<Route path="/signup" component={SignupView} />
+					<Route path="/campaigns" component={CampaignsView} />
+					<Route path="/charities" component={CharitiesView} />
+					<Route path="/posts" component={PostsView} />
+					<Route path="/user/:guid" component={UserView} />
+					<Route path="/charity/:guid" component={CharityView} />
+					<Route path="/campaign/:guid" component={CampaignView} />
+					<Route path="/update/:guid" component={UpdateView} />
+					<Route path="/post/:guid" component={PostView} />
 				</div>
 			</div>
 		);
