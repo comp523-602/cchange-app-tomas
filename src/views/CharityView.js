@@ -3,56 +3,39 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Form from './../components/Form';
-
-var editForm = {
-	title: 'Edit charity',
-	fields: {
-		name: {
-			type: 'text',
-			name: 'Name',
-			value: '',
-		},
-		description: {
-			type: 'textarea',
-			name: 'Description',
-			value: '',
-		},
-	},
-	address: 'charity.edit',
-	body: function (fields) {
-		return {
-			'name': fields.name.state.value,
-			'description': fields.description.state.value
-		}
-	},
-	onSuccess: function (response) {
-		window.location.reload();
-	},
-};
+import { Link } from 'react-router-dom';
 
 class CharityView extends Component {
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			charity: {},
-			editForm: null,
+			'charity': {},
+			'editLink': null,
 		};
 	}
 
 	componentWillMount () {
+
+		// Get charity GUID from props
 		var charityGUID = this.props.match.params.guid;
+
+		// Make reference to this for use in callback
 		var self = this;
+
+		// Get charity from server
 		Requests.makeRequest('charity', {
 			'charity': charityGUID
 		}, function (error, body) {
+
+			// Get charity from response
 			var charity = body.charity;
 			if (!charity) return;
-			editForm.fields.name.value = charity.name;
-			editForm.fields.description.value = charity.description;
+
+			// Add charity to state
 			self.setState({
 				'charity': charity,
-				'editForm': editForm,
+				'editLink': '/charityEdit/'+charity.guid,
 			})
 		})
 	}
@@ -62,7 +45,7 @@ class CharityView extends Component {
 			<div className="container row">
 				<h1>{this.state.charity.name}</h1>
 				<h2>{this.state.charity.description}</h2>
-				{ this.state.editForm ? <Form form={this.state.editForm} /> : null }
+				{ this.state.editLink ? <Link to={this.state.editLink}>Edit charity</Link> : null }
 			</div>
 
 		)

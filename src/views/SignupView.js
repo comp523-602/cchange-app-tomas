@@ -1,50 +1,30 @@
 
 // Import dependencies
 import React, { Component } from 'react';
+import Forms from './../modules/Forms';
 import Form from './../components/Form';
 import Authentication from './../modules/Authentication';
 
-var signupForm = {
-	title: 'Sign Up',
-	fields: {
-		name: {
-			type: 'text',
-			name: 'Name',
-			value: '',
-		},
-		email: {
-			type: 'email',
-			name: 'Email',
-			value: '',
-		},
-		password: {
-			key: 'password',
-			type: 'password',
-			name: 'Password',
-			value: '',
-		},
-	},
-	address: 'user.create',
-	body: function (fields) {
-		return {
-			'name': fields.name.state.value,
-			'email': fields.email.state.value,
-			'password': fields.password.state.value,
-		};
-	},
-	onSuccess: function (response) {
-		Authentication.goToLandingPage();
-	},
-};
-
 class SignupView extends Component {
+
+	constructor (props) {
+		super(props);
+		this.state = {
+			signupForm: Forms.signup(),
+		};
+	}
+
 	render() {
 		return (
 			<div className="container">
-				<Form form={signupForm} />
+				<Form form={this.state.signupForm} onSuccess={this.onSuccess} />
 			</div>
 		);
   	}
+
+	onSuccess (response) {
+		Authentication.goToLandingPage();
+	}
 }
 
 export default SignupView;

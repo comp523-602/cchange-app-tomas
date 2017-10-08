@@ -22,7 +22,7 @@ class Form extends Component {
 
 	render() {
 
-		// Create array of field objects from form.fields object passed to props
+		// Create array of field objects from referenced by key
 		var fields = [];
 		for (var key in this.props.form.fields) {
 			fields.push(
@@ -55,7 +55,12 @@ class Form extends Component {
 
 		// Setup request
 		var address = this.props.form.address;
-		var body = this.props.form.body(this.refs);
+		var body = this.props.form.base(this.refs);
+		if (this.props.requestParms) {
+			for (var key in this.props.requestParams) {
+				body[key] = this.props.requestParams[key];
+			}	
+		}
 
 		// Save reference to component
 		var self = this;
@@ -72,7 +77,7 @@ class Form extends Component {
 					buttonText: 'Submit',
 					errorMessage: null,
 				});
-				if (self.props.form.onSuccess) self.props.form.onSuccess(response);
+				if (self.props.onSuccess) self.props.onSuccess(response);
 			}
 		})
 	}
