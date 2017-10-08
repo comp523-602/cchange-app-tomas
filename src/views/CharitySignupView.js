@@ -30,7 +30,7 @@ class CharitySignupView extends Component {
 
 
 	onSuccess (response) {
-		window.location.href = '/charity/'+this.props.match.params.guid;
+		Authentication.goToLandingPage();
 	}
 }
 

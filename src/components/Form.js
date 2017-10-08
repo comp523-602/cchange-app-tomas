@@ -56,10 +56,10 @@ class Form extends Component {
 		// Setup request
 		var address = this.props.form.address;
 		var body = this.props.form.base(this.refs);
-		if (this.props.requestParms) {
+		if (this.props.requestParams) {
 			for (var key in this.props.requestParams) {
 				body[key] = this.props.requestParams[key];
-			}	
+			}
 		}
 
 		// Save reference to component

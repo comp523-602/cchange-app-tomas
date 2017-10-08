@@ -2,7 +2,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Form from './../components/Form';
 import { Link } from 'react-router-dom';
 
 class CharityView extends Component {
