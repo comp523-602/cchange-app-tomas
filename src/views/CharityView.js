@@ -1,3 +1,4 @@
+/** @namespace views/CharityView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -6,6 +7,10 @@ import { Link } from 'react-router-dom';
 
 class CharityView extends Component {
 
+	/**
+	 * Creates initial state with null values
+	 * @memberof views/CharityView#
+	 */
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -14,6 +19,10 @@ class CharityView extends Component {
 		};
 	}
 
+	/**
+	 * Gets charity object, updates state with charity object
+	 * @memberof views/CharityView#
+	 */
 	componentWillMount () {
 
 		// Get charity GUID from props
@@ -39,6 +48,10 @@ class CharityView extends Component {
 		})
 	}
 
+	/**
+	 * Renders view
+	 * @memberof views/CharityView#
+	 */
 	render() {
 		return (
 			<div className="container row">

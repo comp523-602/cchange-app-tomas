@@ -1,15 +1,16 @@
+/** @namespace components/Form */
 
 // Import dependencies
 import React, { Component } from 'react';
-
-// Import components
 import Field from './Field';
-
-// Import modules
 import Requests from './../modules/Requests';
 
 class Form extends Component {
 
+	/**
+	 * Creates initial state using props based to component, binds functions
+	 * @memberof components/Form#
+	 */
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -20,6 +21,10 @@ class Form extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	/**
+	 * Converts props fields object to array, renders view
+	 * @memberof components/Form#
+	 */
 	render() {
 
 		// Create array of field objects from referenced by key
@@ -43,6 +48,10 @@ class Form extends Component {
 		);
   	}
 
+	/**
+	 * Updates state with loading indicators, builds request, makes request using modules/Requests, runs props.onSuccess if successful
+	 * @memberof components/Form#
+	 */
 	handleSubmit(event) {
 
 		// Prevent default action

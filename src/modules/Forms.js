@@ -1,20 +1,13 @@
+/** @namespace modules/Forms */
 
-var Fields = {
-	text: function (name) {
-		return {name: name, type: 'text', value: ''};
-	},
-	textarea: function (name) {
-		return {name: name, type: 'textarea', value: ''};
-	},
-	email: function () {
-		return {name: 'Email', type: 'email', value: ''};
-	},
-	password: function () {
-		return {name: 'Password', type: 'password', value: ''};
-	},
-};
+import Fields from './Fields';
 
 var Forms = {
+
+	/**
+	 * @memberof modules/Forms
+	 * @return {Object} Signup form configuration object
+	 */
 	signup: function () {
 		return {
 			title: 'Sign up',
@@ -33,6 +26,11 @@ var Forms = {
 			},
 		};
 	},
+
+	/**
+	 * @memberof modules/Forms
+	 * @return {Object} Login form configuration object
+	 */
 	login: function () {
 		return {
 			title: 'Log in',
@@ -49,6 +47,11 @@ var Forms = {
 			},
 		};
 	},
+
+	/**
+	 * @memberof modules/Forms
+	 * @return {Object} Charity signup form configuration object
+	 */
 	charitySignup: function () {
 		return {
 			title: 'Create a new cChange charity',
@@ -69,6 +72,11 @@ var Forms = {
 			},
 		};
 	},
+
+	/**
+	 * @memberof modules/Forms
+	 * @return {Object} Charity edit form configuration object
+	 */
 	charityEdit: function () {
 		return {
 			title: 'Edit charity',

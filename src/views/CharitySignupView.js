@@ -1,3 +1,4 @@
+/** @namespace views/CharitySignupView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -7,6 +8,10 @@ import Authentication from './../modules/Authentication';
 
 class CharitySignupView extends Component {
 
+	/**
+	 * Creates initial state using Charity Signup form from Forms module
+	 * @memberof views/CharitySignupView#
+	 */
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -14,6 +19,10 @@ class CharitySignupView extends Component {
 		}
 	}
 
+	/**
+	 * Renders view (passing route parameters to components/Form)
+	 * @memberof views/CharitySignupView#
+	 */
 	render() {
 
 		// Add charityToken to charitySignupForm from route parameters
@@ -28,7 +37,10 @@ class CharitySignupView extends Component {
 		);
   	}
 
-
+	/**
+	 * Passed to components/Form to execute on successful request
+	 * @memberof views/CharitySignupView#
+	 */
 	onSuccess (response) {
 		Authentication.goToLandingPage();
 	}

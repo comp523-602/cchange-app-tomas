@@ -1,3 +1,4 @@
+/** @namespace components/Header */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -6,6 +7,10 @@ import Authentication from './../modules/Authentication';
 
 class Header extends Component {
 
+	/**
+	 * Creates initial state, binds functions
+	 * @memberof components/Header#
+	 */
 	constructor (props) {
 		super(props)
 		this.state = {};
@@ -16,10 +21,18 @@ class Header extends Component {
 		this.getCharityUserMenu = this.getCharityUserMenu.bind(this);
 	}
 
+	/**
+	 * Runs functions once component is ready
+	 * @memberof components/Header#
+	 */
 	componentWillMount () {
 		this.renderAuthMenu();
 	}
 
+	/**
+	 * Renders component
+	 * @memberof components/Header#
+	 */
 	render() {
 		return (
 			<header>
@@ -38,6 +51,10 @@ class Header extends Component {
 		);
   	}
 
+	/**
+	 * Adds auth menu to state based on Authentication status
+	 * @memberof components/Header#
+	 */
 	renderAuthMenu () {
 		var user = Authentication.getUser();
 		if (!user) this.setState({
@@ -51,6 +68,10 @@ class Header extends Component {
 		})
 	}
 
+	/**
+	 * Returns a list of links for visiting users
+	 * @memberof components/Header#
+	 */
 	getVisitorMenu () {
 		return (
 			<div className="authmenu">
@@ -60,6 +81,10 @@ class Header extends Component {
 		);
 	}
 
+	/**
+	 * Returns a list of links for users
+	 * @memberof components/Header#
+	 */
 	getUserMenu (user) {
 		var profile = "/user/"+user.guid;
 		return (
@@ -71,6 +96,10 @@ class Header extends Component {
 		);
 	}
 
+	/**
+	 * Returns a list of links for charity users
+	 * @memberof components/Header#
+	 */
 	getCharityUserMenu (user) {
 		var charity = "/charity/"+user.charity;
 		return (
@@ -82,6 +111,10 @@ class Header extends Component {
 		);
 	}
 
+	/**
+	 * Provides Authentication logout function to component
+	 * @memberof components/Header#
+	 */
 	logout (event) {
 		event.preventDefault();
 		Authentication.logout();

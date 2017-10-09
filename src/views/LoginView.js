@@ -1,3 +1,4 @@
+/** @namespace views/LoginView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -7,6 +8,10 @@ import Authentication from './../modules/Authentication';
 
 class LoginView extends Component {
 
+	/**
+	 * Creates initial state using Login form from Forms module
+	 * @memberof views/LoginView#
+	 */
 	constructor (props) {
 		super(props)
 		this.state = {
@@ -14,6 +19,10 @@ class LoginView extends Component {
 		}
 	}
 
+	/**
+	 * Renders view
+	 * @memberof views/LoginView#
+	 */
 	render() {
 		return (
 			<div className="container">
@@ -22,6 +31,10 @@ class LoginView extends Component {
 		);
   	}
 
+	/**
+	 * Passed to components/Form to execute on successful request
+	 * @memberof views/LoginView#
+	 */
 	onSuccess (response) {
 		Authentication.goToLandingPage();
 	}

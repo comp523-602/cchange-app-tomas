@@ -1,3 +1,4 @@
+/** @namespace views/SignupView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -7,6 +8,10 @@ import Authentication from './../modules/Authentication';
 
 class SignupView extends Component {
 
+	/**
+	 * Creates initial state using Signup form from Forms module
+	 * @memberof views/SignupView#
+     */
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -14,6 +19,19 @@ class SignupView extends Component {
 		};
 	}
 
+	/**
+	 * Passed to components/Form to be executed on successful request
+	 * @memberof views/SignupView#
+	 * @param {Object} response Server response body
+	 */
+	onSuccess (response) {
+		Authentication.goToLandingPage();
+	}
+
+	/**
+	 * Renders view
+	 * @memberof views/SignupView#
+	 */
 	render() {
 		return (
 			<div className="container">
@@ -21,10 +39,6 @@ class SignupView extends Component {
 			</div>
 		);
   	}
-
-	onSuccess (response) {
-		Authentication.goToLandingPage();
-	}
 }
 
 export default SignupView;

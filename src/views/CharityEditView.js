@@ -1,3 +1,4 @@
+/** @namespace views/CharityEditView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -7,6 +8,10 @@ import Requests from './../modules/Requests';
 
 class CharityEditView extends Component {
 
+	/**
+	 * Creates initial state using null values
+	 * @memberof views/CharityEditView#
+	 */
 	constructor (props) {
 		super(props);
 		this.state = {
@@ -15,6 +20,10 @@ class CharityEditView extends Component {
 		this.onSuccess = this.onSuccess.bind(this);
 	}
 
+	/**
+	 * Gets charity object, updates state using charity object
+	 * @memberof views/CharityEditView#
+	 */
 	componentWillMount () {
 
 		// Get charity GUID from props
@@ -44,6 +53,10 @@ class CharityEditView extends Component {
 		})
 	}
 
+	/**
+	 * Renders view
+	 * @memberof views/CharityEditView#
+	 */
 	render() {
 
 		return (
@@ -55,6 +68,10 @@ class CharityEditView extends Component {
 		);
   	}
 
+	/**
+	 * Passed to components/Form to be executed on successful request
+	 * @memberof views/CharityEditView#
+	 */
 	onSuccess (response) {
 		window.location.href = '/charity/'+this.props.match.params.guid;
 	}

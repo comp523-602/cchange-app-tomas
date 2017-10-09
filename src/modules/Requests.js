@@ -1,3 +1,4 @@
+/** @namespace modules/Requests */
 
 // Import dependencies
 import RequestLibrary from 'request';
@@ -7,6 +8,14 @@ import Authentication from './Authentication';
 const API = 'http://api.cchange.ga/';
 
 var Requests = {
+
+	/**
+	 * Stores the user and token properties of a response from the server
+	 * @memberof modules/Requests
+	 * @param {String} address Endpoint to append to base API address (no slashes)
+	 * @param {Object} body JSON object to send as POST request body
+	 * @param {Function} callback Callback: function (error, body)
+	 */
 	makeRequest: function (address, body, callback) {
 
 		// Setup request options
