@@ -20,9 +20,10 @@ var FormConfigs = {
 		return {
 			title: 'Sign up',
 			fields: {
-				name: FieldConfigs.text('Name'),
-				email: FieldConfigs.email(),
-				password: FieldConfigs.password(),
+				name: FieldConfigs.text('Name', 'Enter your name'),
+				email: FieldConfigs.email('Enter your email'),
+				password: FieldConfigs.password('Must contain at least 8 characters and 1 number'),
+				// passwordVerify: FieldConfigs.password('')
 			},
 			address: 'user.create',
 			base: function (ref) {
@@ -43,8 +44,8 @@ var FormConfigs = {
 		return {
 			title: 'Log in',
 			fields: {
-				email: FieldConfigs.email(),
-				password: FieldConfigs.password(),
+				email: FieldConfigs.email('Enter your email'),
+				password: FieldConfigs.password('Enter your password'),
 			},
 			address: 'user.login',
 			base: function (ref) {
@@ -64,10 +65,10 @@ var FormConfigs = {
 		return {
 			title: 'Create a new cChange charity',
 			fields: {
-				name: FieldConfigs.text('Your Name'),
-				email: FieldConfigs.email(),
-				password: FieldConfigs.password(),
-				charityName: FieldConfigs.text('Charity Name'),
+				name: FieldConfigs.text('Your Name', 'Enter your name'),
+				email: FieldConfigs.email('Enter your email'),
+				password: FieldConfigs.password('Must contain at least 8 characters and 1 number'),
+				charityName: FieldConfigs.text('Charity Name', "Enter your charity's name"),
 			},
 			address: 'user.create.charity',
 			base: function (ref) {
@@ -89,8 +90,8 @@ var FormConfigs = {
 		return {
 			title: 'Edit charity',
 			fields: {
-				name: FieldConfigs.text('Name'),
-				description: FieldConfigs.textarea('Description'),
+				name: FieldConfigs.text('Name', 'Enter new charity name'),
+				description: FieldConfigs.textarea('Description', 'Enter new charity description'),
 				image: FieldConfigs.singleImage('imageURL')
 			},
 			address: 'charity.edit',
@@ -106,16 +107,37 @@ var FormConfigs = {
 
 	/**
 	 * @memberof modules/Forms
-	 * @return {Object} Campaign edit/create form configuration object
+	 * @return {Object} Campaign create form configuration object
 	 */
-	campaignEditCreate: function (title, address) {
+	campaignCreate: function () {
 		return {
-			title: title,
+			title: 'Create campaign',
 			fields: {
-				name: FieldConfigs.text('Name'),
-				description: FieldConfigs.textarea('Description'),
+				name: FieldConfigs.text('Name', 'Enter campaign name'),
+				description: FieldConfigs.textarea('Description', 'Enter campaign description'),
 			},
-			address: 'charity.edit',
+			address: 'campaign.create',
+			base: function (ref) {
+				return {
+					'name': ref.name.state.value,
+					'description': ref.description.state.value,
+				}
+			},
+		};
+	},
+
+	/**
+	 * @memberof modules/Forms
+	 * @return {Object} Campaign edit form configuration object
+	 */
+	campaignEdit: function () {
+		return {
+			title: 'Edit campaign',
+			fields: {
+				name: FieldConfigs.text('Name', 'Enter new campaign name'),
+				description: FieldConfigs.textarea('Description', 'Enter new campaign description'),
+			},
+			address: 'campaign.edit',
 			base: function (ref) {
 				return {
 					'name': ref.name.state.value,

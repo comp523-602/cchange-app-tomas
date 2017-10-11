@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import { Link } from 'react-router-dom';
+import Authentication from './../modules/Authentication';
 
 class CharityView extends Component {
 
@@ -65,6 +66,9 @@ class CharityView extends Component {
 					: <div className="loading">Loading...</div> }
 				{ this.state.editLink
 					? <Link to={this.state.editLink}>Edit charity</Link>
+					: null }
+				{ Authentication.getUser().charity === this.props.match.params.guid
+					? <button type="button">Create a Campaign</button>
 					: null }
 			</div>
 

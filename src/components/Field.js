@@ -32,10 +32,10 @@ class Field extends Component {
 			<div className="field">
 				<span>{this.props.field.name}</span>
 				{ this.props.field.type === 'textarea'
-					? <textarea value={this.state.value} onChange={this.handleChange}></textarea>
+					? <textarea value={this.state.value} onChange={this.handleChange} placeholder={this.placeholder} ></textarea>
 					: null }
 				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password'
-					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} />
+					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} place={this.placeholder} />
 					: null }
 				{
 					this.props.field.type === 'singleImage'
