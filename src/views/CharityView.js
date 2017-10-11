@@ -14,7 +14,7 @@ class CharityView extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			'charity': {},
+			'charity': null,
 			'editLink': null,
 		};
 	}
@@ -55,9 +55,17 @@ class CharityView extends Component {
 	render() {
 		return (
 			<div className="container row">
-				<h1>{this.state.charity.name}</h1>
-				<h2>{this.state.charity.description}</h2>
-				{ this.state.editLink ? <Link to={this.state.editLink}>Edit charity</Link> : null }
+				{ this.state.charity
+					? (
+						<div className="objectHeader">
+							<h1>{this.state.charity.name}</h1>
+							<h2>{this.state.charity.description}</h2>
+						</div>
+					)
+					: <div className="loading">Loading...</div> }
+				{ this.state.editLink
+					? <Link to={this.state.editLink}>Edit charity</Link>
+					: null }
 			</div>
 
 		)

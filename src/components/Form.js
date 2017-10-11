@@ -27,7 +27,7 @@ class Form extends Component {
 	 */
 	render() {
 
-		// Create array of field objects from referenced by key
+		// Create array of Field components from referenced by key
 		var fields = [];
 		for (var key in this.props.form.fields) {
 			fields.push(
@@ -41,7 +41,9 @@ class Form extends Component {
 				<h2>{this.props.form.title}</h2>
 				<form onSubmit={this.handleSubmit}>
 					{fields}
-					{ this.state.errorMessage ? <div className="errorMessage">{this.state.errorMessage}</div> : null }
+					{ this.state.errorMessage
+						? <div className="errorMessage">{this.state.errorMessage}</div>
+						: null }
 					<input type="submit" className="submit" value={this.state.buttonText} />
 				</form>
 			</div>
@@ -62,9 +64,13 @@ class Form extends Component {
 			buttonText: 'Loading...',
 		})
 
-		// Setup request
+		// Initialize requst address
 		var address = this.props.form.address;
+
+		// Initialize request body
 		var body = this.props.form.base(this.refs);
+
+		// Add extra request params from props
 		if (this.props.requestParams) {
 			for (var key in this.props.requestParams) {
 				body[key] = this.props.requestParams[key];

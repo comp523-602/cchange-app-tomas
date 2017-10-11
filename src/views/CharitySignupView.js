@@ -2,7 +2,7 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import Forms from './../modules/Forms';
+import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 import Authentication from './../modules/Authentication';
 
@@ -15,7 +15,7 @@ class CharitySignupView extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			'charitySignupForm': Forms.charitySignup(),
+			'charitySignupForm': FormConfigs.charitySignup(),
 		}
 	}
 

@@ -1,8 +1,16 @@
-/** @namespace modules/Forms */
+/** @namespace modules/FormConfigs */
 
-import Fields from './Fields';
+import FieldConfigs from './FieldConfigs';
 
-var Forms = {
+/*
+form config object:
+title: Name of form
+fields: keyed object for form fields
+address: string to append to API address
+base: initial JSON to send to server as body
+*/
+
+var FormConfigs = {
 
 	/**
 	 * @memberof modules/Forms
@@ -12,9 +20,9 @@ var Forms = {
 		return {
 			title: 'Sign up',
 			fields: {
-				name: Fields.text('Name'),
-				email: Fields.email(),
-				password: Fields.password(),
+				name: FieldConfigs.text('Name'),
+				email: FieldConfigs.email(),
+				password: FieldConfigs.password(),
 			},
 			address: 'user.create',
 			base: function (ref) {
@@ -24,6 +32,9 @@ var Forms = {
 					'password': ref.password.state.value,
 				}
 			},
+			onSuccess: function () {
+
+			}
 		};
 	},
 
@@ -35,8 +46,8 @@ var Forms = {
 		return {
 			title: 'Log in',
 			fields: {
-				email: Fields.email(),
-				password: Fields.password(),
+				email: FieldConfigs.email(),
+				password: FieldConfigs.password(),
 			},
 			address: 'user.login',
 			base: function (ref) {
@@ -56,10 +67,10 @@ var Forms = {
 		return {
 			title: 'Create a new cChange charity',
 			fields: {
-				name: Fields.text('Your Name'),
-				email: Fields.email(),
-				password: Fields.password(),
-				charityName: Fields.text('Charity Name'),
+				name: FieldConfigs.text('Your Name'),
+				email: FieldConfigs.email(),
+				password: FieldConfigs.password(),
+				charityName: FieldConfigs.text('Charity Name'),
 			},
 			address: 'user.create.charity',
 			base: function (ref) {
@@ -81,8 +92,29 @@ var Forms = {
 		return {
 			title: 'Edit charity',
 			fields: {
-				name: Fields.text('Name'),
-				description: Fields.textarea('Description'),
+				name: FieldConfigs.text('Name'),
+				description: FieldConfigs.textarea('Description'),
+			},
+			address: 'charity.edit',
+			base: function (ref) {
+				return {
+					'name': ref.name.state.value,
+					'description': ref.description.state.value,
+				}
+			},
+		};
+	},
+
+	/**
+	 * @memberof modules/Forms
+	 * @return {Object} Campaign edit/create form configuration object
+	 */
+	campaignEditCreate: function (title, address) {
+		return {
+			title: title,
+			fields: {
+				name: FieldConfigs.text('Name'),
+				description: FieldConfigs.textarea('Description'),
 			},
 			address: 'charity.edit',
 			base: function (ref) {
@@ -95,4 +127,4 @@ var Forms = {
 	},
 };
 
-export default Forms;
+export default FormConfigs;

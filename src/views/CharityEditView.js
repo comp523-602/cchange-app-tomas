@@ -2,7 +2,7 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import Forms from './../modules/Forms';
+import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 import Requests from './../modules/Requests';
 
@@ -15,7 +15,7 @@ class CharityEditView extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			charityEditFrom: null,
+			charityEditForm: null,
 		};
 		this.onSuccess = this.onSuccess.bind(this);
 	}
@@ -42,7 +42,7 @@ class CharityEditView extends Component {
 			if (!charity) return;
 
 			// Setup charity edit form
-			var charityEditForm = Forms.charityEdit();
+			var charityEditForm = FormConfigs.charityEdit();
 			charityEditForm.fields.name.value = charity.name;
 			charityEditForm.fields.description.value = charity.description;
 

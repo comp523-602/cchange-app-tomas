@@ -1,6 +1,6 @@
-/** @namespace modules/Fields */
+/** @namespace modules/FieldConfigs */
 
-var Fields = {
+var FieldConfigs = {
 
 	/**
 	 * @memberof modules/Fields
@@ -20,6 +20,10 @@ var Fields = {
 		return {name: name, type: 'textarea', value: ''};
 	},
 
+	singleImage: function (name) {
+		return {name: name, type: 'singleImage', value: ''};
+	},
+
 	/**
 	 * @memberof modules/Fields
 	 * @return {Object} Email field configuration object
@@ -37,4 +41,4 @@ var Fields = {
 	},
 };
 
-export default Fields;
+export default FieldConfigs;
