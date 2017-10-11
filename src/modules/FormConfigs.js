@@ -94,12 +94,14 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name'),
 				description: FieldConfigs.textarea('Description'),
+				image: FieldConfigs.singleImage('imageURL')
 			},
 			address: 'charity.edit',
 			base: function (ref) {
 				return {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
+					'image': ref.image.state.value
 				}
 			},
 		};
