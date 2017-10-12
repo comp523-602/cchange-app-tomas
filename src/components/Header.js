@@ -103,8 +103,7 @@ class Header extends Component {
 		var charity = "/charity/"+user.charity;
 		return (
 			<div className="authmenu">
-				<span>{user.name}</span>
-				<NavLink to={charity} activeClassName="active">My Charity</NavLink>
+				<NavLink to={charity} activeClassName="active">{user.name}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);
