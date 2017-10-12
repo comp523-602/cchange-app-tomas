@@ -89,8 +89,7 @@ class Header extends Component {
 		var profile = "/user/"+user.guid;
 		return (
 			<div className="authmenu">
-				<span>{user.name}</span>
-				<NavLink to={profile} activeClassName="active">My Profile</NavLink>
+				<NavLink to={profile} activeClassName="active">{user.name}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);

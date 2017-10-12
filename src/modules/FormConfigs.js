@@ -32,9 +32,6 @@ var FormConfigs = {
 					'password': ref.password.state.value,
 				}
 			},
-			onSuccess: function () {
-
-			}
 		};
 	},
 
