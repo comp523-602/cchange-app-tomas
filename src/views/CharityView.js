@@ -5,7 +5,10 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import { Link } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
+<<<<<<< HEAD
 import Campaign from './../components/Campaign';
+=======
+>>>>>>> 5f0647c64fef258e8ea916757ec0011353029d8b
 
 class CharityView extends Component {
 
