@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import $ from 'jquery';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import Storage from '../modules/Storage';
 class Field extends Component {
 
@@ -48,7 +48,7 @@ class Field extends Component {
 						<img src={this.state.uploadedFileCloudinaryUrl}/>
 					 </Dropzone>
 					 : null }
-				
+
 			</div>
 		);
   	}
@@ -59,7 +59,7 @@ class Field extends Component {
 	onImageDrop(files) {
         this.handleImageUpload(files[0]);
     }
-	
+
     /**
      * Makes the post request to to the cloudinary server
      * Success: print upload information to console

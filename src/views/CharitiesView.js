@@ -1,8 +1,10 @@
+/** @namespace views/CharitiesView */
 
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import { Link } from 'react-router-dom';
+import Charity from './../components/Charity';
 
 class CharitiesView extends Component {
 
@@ -10,7 +12,6 @@ class CharitiesView extends Component {
 	 * Creates initial state with null values
 	 * @memberof views/CharitiesView#
 	 */
-
 	 constructor(props) {
 		 super(props)
 		 this.state = {
@@ -24,39 +25,31 @@ class CharitiesView extends Component {
 	  * @memberof views/CharitiesView#
 	  */
 	componentWillMount() {
-		var self = this;
-
 		//Get list of 10 charities from the server
 		Requests.makeRequest('charities', {
 			'pageSize' : 10,
 			'sort': 'desc',
 			'sortKey' : 'dateCreated'
-		}, function(error, body) {
-			for(var i = 0; i < body.charities.length; i++) {
-				//var temp = self.state.charities.concat(body.charities[i].name + "\n");
-				console.log(body.charities[i]);
-				//self.setState({
-					//'charities' : temp
-				//})
-			}
-
+		}, (error, body) => {
+			this.setState({
+				charities: body.charities,
+			})
 		})
-	}  
+	}
+
 	render() {
 		return (
 			<div className="container">
-				<h1>Charities</h1>				
-				{ this.state.charities
-					? (
-						<div className="objectHeader">
-							<h1>{this.state.charities}</h1>
-						</div>
-					)
+				<h1>Charities</h1>
+				{ this.state.charities[0]
+					? this.state.charities.map((charity, index) => {
+							return <Charity charity={charity} key={index}/>
+						})
 					: <div className="loading">Loading...</div> }
 			</div>
 
 		);
-  	}
+	}
 }
 
 export default CharitiesView;

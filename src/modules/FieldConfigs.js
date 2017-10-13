@@ -24,6 +24,15 @@ var FieldConfigs = {
 
 	/**
 	 * @memberof modules/Fields
+	 * @param {String} name name of field
+	 * @return {Object} Image upload field configuration object
+	 */
+	singleImage: function (name) {
+		return {name: name, type: 'singleImage', value: ''};
+	},
+
+	/**
+	 * @memberof modules/Fields
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Email field configuration object
 	 */

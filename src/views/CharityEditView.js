@@ -8,7 +8,7 @@ import Requests from './../modules/Requests';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
 import $ from 'jquery';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import Storage from '../modules/Storage';
 
 class CharityEditView extends Component {
@@ -71,11 +71,11 @@ class CharityEditView extends Component {
 			<div className="container">
 				{ this.state.charityEditForm
 					? <Form form={this.state.charityEditForm} onSuccess={this.onSuccess} />
-					: null}
+					: <div className="loading">Loading...</div> }
 			</div>
 		);
 	  }
-	  
+
 	onSuccess (response) {
 		window.location.href = '/charity/'+this.props.match.params.guid;
 	}
