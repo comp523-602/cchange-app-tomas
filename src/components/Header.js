@@ -101,9 +101,11 @@ class Header extends Component {
 	 */
 	getCharityUserMenu (user) {
 		var charity = "/charity/"+user.charity;
+		var profile = "/user/"+user.guid;
 		return (
 			<div className="authmenu">
-				<NavLink to={charity} activeClassName="active">{user.name}</NavLink>
+				<NavLink to={profile} activeClassName="active">{user.name}</NavLink>
+				<NavLink to={charity} activeClassName="active">My Charity</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);
