@@ -40,7 +40,7 @@ class CharitiesView extends Component {
 	render() {
 		return (
 			<div className="container">
-				<h1>Charities</h1>
+				<h1 className="row">Charities</h1>
 				{ this.state.charities[0]
 					? this.state.charities.map((charity, index) => {
 							return <Charity charity={charity} key={index}/>

@@ -32,10 +32,10 @@ class Field extends Component {
 			<div className="field">
 				<span>{this.props.field.name}</span>
 				{ this.props.field.type === 'textarea'
-					? <textarea value={this.state.value} onChange={this.handleChange} placeholder={this.placeholder} ></textarea>
+					? <textarea value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} ></textarea>
 					: null }
 				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password'
-					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} place={this.placeholder} />
+					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
 					: null }
 				{
 					this.props.field.type === 'singleImage'
@@ -44,11 +44,13 @@ class Field extends Component {
 						multiple={false}
 						accept="image/*"
 						>
-						<div>Drop or select your files here</div>
+						<div>Upload your image here</div>
 						<img src={this.state.uploadedFileCloudinaryUrl}/>
 					 </Dropzone>
 					 : null }
-
+				{ this.props.field.instructions
+					? <span className="instructions">{this.props.field.instructions}</span>
+					: null }
 			</div>
 		);
   	}

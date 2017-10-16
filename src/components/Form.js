@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import Field from './Field';
 import Requests from './../modules/Requests';
+import Validation from './../modules/Validation';
 
 class Form extends Component {
 
@@ -63,6 +64,16 @@ class Form extends Component {
 		this.setState({
 			buttonText: 'Loading...',
 		})
+
+		// Validate form
+		var error = Validation.getErrorsFromForm(this.refs);
+		if (error) {
+			this.setState({
+				buttonText: 'Submit',
+				errorMessage: error,
+			})
+			return;
+		}
 
 		// Initialize requst address
 		var address = this.props.form.address;

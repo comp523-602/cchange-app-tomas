@@ -19,6 +19,7 @@ class CharityView extends Component {
 			'charity': null,
 			'editLink': null,
 			'profilepictureURL': null,
+			'campaigns': null,
 		};
 	}
 
@@ -46,8 +47,21 @@ class CharityView extends Component {
 				'editLink': '/charityEdit/'+charity.guid,
 				'profilepictureURL': charity.logo,
 			})
-			console.log(this.state.charity)
-			// TODO: finish campaign listing
+		})
+
+		// Get campaigns from server
+		Requests.makeRequest('campaigns', {
+			'charity': charityGUID
+		}, (error, body) => {
+
+			// Get charity from response
+			var campaigns = body.campaigns;
+			if (!campaigns || !campaigns.length) return;
+
+			// Add charity to state
+			this.setState({
+				'campaigns': campaigns
+			})
 		})
 	}
 
@@ -57,7 +71,7 @@ class CharityView extends Component {
 	 */
 	render() {
 		return (
-			<div className="container row">
+			<div className="charityView container row">
 				{ this.state.charity
 					? (
 						<div className="objectHeader">
@@ -77,8 +91,8 @@ class CharityView extends Component {
 							<Link to={this.state.editLink}>Edit charity</Link>
 						</div>
 					: null }
-					{ this.state.charity && this.state.charity.campaigns
-						? this.state.charity.campaigns.map((campaign, index) => {
+					{ this.state && this.state.campaigns
+						? this.state.campaigns.map((campaign, index) => {
 								return <Campaign campaign={campaign} key={index}/>
 							})
 						: null}
