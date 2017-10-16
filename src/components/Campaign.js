@@ -20,7 +20,7 @@ class Campaign extends Component {
   */
   render() {
     return (
-      <div className="container">
+      <div className="item row">
         <h3><a href={'/campaign/' + this.props.campaign.guid}>{this.props.campaign.name}</a></h3>
         <p>{this.props.campaign.description}</p>
       </div>

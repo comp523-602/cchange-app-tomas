@@ -45,8 +45,9 @@ var FieldConfigs = {
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Password field configuration object
 	 */
-	password: function (placeholder) {
-		return {name: 'Password', type: 'password', value: '', placeholder: placeholder};
+	password: function (placeholder, instructions) {
+		return {name: 'Password', type: 'password', value: '', placeholder: placeholder,
+			instructions: instructions};
 	}
 };
 

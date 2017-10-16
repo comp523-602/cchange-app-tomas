@@ -20,10 +20,12 @@ class Charity extends Component {
   */
   render() {
     return (
-      <div className="container">
+      <div className="item row">
+	  	{ this.props.charity.logo
+		  ? <img src={this.props.charity.logo} />
+		  : null }
         <h3><a href={'/charity/' + this.props.charity.guid}>{this.props.charity.name}</a></h3>
         <p>{this.props.charity.description}</p>
-        <img src={this.props.charity.logo}/>
       </div>
     )
   }

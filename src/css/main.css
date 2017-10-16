@@ -3,6 +3,7 @@
 * {margin:0px; padding:0px;}
 html, body {font-family:'Helvetica', 'Arial', sans-serif};
 div {box-sizing:border-box;}
+img {max-width:100%;}
 
 /* View */
 .view {padding-bottom:30px;}
@@ -13,7 +14,7 @@ div {box-sizing:border-box;}
 .row {margin-top:30px;}
 
 /* Container */
-.container {position:relative; max-width:640px; margin-left:auto; margin-right:auto; text-align:left;}
+.container {position:relative; max-width:720px; margin-left:auto; margin-right:auto; text-align:left;}
 
 /* COMPONENTS =============================================================== */
 
@@ -40,3 +41,9 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 .field {display:block; margin-top:20px; width:100%; max-width:320px;}
 .field span {display:block; font-size:16px; margin-bottom:6px;}
 .field input, .field textarea {width:100%; padding:8px 10px; font-size:16px;}
+.field span.instructions {margin-top:8px; font-size:14px; margin-bottom:0px; font-style:italic;}
+
+.charityView img {max-height:240px;}
+
+/* Item */
+.item img {max-width:120px;}
