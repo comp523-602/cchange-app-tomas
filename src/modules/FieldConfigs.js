@@ -3,7 +3,7 @@
 var FieldConfigs = {
 
 	/**
-	 * @memberof modules/Fields
+	 * @memberof modules/FieldConfigs
 	 * @param {String} name Name of field
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Text field configuration object
@@ -13,7 +13,7 @@ var FieldConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Fields
+	 * @memberof modules/FieldConfigs
 	 * @param {String} name Name of field
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Textarea field configuration object
@@ -23,7 +23,7 @@ var FieldConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Fields
+	 * @memberof modules/FieldConfigs
 	 * @param {String} name name of field
 	 * @return {Object} Image upload field configuration object
 	 */
@@ -32,7 +32,7 @@ var FieldConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Fields
+	 * @memberof modules/FieldConfigs
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Email field configuration object
 	 */
@@ -41,7 +41,7 @@ var FieldConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Fields
+	 * @memberof modules/FieldConfigs
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Password field configuration object
 	 */

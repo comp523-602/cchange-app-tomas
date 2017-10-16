@@ -56,7 +56,7 @@ class Field extends Component {
   	}
 	/**
 	 * Passed to components/Form to be executed on successful request
-	 * @memberof views/CharityEditView#
+	 * @memberof components/Field#
 	 */
 	onImageDrop(files) {
         this.handleImageUpload(files[0]);
@@ -66,8 +66,8 @@ class Field extends Component {
      * Makes the post request to to the cloudinary server
      * Success: print upload information to console
      * Error: print error message to console
+	 * @memberof components/Field#
      * @param {*} file
-     * @public
      */
     handleImageUpload(file) {
 		var self = this;

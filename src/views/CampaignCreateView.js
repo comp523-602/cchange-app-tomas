@@ -1,4 +1,4 @@
-/** @namespace views/CampaignEditView */
+/** @namespace views/CampaignCreateView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -11,7 +11,7 @@ class CampaignCreateView extends Component {
 
   /**
   * Creates initial state using null values
-  * @memberof views/CampaignCreateView
+  * @memberof views/CampaignCreateView#
   */
   constructor (props) {
     super(props);
@@ -23,7 +23,7 @@ class CampaignCreateView extends Component {
 
   /**
   * Sets up campaign create form
-  *
+  * @memberof views/CampaignCreateView#
   */
   componentWillMount () {
 

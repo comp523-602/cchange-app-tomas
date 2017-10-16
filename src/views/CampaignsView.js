@@ -1,4 +1,4 @@
-/** @namespace views/CharityView */
+/** @namespace views/CampaignsView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -10,7 +10,7 @@ class CampaignsView extends Component {
 
 	/**
 	* Creates initial state with null values
-	* @memberof views/CharitiesView#
+	* @memberof views/CampaignsView#
 	*/
 	constructor(props) {
 		super(props)

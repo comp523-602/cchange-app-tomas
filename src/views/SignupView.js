@@ -12,7 +12,6 @@ class SignupView extends Component {
 	 * Renders view
 	 * @memberof views/SignupView#
 	 */
-
 	render() {
 		return (
 			<div className="container">
@@ -21,6 +20,10 @@ class SignupView extends Component {
 		);
   	}
 
+	/**
+	 * Handles form success
+	 * @memberof views/SignupView#
+	 */
 	onSuccess () {
 		Authentication.goToLandingPage()
 	}

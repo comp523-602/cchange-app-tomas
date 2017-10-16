@@ -25,6 +25,12 @@ var Validation = {
 
 		return null;
 	},
+
+	/**
+	 * @memberof modules/Validation
+	 * @param {array} passwordFields Array of password field references
+	 * @return {boolean} True if passwords match, false otherwise
+	 */
 	passwordMatch: function (passwordFields) {
 		var password = passwordFields[0].state.value;
 		var confirm = passwordFields[1].state.value;

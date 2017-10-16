@@ -13,7 +13,7 @@ base: initial JSON to send to server as body
 var FormConfigs = {
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Signup form configuration object
 	 */
 	signup: function () {
@@ -37,7 +37,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Login form configuration object
 	 */
 	login: function () {
@@ -58,7 +58,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Charity signup form configuration object
 	 */
 	charitySignup: function () {
@@ -83,7 +83,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Charity edit form configuration object
 	 */
 	charityEdit: function () {
@@ -106,7 +106,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Campaign create form configuration object
 	 */
 	campaignCreate: function () {
@@ -127,7 +127,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Campaign edit form configuration object
 	 */
 	campaignEdit: function () {

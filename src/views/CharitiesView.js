@@ -37,6 +37,10 @@ class CharitiesView extends Component {
 		})
 	}
 
+	/**
+	 * Renders view
+	 * @memberof views/CharitiesView#
+	 */
 	render() {
 		return (
 			<div className="container">
