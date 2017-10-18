@@ -83,7 +83,7 @@ class CharityView extends Component {
 						<div className="objectHeader">
 							<h1>{this.state.charity.name}</h1>
 							<h2>{this.state.charity.description}</h2>
-							<img src={this.state.profilepictureURL}/>
+							<img src={this.state.profilepictureURL} alt={this.state.charity.name} />
 						</div>
 					)
 					: <div className="loading">Loading...</div> }

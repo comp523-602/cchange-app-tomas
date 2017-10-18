@@ -9,16 +9,15 @@ var Validation = {
 	 */
 	getErrorsFromForm: function (refs) {
 
+		// Get password fields
 		var passwordFields = [];
-		var errors = [];
-
 		for (var key in refs) {
 			var ref = refs[key];
 			var type = ref.props.field.type;
-
 			if (type === 'password') passwordFields.push(ref);
 		}
 
+		// Check password fields
 		if (passwordFields.length === 2) {
 			if (!this.passwordMatch(passwordFields)) return "Passwords do not match";
 		}

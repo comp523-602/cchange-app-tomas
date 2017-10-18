@@ -28,7 +28,7 @@ var FieldConfigs = {
 	 * @return {Object} Image upload field configuration object
 	 */
 	singleImage: function (name) {
-		return {name: name, type: 'singleImage', value: ''};
+		return {name: name, type: 'singleImage', value: null};
 	},
 
 	/**

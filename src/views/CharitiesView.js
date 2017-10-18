@@ -3,7 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
 import Charity from './../components/Charity';
 
 class CharitiesView extends Component {

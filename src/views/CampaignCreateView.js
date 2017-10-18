@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
-import Requests from './../modules/Requests';
 import Authentication from './../modules/Authentication';
 
 class CampaignCreateView extends Component {

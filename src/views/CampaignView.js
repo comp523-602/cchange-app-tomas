@@ -3,8 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
-import Authentication from './../modules/Authentication';
 
 class CampaignView extends Component {
 
@@ -25,9 +23,12 @@ class CampaignView extends Component {
 	* Gets campaign object, updates state with campaign object
 	* @memberof views/CampaignView#
 	*/
-	componentWillMount() {
+	componentWillMount(newProps) {
+
 		// Get campaign GUID from props
-		var campaignGUID = this.props.match.params.guid;
+		var campaignGUID = null;
+		if (newProps) campaignGUID = newProps.match.params.guid;
+		else campaignGUID = this.props.match.params.guid;
 
 		// Get campaign from server
 		Requests.makeRequest('campaign', {
@@ -41,14 +42,17 @@ class CampaignView extends Component {
 			// Add campaign to state
 			this.setState({
 				'campaign': campaign,
-			})
-			console.log(body)
+			});
 		})
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.componentWillMount(newProps);
 	}
 
 	render() {
 		return (
-			<div className="container">
+			<div className="container row">
 				{ this.state.campaign
 					? <div className="container">
 						<h1>{this.state.campaign.name}</h1>

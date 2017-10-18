@@ -3,7 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
 import Campaign from './../components/Campaign';
 
 class CampaignsView extends Component {

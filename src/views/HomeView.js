@@ -2,7 +2,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
 import Campaign from './../components/Campaign';
 import Charity from './../components/Charity';
 
@@ -30,7 +29,7 @@ class HomeView extends Component {
 		Requests.makeRequest('charities', {
 			'pageSize': 10,
 			'sort': 'asc',
-			'sortKey': 'dateCreated'	
+			'sortKey': 'dateCreated'
 		}, (error, body) => {
 			this.setState({
 				charities: body.charities

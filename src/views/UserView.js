@@ -2,8 +2,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
-import Authentication from './../modules/Authentication';
 
 class UserView extends Component {
 
@@ -14,16 +12,34 @@ class UserView extends Component {
 		};
 	}
 
-	componentWillMount() {
-		var userGUID = this.props.match.params.guid;
-		console.log(Authentication.getUser());
-		/** 
+	componentWillMount(newProps) {
+
+		// Get user GUID from props
+		var userGUID = null;
+		if (newProps) userGUID = newProps.match.params.guid;
+		else userGUID = this.props.match.params.guid;
+
+		// Get user from server
 		Requests.makeRequest('user', {
 			'user': userGUID
 		}, (error, body) => {
+
+			// Get user from response
+			var user = body.user;
+			if (!user) return;
+
+			// Add user to state
+			this.setState({
+				'user': user,
+			});
 		})
-		*/
+
 	}
+
+	componentWillReceiveProps(newProps) {
+		this.componentWillMount(newProps);
+	}
+
 	render() {
 		return (
 			<div className="container">
