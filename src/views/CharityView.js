@@ -27,10 +27,12 @@ class CharityView extends Component {
 	 * Gets charity object, updates state with charity object
 	 * @memberof views/CharityView#
 	 */
-	componentWillMount () {
+	componentWillMount (newProps) {
 
 		// Get charity GUID from props
-		var charityGUID = this.props.match.params.guid;
+		var charityGUID = null;
+		if (newProps) charityGUID = newProps.match.params.guid;
+		else charityGUID = this.props.match.params.guid;
 
 		// Get charity from server
 		Requests.makeRequest('charity', {
@@ -63,6 +65,10 @@ class CharityView extends Component {
 				'campaigns': campaigns
 			})
 		})
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.componentWillMount(newProps);
 	}
 
 	/**
