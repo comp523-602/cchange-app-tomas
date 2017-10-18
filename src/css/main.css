@@ -43,7 +43,7 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 .field input, .field textarea {width:100%; padding:8px 10px; font-size:16px;}
 .field span.instructions {margin-top:8px; font-size:14px; margin-bottom:0px; font-style:italic;}
 
-.charityView img {max-height:240px;}
+.charityView img {max-height:220px;}
 
 /* Item */
-.item img {max-width:120px;}
+.item img {max-width:260px;}
