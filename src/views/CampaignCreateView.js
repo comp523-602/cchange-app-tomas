@@ -57,7 +57,8 @@ class CampaignCreateView extends Component {
   * @memberof views/CampaignCreateView#
   */
   onSuccess (response) {
-    window.location.href = '/charity/' + this.props.location.state.guid;
+	var campaign = response.campaign;
+    window.location.href = '/campaign/' + campaign.guid;
   }
 }
 

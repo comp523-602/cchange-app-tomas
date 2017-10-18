@@ -13,9 +13,7 @@ class Field extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			value: this.props.field.value,
-			image: null,
-			fileURL: ""
+			value: this.props.field.value
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
@@ -40,8 +38,8 @@ class Field extends Component {
 				{ this.props.field.type === 'singleImage'
 					? (
 						<div>
-							{ this.props.field.value !== null
-								? <img src={this.props.field.value} className="uploadedImage" alt="Uploaded" />
+							{ this.state.value
+								? <img src={this.state.value} className="uploadedImage" alt="Uploaded" />
 								: null }
 							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*">
 								<div>Upload your image here</div>

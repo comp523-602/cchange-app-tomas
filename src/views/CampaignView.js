@@ -52,13 +52,15 @@ class CampaignView extends Component {
 
 	render() {
 		return (
-			<div className="container row">
-				{ this.state.campaign
-					? <div className="container">
-						<h1>{this.state.campaign.name}</h1>
-						<p>{this.state.campaign.description}</p>
-					</div>
-					: <div className="loading">Loading...</div> }
+			<div>
+				<div className="heading">
+					{ this.state.campaign
+						? <div className="profileHeading">
+							<h1>{this.state.campaign.name}</h1>
+							<p>{this.state.campaign.description}</p>
+						</div>
+						: <div className="loading">Loading...</div> }
+				</div>
 			</div>
 		);
   	}

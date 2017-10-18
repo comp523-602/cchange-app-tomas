@@ -77,30 +77,35 @@ class CharityView extends Component {
 	 */
 	render() {
 		return (
-			<div className="charityView container row">
-				{ this.state.charity
-					? (
-						<div className="objectHeader">
-							<h1>{this.state.charity.name}</h1>
-							<h2>{this.state.charity.description}</h2>
-							<img src={this.state.profilepictureURL} alt={this.state.charity.name} />
-						</div>
-					)
-					: <div className="loading">Loading...</div> }
-				{ Authentication.getUser().charity === this.props.match.params.guid
-					&& this.state.editLink
-					? <div className="container">
-							<Link to="/campaignCreate">Create a Campaign</Link>
-							<Link to={this.state.editLink}>Edit charity</Link>
-						</div>
-					: null }
-					{ this.state && this.state.campaigns
+			<div>
+				<div className="heading">
+					<div className="container">
+						{ this.state.charity
+							? (
+								<div className="profileHeading">
+									<img src={this.state.profilepictureURL} alt={this.state.charity.name} />
+									<h1>{this.state.charity.name}</h1>
+									<h2>{this.state.charity.description}</h2>
+								</div>
+							)
+							: <div className="loading">Loading...</div> }
+						{ Authentication.getUser().charity === this.props.match.params.guid
+							&& this.state.editLink
+							? <div className="editLinks">
+									<Link to="/campaignCreate">Create a Campaign</Link>
+									<Link to={this.state.editLink}>Edit charity</Link>
+								</div>
+							: null }
+					</div>
+				</div>
+				<div className="container row">
+					{ this.state.campaigns
 						? this.state.campaigns.map((campaign, index) => {
-								return <Campaign campaign={campaign} key={index}/>
-							})
+							return <Campaign campaign={campaign} key={index}/>
+						})
 						: null}
+				</div>
 			</div>
-
 		)
   	}
 }

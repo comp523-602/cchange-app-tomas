@@ -39,7 +39,7 @@ class HomeView extends Component {
 
 	render() {
 		return (
-			<div className="container">
+			<div className="container row">
 				<h1>Home</h1>
 				{this.state.charities[0]
 					? this.state.charities.map((charity, index) => {

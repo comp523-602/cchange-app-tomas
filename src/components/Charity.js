@@ -12,13 +12,17 @@ class Charity extends Component {
   */
   render() {
     return (
-      <div className="item row">
+	  <Link to={'/charity/' + this.props.charity.guid}>
+      <div className="item charity row">
 	  	{ this.props.charity.logo
 		  ? <img src={this.props.charity.logo} alt={this.props.charity.name} />
 		  : null }
-        <h3><Link to={'/charity/' + this.props.charity.guid}>{this.props.charity.name}</Link></h3>
-        <p>{this.props.charity.description}</p>
+		  <div className="info">
+		    <h3>{this.props.charity.name}</h3>
+            <p>{this.props.charity.description}</p>
+		  </div>
       </div>
+	  </Link>
     )
   }
 }

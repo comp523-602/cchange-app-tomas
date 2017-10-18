@@ -12,10 +12,12 @@ class Campaign extends Component {
   */
   render() {
     return (
-      <div className="item row">
-        <h3><Link to={'/campaign/' + this.props.campaign.guid}>{this.props.campaign.name}</Link></h3>
+	  <Link to={'/campaign/' + this.props.campaign.guid}>
+      <div className="item campaign row">
+        <h3>{this.props.campaign.name}</h3>
         <p>{this.props.campaign.description}</p>
       </div>
+	  </Link>
     )
   }
 }

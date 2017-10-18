@@ -67,7 +67,8 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Your Name', 'Enter your name'),
 				email: FieldConfigs.email('Enter your email'),
-				password: FieldConfigs.password(),
+				password: FieldConfigs.password('Enter your password', 'Must be 8 characters long, must contain both letters and numbers'),
+				confirmPassword: FieldConfigs.password('Confirm your password'),
 				charityName: FieldConfigs.text('Charity Name', "Enter your charity's name"),
 			},
 			address: 'user.create.charity',
@@ -92,14 +93,14 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name', 'Enter new charity name'),
 				description: FieldConfigs.textarea('Description', 'Enter new charity description'),
-				image: FieldConfigs.singleImage('Logo'),
+				logo: FieldConfigs.singleImage('Logo'),
 			},
 			address: 'charity.edit',
 			base: function (ref) {
 				return {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
-					'image': ref.image.state.value
+					'logo': ref.logo.state.value
 				}
 			},
 		};
