@@ -16,8 +16,6 @@ class CharityEditView extends Component {
 		super(props);
 		this.state = {
 			charityEditForm: null,
-			uploadedURL: "",
-            uploadedFileCloudinaryUrl: null,
 		};
 		this.onSuccess = this.onSuccess.bind(this);
 	}
@@ -47,6 +45,7 @@ class CharityEditView extends Component {
 			var charityEditForm = FormConfigs.charityEdit();
 			charityEditForm.fields.name.value = charity.name;
 			charityEditForm.fields.description.value = charity.description;
+			charityEditForm.fields.image.value = charity.logo;
 
 			// Add charity to state
 			self.setState({

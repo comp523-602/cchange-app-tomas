@@ -41,6 +41,7 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 .field {display:block; margin-top:20px; width:100%; max-width:320px;}
 .field span {display:block; font-size:16px; margin-bottom:6px;}
 .field input, .field textarea {width:100%; padding:8px 10px; font-size:16px;}
+.field .uploadedImage {height:120px;}
 .field span.instructions {margin-top:8px; font-size:14px; margin-bottom:0px; font-style:italic;}
 
 .charityView img {max-height:220px;}

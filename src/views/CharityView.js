@@ -90,10 +90,7 @@ class CharityView extends Component {
 				{ Authentication.getUser().charity === this.props.match.params.guid
 					&& this.state.editLink
 					? <div className="container">
-							<Link to={{
-							pathname: '/campaignCreate',
-							state: { guid: this.props.match.params.guid }
-								}}>Create a Campaign </Link>
+							<Link to="/campaignCreate">Create a Campaign</Link>
 							<Link to={this.state.editLink}>Edit charity</Link>
 						</div>
 					: null }

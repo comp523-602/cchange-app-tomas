@@ -39,12 +39,14 @@ class Field extends Component {
 
 				{ this.props.field.type === 'singleImage'
 					? (
-						<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*">
-							<div>Upload your image here</div>
+						<div>
 							{ this.props.field.value !== null
 								? <img src={this.props.field.value} className="uploadedImage" alt="Uploaded" />
 								: null }
-						</Dropzone>
+							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*">
+								<div>Upload your image here</div>
+							</Dropzone>
+						</div>
 					)
 					: null }
 
