@@ -1,12 +1,49 @@
 
 // Import dependencies
 import React, { Component } from 'react';
+import Requests from './../modules/Requests';
+import Post from './../components/Post';
 
 class PostsView extends Component {
+
+	/**
+	 * Creates initial state with null values
+	 * @memberof views/PostsView#
+	 */
+
+	 constructor(props) {
+		 super(props) 
+			 this.state = {
+				 'posts': []
+			 };
+	}
+	
+	/**
+	 * Gets list of posts
+	 * @memberof views/PostView#
+	 */
+
+	componentWillMount() {
+		Requests.makeRequest('posts'), (error, body) => {
+			this.setState({
+				posts: body.posts
+			});
+		}
+	 }
+	 
+	/**
+	 * Renders view
+	 * @memberof views/PostsView#
+	 */
 	render() {
 		return (
-			<div className="container row">
-				<h1>Posts</h1>
+			<div className="container ">
+				<h1 className="row">Posts</h1>
+				{ this.state.posts[0]
+					? this.state.posts.map((post, index) => {
+							return <Post post={post} key={index}/>
+						})
+					: <div className="loading">Loading...</div> }				
 			</div>
 		);
   	}

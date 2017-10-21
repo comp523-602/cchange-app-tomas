@@ -31,8 +31,8 @@ class CampaignsView extends Component {
 			'sortKey' : 'dateCreated'
 		}, (error, body) => {
 			this.setState({
-				campaigns: body.campaigns,
-			})
+				'campaigns': body.campaigns,
+			});
 		})
 	}
 
