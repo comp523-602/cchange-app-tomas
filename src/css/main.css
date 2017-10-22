@@ -53,7 +53,7 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 .heading .editLinks a {display:inline-block; margin:0px 10px;}
 
 /* Item */
-.item {display:block; border:1px solid #ccc; padding:10px;}
+.item {display:block; border:3px solid #ccc; padding:10px;}
 .item img {display:inline-block; vertical-align:top; max-height:100px; margin-right:10px;}
 .item .info {display:inline-block; vertical-align:top; margin-top:20px; }
 .item .info h3 {line-height:40px;}
