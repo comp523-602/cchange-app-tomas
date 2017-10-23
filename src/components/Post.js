@@ -7,21 +7,19 @@ import Requests from './../modules/Requests';
 class Post extends Component {
     
     constructor(props) {
-		super(props)
-		this.state = {
-			//TODO: edit charity
+	super(props)
+	this.state = {
             'campaign': [],
             'user': []
-		};
+	};
 		
-	}
+    }
     /**
      * Gets a Post based on a campaign and gets the user's name
      * who made the post
      * @memberof components/Post#
      */
     componentWillMount() {
-        console.log(this.props.post); 
 
         Requests.makeRequest('campaign', {
 		'campaign': this.props.post.campaign
@@ -29,11 +27,11 @@ class Post extends Component {
 
             // Get campaign from response
             var campaign = body.campaign;
-			if (!campaign) return;
-			// Add campaign to state
-			this.setState({
-				'campaign': campaign
-			});
+	    if (!campaign) return;
+	    // Add campaign to state
+	    this.setState({
+		'campaign': campaign
+	    });
         }) 
         Requests.makeRequest('user', {
         	'user': this.props.post.user
@@ -41,11 +39,12 @@ class Post extends Component {
 
             // Get campaign from response
             var user = body.user;
-			// Add campaign to state
-			this.setState({
-				'user': user
-			});
-		})        
+	    if (!campaign) return;
+	    // Add campaign to state
+            this.setState({
+		'user': user
+	    });
+	})        
     }
     /**
      * Renders a post with its image, caption, the campaign's name, and the user who posted it
