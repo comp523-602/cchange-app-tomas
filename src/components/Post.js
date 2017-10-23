@@ -10,12 +10,14 @@ class Post extends Component {
 		super(props)
 		this.state = {
 			//TODO: edit charity
-			'campaign': []
+            'campaign': [],
+            'user': []
 		};
 		
 	}
     /**
-     * Gets a Post based on a campaign
+     * Gets a Post based on a campaign and gets the user's name
+     * who made the post
      * @memberof components/Post#
      */
     componentWillMount() {
@@ -32,10 +34,21 @@ class Post extends Component {
 			this.setState({
 				'campaign': campaign
 			});
+        }) 
+        Requests.makeRequest('user', {
+            'user': this.props.post.user
+        }, (error, body) => {
+
+            // Get campaign from response
+            var user = body.user;
+			// Add campaign to state
+			this.setState({
+				'user': user
+			});
 		})        
     }
     /**
-     * Renders a post with its image, caption, and the campaign's name 
+     * Renders a post with its image, caption, the campaign's name, and the user who posted it
      */
      render() {
          return(
@@ -46,6 +59,7 @@ class Post extends Component {
                 <div className="info">
                     <h3>Campaign: {this.state.campaign.name}</h3>
                     <h3>Post: {this.props.post.caption}</h3>
+                    <h3>User: {this.state.user.name}</h3>
                 </div>
             </div>
          )
