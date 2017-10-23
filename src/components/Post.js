@@ -2,7 +2,6 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Requests from './../modules/Requests';
 
 class Post extends Component {
@@ -16,7 +15,7 @@ class Post extends Component {
 		
 	}
     /**
-     * Renders Post element
+     * Gets a Post based on a campaign
      * @memberof components/Post#
      */
     componentWillMount() {
@@ -35,9 +34,11 @@ class Post extends Component {
 			});
 		})        
     }
+    /**
+     * Renders a post with its image, caption, and the campaign's name 
+     */
      render() {
          return(
-           //<Link to={'/post/' + this.props.posts.guid}>
             <div className="item post row">
                 {this.props.post.image
                     ? <img src={this.props.post.image} />
@@ -47,7 +48,6 @@ class Post extends Component {
                     <h3>Post: {this.props.post.caption}</h3>
                 </div>
             </div>
-           //</Link>
          )
      }
 }

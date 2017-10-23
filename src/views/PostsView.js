@@ -22,7 +22,6 @@ class PostsView extends Component {
 	 * Gets list of posts
 	 * @memberof views/PostView#
 	 */
-
 	componentWillMount() {
 		Requests.makeRequest('posts',{
 			'pageSize': 20
@@ -37,7 +36,7 @@ class PostsView extends Component {
 	)}
 	 
 	/**
-	 * Renders view
+	 * Renders all posts based on the chosen criteria
 	 * @memberof views/PostsView#
 	 */
 	render() {

@@ -28,6 +28,7 @@ class CampaignView extends Component {
 
 	/**
 	* Gets campaign object, updates state with campaign object
+	* Also gets post objects made to this campaign
 	* @memberof views/CampaignView#
 	*/
 	componentWillMount(newProps) {
@@ -68,7 +69,10 @@ class CampaignView extends Component {
 	componentWillReceiveProps(newProps) {
 		this.componentWillMount(newProps);
 	}
-
+	/**
+	 * Renders the campaign information and renders
+	 * All of the posts made to this campaign 
+ 	*/
 	render() {
 		var params = {
 			'campaign': this.props.match.params.guid
