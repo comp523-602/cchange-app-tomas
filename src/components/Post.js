@@ -24,8 +24,8 @@ class Post extends Component {
         console.log(this.props.post); 
 
         Requests.makeRequest('campaign', {
-			'campaign': this.props.post.campaign
-		}, (error, body) => {
+		'campaign': this.props.post.campaign
+	}, (error, body) => {
 
             // Get campaign from response
             var campaign = body.campaign;
@@ -36,7 +36,7 @@ class Post extends Component {
 			});
         }) 
         Requests.makeRequest('user', {
-            'user': this.props.post.user
+        	'user': this.props.post.user
         }, (error, body) => {
 
             // Get campaign from response
