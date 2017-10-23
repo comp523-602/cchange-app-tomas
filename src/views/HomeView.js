@@ -51,7 +51,7 @@ class HomeView extends Component {
 					? this.state.campaigns.map((campaign, index) => {
 						return <Campaign campaign={campaign} key={index}/>
 					})
-				: null}
+				: null }
 			</div>
 		);
   	}
