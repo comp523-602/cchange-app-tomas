@@ -1,4 +1,4 @@
-/** @namespace components/Campaign */
+/** @namespace components/Post */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -34,7 +34,7 @@ class Post extends Component {
            'campaign': campaign
           });
         })
-        
+
         Requests.makeRequest('user', {
         	'user': this.props.post.user
         }, (error, body) => {
@@ -50,6 +50,7 @@ class Post extends Component {
     }
     /**
      * Renders a post with its image, caption, the campaign's name, and the user who posted it
+     * @memberof components/Post#
      */
      render() {
          return(
