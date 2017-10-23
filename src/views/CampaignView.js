@@ -22,9 +22,9 @@ class CampaignView extends Component {
 			'makePostForm': null
 		};
 		this.onSuccess = this.onSuccess.bind(this);
-		
+
 	}
-	
+
 
 	/**
 	* Gets campaign object, updates state with campaign object
@@ -71,7 +71,7 @@ class CampaignView extends Component {
 	}
 	/**
 	 * Renders the campaign information and renders
-	 * All of the posts made to this campaign 
+	 * All of the posts made to this campaign
  	*/
 	render() {
 		var params = {
@@ -80,16 +80,19 @@ class CampaignView extends Component {
 		return (
 			<div>
 				<div className="heading">
-					{ this.state.campaign
-						? <div className="profileHeading">
-							<h1>{this.state.campaign.name}</h1>
-							<p>{this.state.campaign.description}</p>							
-						</div>
-						: <div className="loading">Loading Campaign</div> }		
-					{ this.state.makePostForm 
-						? <Form form={this.state.makePostForm} onSuccess={this.onSuccess} requestParams={params}/>
-						: <div className="loading">Uploading to campaign...</div>}
-
+					<div className="container">
+						{ this.state.campaign
+							? <div className="profileHeading">
+								<h1>{this.state.campaign.name}</h1>
+								<p>{this.state.campaign.description}</p>
+							</div>
+							: <div className="loading">Loading Campaign</div> }
+						{ this.state.makePostForm
+							? <Form form={this.state.makePostForm} onSuccess={this.onSuccess} requestParams={params}/>
+							: <div className="loading">Uploading to campaign...</div>}
+					</div>
+				</div>
+				<div className="container row">
 					{this.state.posts[0]
 						?  this.state.posts.map((post, index) => {
 							return <Post post={post} key={index}/>
@@ -102,7 +105,7 @@ class CampaignView extends Component {
 	onSuccess (response) {
 		console.log("success");
 	}
-	  
+
 }
 
 export default CampaignView;

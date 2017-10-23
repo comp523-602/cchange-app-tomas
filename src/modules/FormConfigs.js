@@ -153,7 +153,7 @@ var FormConfigs = {
 			title: 'Make a post for this campaign',
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
-				image: FieldConfigs.singleImage('Logo'),
+				image: FieldConfigs.singleImage('Image'),
 			},
 			address: 'post.create',
 			base: function(ref) {
