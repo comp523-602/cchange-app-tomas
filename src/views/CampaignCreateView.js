@@ -27,7 +27,7 @@ class CampaignCreateView extends Component {
   componentWillMount () {
 
     // Set up campaign create form
-    var campaignCreateForm = FormConfigs.campaignCreate();
+    var campaignCreateForm = FormConfigs.campaignCreateEdit();
 
     // Add campaign form to state
     this.setState({
