@@ -5,7 +5,9 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Post from './../components/Post';
 import FormConfigs from './../modules/FormConfigs';
-import Form from './../components/Form';
+import Authentication from './../modules/Authentication';
+import { Link } from 'react-router-dom';
+
 
 class CampaignView extends Component {
 
@@ -19,7 +21,6 @@ class CampaignView extends Component {
 			//TODO: edit charity
 			'campaign': null,
 			'posts': [],
-			'makePostForm': null
 		};
 		this.onSuccess = this.onSuccess.bind(this);
 
@@ -46,11 +47,10 @@ class CampaignView extends Component {
 			// Get campaign from response
 			var campaign = body.campaign;
 			if (!campaign) return;
-			var makePostForm = FormConfigs.makePost();
+
 			// Add campaign to state
 			this.setState({
 				'campaign': campaign,
-				'makePostForm': makePostForm
 			});
 		})
 
@@ -86,9 +86,11 @@ class CampaignView extends Component {
 							<p>{this.state.campaign.description}</p>
 						</div>
 						: <div className="loading">Loading Campaign</div> }
-					{ this.state.makePostForm
-						? <Form form={this.state.makePostForm} onSuccess={this.onSuccess} requestParams={params}/>
-						: null }
+					{ Authentication.status() === Authentication.USER
+		          ? <Link to={'/postCreate/' + this.props.match.params.guid} >
+									<p>Create a post for this campaign</p>
+							</Link>
+							: null }
 
 					{this.state.posts[0]
 						?  this.state.posts.map((post, index) => {

@@ -121,7 +121,7 @@ var FormConfigs = {
 			},
 			address: GUID ? 'campaign.edit':'campaign.create',
 			base: function (ref) {
-				returnObject = {
+				var returnObject = {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
 				};
