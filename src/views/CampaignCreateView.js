@@ -1,17 +1,16 @@
-/** @namespace views/CampaignEditView */
+/** @namespace views/CampaignCreateView */
 
 // Import dependencies
 import React, { Component } from 'react';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
-import Requests from './../modules/Requests';
 import Authentication from './../modules/Authentication';
 
 class CampaignCreateView extends Component {
 
   /**
   * Creates initial state using null values
-  * @memberof views/CampaignCreateView
+  * @memberof views/CampaignCreateView#
   */
   constructor (props) {
     super(props);
@@ -23,7 +22,7 @@ class CampaignCreateView extends Component {
 
   /**
   * Sets up campaign create form
-  *
+  * @memberof views/CampaignCreateView#
   */
   componentWillMount () {
 
@@ -47,7 +46,7 @@ class CampaignCreateView extends Component {
           ? this.state.campaignCreateForm
             ? <Form form={this.state.campaignCreateForm} onSuccess={this.onSuccess} />
             : null
-          : <h1>Whoops! Looks like you've navigated somewhere you shouldn't.</h1>
+          : <h1>Whoops! Looks like youve navigated somewhere you shouldnt.</h1>
         }
       </div>
     );
@@ -58,7 +57,8 @@ class CampaignCreateView extends Component {
   * @memberof views/CampaignCreateView#
   */
   onSuccess (response) {
-    window.location.href = '/charity/' + this.props.location.state.guid;
+	var campaign = response.campaign;
+    window.location.href = '/campaign/' + campaign.guid;
   }
 }
 

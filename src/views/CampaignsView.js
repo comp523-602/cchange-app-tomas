@@ -1,16 +1,15 @@
-/** @namespace views/CharityView */
+/** @namespace views/CampaignsView */
 
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
 import Campaign from './../components/Campaign';
 
 class CampaignsView extends Component {
 
 	/**
 	* Creates initial state with null values
-	* @memberof views/CharitiesView#
+	* @memberof views/CampaignsView#
 	*/
 	constructor(props) {
 		super(props)
@@ -32,8 +31,8 @@ class CampaignsView extends Component {
 			'sortKey' : 'dateCreated'
 		}, (error, body) => {
 			this.setState({
-				campaigns: body.campaigns,
-			})
+				'campaigns': body.campaigns,
+			});
 		})
 	}
 
@@ -44,7 +43,7 @@ class CampaignsView extends Component {
 	render() {
 		return (
 			<div className="container">
-				<h1>Campaigns</h1>
+				<h1 className="row">Campaigns</h1>
 				{ this.state.campaigns[0]
 					?  this.state.campaigns.map((campaign, index) => {
 							return <Campaign campaign={campaign} key={index}/>

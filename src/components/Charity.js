@@ -7,24 +7,22 @@ import { Link } from 'react-router-dom';
 class Charity extends Component {
 
   /**
-  * Creates initial props for Charity list element
-  * @memberof components/Charity#
-  */
-  constructor(props) {
-    super(props)
-  }
-
-  /**
   * Renders Charity element
   * @memberof components/Charity#
   */
   render() {
     return (
-      <div className="container">
-        <h3><a href={'/charity/' + this.props.charity.guid}>{this.props.charity.name}</a></h3>
-        <p>{this.props.charity.description}</p>
-        <img src={this.props.charity.logo}/>
+	  <Link to={'/charity/' + this.props.charity.guid}>
+      <div className="item charity row">
+	  	{ this.props.charity.logo
+		  ? <img src={this.props.charity.logo} alt={this.props.charity.name} />
+		  : null }
+		  <div className="info">
+		    <h3>{this.props.charity.name}</h3>
+            <p>{this.props.charity.description}</p>
+		  </div>
       </div>
+	  </Link>
     )
   }
 }

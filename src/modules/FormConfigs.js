@@ -13,7 +13,7 @@ base: initial JSON to send to server as body
 var FormConfigs = {
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Signup form configuration object
 	 */
 	signup: function () {
@@ -22,8 +22,8 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name', 'Enter your name'),
 				email: FieldConfigs.email('Enter your email'),
-				password: FieldConfigs.password('Must contain at least 8 characters and 1 number'),
-				// passwordVerify: FieldConfigs.password('')
+				password: FieldConfigs.password('Enter your password', 'Must be 8 characters long, must contain both letters and numbers'),
+				confirmPassword: FieldConfigs.password('Confirm your password'),
 			},
 			address: 'user.create',
 			base: function (ref) {
@@ -37,7 +37,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Login form configuration object
 	 */
 	login: function () {
@@ -58,7 +58,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Charity signup form configuration object
 	 */
 	charitySignup: function () {
@@ -67,7 +67,8 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Your Name', 'Enter your name'),
 				email: FieldConfigs.email('Enter your email'),
-				password: FieldConfigs.password('Must contain at least 8 characters and 1 number'),
+				password: FieldConfigs.password('Enter your password', 'Must be 8 characters long, must contain both letters and numbers'),
+				confirmPassword: FieldConfigs.password('Confirm your password'),
 				charityName: FieldConfigs.text('Charity Name', "Enter your charity's name"),
 			},
 			address: 'user.create.charity',
@@ -83,7 +84,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Charity edit form configuration object
 	 */
 	charityEdit: function () {
@@ -92,21 +93,21 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name', 'Enter new charity name'),
 				description: FieldConfigs.textarea('Description', 'Enter new charity description'),
-				image: FieldConfigs.singleImage('imageURL')
+				logo: FieldConfigs.singleImage('Logo'),
 			},
 			address: 'charity.edit',
 			base: function (ref) {
 				return {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
-					'image': ref.image.state.value
+					'logo': ref.logo.state.value
 				}
 			},
 		};
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Campaign create form configuration object
 	 */
 	campaignCreate: function () {
@@ -127,7 +128,7 @@ var FormConfigs = {
 	},
 
 	/**
-	 * @memberof modules/Forms
+	 * @memberof modules/FormConfigs
 	 * @return {Object} Campaign edit form configuration object
 	 */
 	campaignEdit: function () {
@@ -146,6 +147,23 @@ var FormConfigs = {
 			},
 		};
 	},
+
+	makePost: function() {
+		return {
+			title: 'Make a post for this campaign',
+			fields: {
+				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
+				image: FieldConfigs.singleImage('Logo'),
+			},
+			address: 'post.create',
+			base: function(ref) {
+				return {
+					'caption': ref.caption.state.value,
+					'image': ref.image.state.value,
+				}
+			}
+		}
+	}
 };
 
 export default FormConfigs;

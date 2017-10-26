@@ -3,7 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
 import Charity from './../components/Charity';
 
 class CharitiesView extends Component {
@@ -37,10 +36,14 @@ class CharitiesView extends Component {
 		})
 	}
 
+	/**
+	 * Renders view
+	 * @memberof views/CharitiesView#
+	 */
 	render() {
 		return (
 			<div className="container">
-				<h1>Charities</h1>
+				<h1 className="row">Charities</h1>
 				{ this.state.charities[0]
 					? this.state.charities.map((charity, index) => {
 							return <Charity charity={charity} key={index}/>

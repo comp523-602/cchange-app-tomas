@@ -3,8 +3,9 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
-import Authentication from './../modules/Authentication';
+import Post from './../components/Post';
+import FormConfigs from './../modules/FormConfigs';
+import Form from './../components/Form';
 
 class CampaignView extends Component {
 
@@ -17,17 +18,25 @@ class CampaignView extends Component {
 		this.state = {
 			//TODO: edit charity
 			'campaign': null,
-			'editLink': null,
+			'posts': [],
+			'makePostForm': null
 		};
+		this.onSuccess = this.onSuccess.bind(this);
+
 	}
+
 
 	/**
 	* Gets campaign object, updates state with campaign object
+	* Also gets post objects made to this campaign
 	* @memberof views/CampaignView#
 	*/
-	componentWillMount() {
+	componentWillMount(newProps) {
+
 		// Get campaign GUID from props
-		var campaignGUID = this.props.match.params.guid;
+		var campaignGUID = null;
+		if (newProps) campaignGUID = newProps.match.params.guid;
+		else campaignGUID = this.props.match.params.guid;
 
 		// Get campaign from server
 		Requests.makeRequest('campaign', {
@@ -37,27 +46,63 @@ class CampaignView extends Component {
 			// Get campaign from response
 			var campaign = body.campaign;
 			if (!campaign) return;
-
+			var makePostForm = FormConfigs.makePost();
 			// Add campaign to state
 			this.setState({
 				'campaign': campaign,
-			})
-			console.log(body)
+				'makePostForm': makePostForm
+			});
+		})
+
+		//Retrieve all posts made for this specific campaign
+		Requests.makeRequest('posts', {
+			'campaign': campaignGUID
+		}, (error, body) => {
+			var posts = body.posts;
+			if(!posts) return;
+
+			this.setState({
+				'posts': body.posts
+			});
 		})
 	}
-
+	componentWillReceiveProps(newProps) {
+		this.componentWillMount(newProps);
+	}
+	/**
+	 * Renders the campaign information and renders
+	 * All of the posts made to this campaign
+ 	*/
 	render() {
+		var params = {
+			'campaign': this.props.match.params.guid
+		}
 		return (
-			<div className="container">
-				{ this.state.campaign
-					? <div className="container">
-						<h1>{this.state.campaign.name}</h1>
-						<p>{this.state.campaign.description}</p>
-					</div>
-					: <div className="loading">Loading...</div> }
+			<div>
+				<div className="heading">
+					{ this.state.campaign
+						? <div className="profileHeading">
+							<h1>{this.state.campaign.name}</h1>
+							<p>{this.state.campaign.description}</p>
+						</div>
+						: <div className="loading">Loading Campaign</div> }
+					{ this.state.makePostForm
+						? <Form form={this.state.makePostForm} onSuccess={this.onSuccess} requestParams={params}/>
+						: null }
+
+					{this.state.posts[0]
+						?  this.state.posts.map((post, index) => {
+							return <Post post={post} key={index}/>
+						})
+						: null }
+				</div>
 			</div>
 		);
-  	}
+	}
+	onSuccess (response) {
+		console.log("success");
+	}
+
 }
 
 export default CampaignView;

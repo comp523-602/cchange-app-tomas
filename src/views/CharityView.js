@@ -19,6 +19,7 @@ class CharityView extends Component {
 			'charity': null,
 			'editLink': null,
 			'profilepictureURL': null,
+			'campaigns': null,
 		};
 	}
 
@@ -26,10 +27,12 @@ class CharityView extends Component {
 	 * Gets charity object, updates state with charity object
 	 * @memberof views/CharityView#
 	 */
-	componentWillMount () {
+	componentWillMount (newProps) {
 
 		// Get charity GUID from props
-		var charityGUID = this.props.match.params.guid;
+		var charityGUID = null;
+		if (newProps) charityGUID = newProps.match.params.guid;
+		else charityGUID = this.props.match.params.guid;
 
 		// Get charity from server
 		Requests.makeRequest('charity', {
@@ -46,9 +49,26 @@ class CharityView extends Component {
 				'editLink': '/charityEdit/'+charity.guid,
 				'profilepictureURL': charity.logo,
 			})
-			console.log(this.state.charity)
-			// TODO: finish campaign listing
 		})
+
+		// Get campaigns from server
+		Requests.makeRequest('campaigns', {
+			'charity': charityGUID
+		}, (error, body) => {
+
+			// Get charity from response
+			var campaigns = body.campaigns;
+			if (!campaigns || !campaigns.length) return;
+
+			// Add charity to state
+			this.setState({
+				'campaigns': campaigns
+			})
+		})
+	}
+
+	componentWillReceiveProps(newProps) {
+		this.componentWillMount(newProps);
 	}
 
 	/**
@@ -57,33 +77,35 @@ class CharityView extends Component {
 	 */
 	render() {
 		return (
-			<div className="container row">
-				{ this.state.charity
-					? (
-						<div className="objectHeader">
-							<h1>{this.state.charity.name}</h1>
-							<h2>{this.state.charity.description}</h2>
-							<img src={this.state.profilepictureURL}/>
-						</div>
-					)
-					: <div className="loading">Loading...</div> }
-				{ Authentication.getUser().charity === this.props.match.params.guid
-					&& this.state.editLink
-					? <div className="container">
-							<Link to={{
-							pathname: '/campaignCreate',
-							state: { guid: this.props.match.params.guid }
-								}}>Create a Campaign</Link>
-							<Link to={this.state.editLink}>Edit charity</Link>
-						</div>
-					: null }
-					{ this.state.charity && this.state.charity.campaigns
-						? this.state.charity.campaigns.map((campaign, index) => {
-								return <Campaign campaign={campaign} key={index}/>
-							})
+			<div>
+				<div className="heading">
+					<div className="container">
+						{ this.state.charity
+							? (
+								<div className="profileHeading">
+									<img src={this.state.profilepictureURL} alt={this.state.charity.name} />
+									<h1>{this.state.charity.name}</h1>
+									<h2>{this.state.charity.description}</h2>
+								</div>
+							)
+							: <div className="loading">Loading...</div> }
+						{ Authentication.getUser().charity === this.props.match.params.guid
+							&& this.state.editLink
+							? <div className="editLinks">
+									<Link to="/campaignCreate">Create a Campaign</Link>
+									<Link to={this.state.editLink}>Edit charity</Link>
+								</div>
+							: null }
+					</div>
+				</div>
+				<div className="container row">
+					{ this.state.campaigns
+						? this.state.campaigns.map((campaign, index) => {
+							return <Campaign campaign={campaign} key={index}/>
+						})
 						: null}
+				</div>
 			</div>
-
 		)
   	}
 }

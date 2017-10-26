@@ -5,11 +5,6 @@ import React, { Component } from 'react';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 import Requests from './../modules/Requests';
-import Dropzone from 'react-dropzone';
-import request from 'superagent';
-import $ from 'jquery';
-import PropTypes from 'prop-types';
-import Storage from '../modules/Storage';
 
 class CharityEditView extends Component {
 
@@ -21,8 +16,6 @@ class CharityEditView extends Component {
 		super(props);
 		this.state = {
 			charityEditForm: null,
-			uploadedURL: "",
-            uploadedFileCloudinaryUrl: null,
 		};
 		this.onSuccess = this.onSuccess.bind(this);
 	}
@@ -50,9 +43,9 @@ class CharityEditView extends Component {
 
 			// Setup charity edit form
 			var charityEditForm = FormConfigs.charityEdit();
-			console.log(charityEditForm);
 			charityEditForm.fields.name.value = charity.name;
 			charityEditForm.fields.description.value = charity.description;
+			charityEditForm.fields.logo.value = charity.logo;
 
 			// Add charity to state
 			self.setState({
