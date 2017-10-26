@@ -24,7 +24,7 @@ class CampaignView extends Component {
 		this.onSuccess = this.onSuccess.bind(this);
 		this.compare = this.compare.bind(this)
 	}
-	
+
 
 	/**
 	* Gets campaign object, updates state with campaign object
@@ -71,7 +71,7 @@ class CampaignView extends Component {
 	}
 	/**
 	 * Renders the campaign information and renders
-	 * All of the posts made to this campaign 
+	 * All of the posts made to this campaign
  	*/
 	render() {
 		var params = {
@@ -83,10 +83,10 @@ class CampaignView extends Component {
 					{ this.state.campaign
 						? <div className="profileHeading">
 							<h1>{this.state.campaign.name}</h1>
-							<p>{this.state.campaign.description}</p>							
+							<p>{this.state.campaign.description}</p>
 						</div>
-						: <div className="loading">Loading Campaign</div> }		
-					{ this.state.makePostForm 
+						: <div className="loading">Loading Campaign</div> }
+					{ this.state.makePostForm
 						? <Form form={this.state.makePostForm} onSuccess={this.onSuccess} requestParams={params}/>
 						: null }
 

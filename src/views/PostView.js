@@ -1,3 +1,4 @@
+/** @namespace views/PostView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -11,6 +12,11 @@ class PostView extends Component {
 			'post': null
 		};
 	}
+
+	/**
+	* Gets post info based on the selected GUID
+	* @memberof views/PostView#
+	*/
 
 	componentWillMount(newProps) {
 
