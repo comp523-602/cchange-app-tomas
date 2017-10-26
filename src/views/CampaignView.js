@@ -22,7 +22,7 @@ class CampaignView extends Component {
 			'makePostForm': null
 		};
 		this.onSuccess = this.onSuccess.bind(this);
-		
+		this.compare = this.compare.bind(this)
 	}
 	
 
@@ -88,10 +88,10 @@ class CampaignView extends Component {
 						: <div className="loading">Loading Campaign</div> }		
 					{ this.state.makePostForm 
 						? <Form form={this.state.makePostForm} onSuccess={this.onSuccess} requestParams={params}/>
-						: <div className="loading">Uploading to campaign...</div>}
+						: null }
 
 					{this.state.posts[0]
-						?  this.state.posts.map((post, index) => {
+						?	this.state.posts.sort(this.compare).map((post, index) => {
 							return <Post post={post} key={index}/>
 						})
 						: null }
@@ -99,10 +99,22 @@ class CampaignView extends Component {
 			</div>
 		);
 	}
-	onSuccess (response) {
-		console.log("success");
+	compare (a, b) {
+		if (a.dateCreated < b.dateCreated) {
+			return 1;
+		}
+		if(a.dateCreated > b.dateCreated) {
+			return -1;
+		}
+		return 0;
 	}
-	  
+	onSuccess (response) {
+		var posts = this.state.posts;
+		posts.push(response.post)
+		this.setState({
+			posts: posts
+		});
+	}  
 }
 
 export default CampaignView;

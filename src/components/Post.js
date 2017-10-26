@@ -3,6 +3,7 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
+import Moment from 'moment';
 
 class Post extends Component {
     
@@ -59,7 +60,7 @@ class Post extends Component {
                 <div className="info">
                     <h3>Campaign: {this.state.campaign.name}</h3>
                     <h3>Post: {this.props.post.caption}</h3>
-                    <h3>User: {this.state.user.name}</h3>
+                    <h3>User: {this.state.user.name}, {Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
                 </div>
             </div>
          )
