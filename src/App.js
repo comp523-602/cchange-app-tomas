@@ -17,7 +17,7 @@ import CharityView from './views/CharityView';
 import CharityEditView from './views/CharityEditView';
 import CampaignView from './views/CampaignView';
 import UpdateView from './views/UpdateView';
-import PostView from './views/PostView';
+import PostCreateView from './views/PostCreateView';
 import LogoutView from './views/LogoutView';
 
 // Import components
@@ -42,7 +42,7 @@ class App extends Component {
 					<Route path="/campaign/:guid" component={CampaignView} />
 					<Route path="/campaignCreate" component={CampaignCreateView} />
 					<Route path="/update/:guid" component={UpdateView} />
-					<Route path="/post/:guid" component={PostView} />
+					<Route path="/postCreate/:guid" component={PostCreateView} />
 					<Route path="/logout" component={LogoutView} />
 				</div>
 			</div>

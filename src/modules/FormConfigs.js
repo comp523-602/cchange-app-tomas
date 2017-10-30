@@ -59,9 +59,10 @@ var FormConfigs = {
 
 	/**
 	 * @memberof modules/FormConfigs
+ 	 * @param {String} token
 	 * @return {Object} Charity signup form configuration object
 	 */
-	charitySignup: function () {
+	charitySignup: function (token) {
 		return {
 			title: 'Create a new cChange charity',
 			fields: {
@@ -78,6 +79,7 @@ var FormConfigs = {
 					'email': ref.email.state.value,
 					'password': ref.password.state.value,
 					'charityName': ref.charityName.state.value,
+					'charityToken': token,
 				}
 			},
 		};
@@ -100,7 +102,7 @@ var FormConfigs = {
 				return {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
-					'logo': ref.logo.state.value
+					'logo': ref.logo.state.value,
 				}
 			},
 		};
@@ -108,58 +110,69 @@ var FormConfigs = {
 
 	/**
 	 * @memberof modules/FormConfigs
-	 * @return {Object} Campaign create form configuration object
+	 * @return {Object} Campaign creation or editing form configuration object
 	 */
-	campaignCreate: function () {
-		return {
-			title: 'Create campaign',
-			fields: {
-				name: FieldConfigs.text('Name', 'Enter campaign name'),
-				description: FieldConfigs.textarea('Description', 'Enter campaign description'),
-			},
-			address: 'campaign.create',
-			base: function (ref) {
-				return {
-					'name': ref.name.state.value,
-					'description': ref.description.state.value,
-				}
-			},
-		};
-	},
-
-	/**
-	 * @memberof modules/FormConfigs
-	 * @return {Object} Campaign edit form configuration object
-	 */
-	campaignEdit: function () {
+	campaignCreateEdit: function (GUID) {
 		return {
 			title: 'Edit campaign',
 			fields: {
 				name: FieldConfigs.text('Name', 'Enter new campaign name'),
 				description: FieldConfigs.textarea('Description', 'Enter new campaign description'),
 			},
-			address: 'campaign.edit',
+			address: GUID ? 'campaign.edit':'campaign.create',
 			base: function (ref) {
-				return {
+				var returnObject = {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
-				}
+				};
+				if (GUID)
+					returnObject['campaign'] = GUID;
+				return returnObject;
 			},
 		};
 	},
 
-	makePost: function() {
+	/**
+	 * @memberof modules/FormConfigs
+	 * @param {String} campaignGUID
+	 * @return {Object} Post creation form configuration object
+	 */
+	postCreate: function(campaignGUID) {
 		return {
 			title: 'Make a post for this campaign',
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
-				image: FieldConfigs.singleImage('Image'),
+				image: FieldConfigs.singleImage('Logo'),
 			},
 			address: 'post.create',
 			base: function(ref) {
 				return {
 					'caption': ref.caption.state.value,
 					'image': ref.image.state.value,
+					'campaign': campaignGUID,
+				}
+			}
+		}
+	},
+
+	/**
+	 * @memberof modules/FormConfigs
+	 * @param {String} postGUID
+	 * @return {Object} Post edit form configuration object
+	 */
+	postEdit: function(postGUID) {
+		return {
+			title: 'Edit your post',
+			fields: {
+				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
+				image: FieldConfigs.singleImage('Image'),
+			},
+			address: 'post.edit',
+			base: function(ref) {
+				return {
+					'caption': ref.caption.state.value,
+					'image': ref.image.state.value,
+					'post': postGUID,
 				}
 			}
 		}

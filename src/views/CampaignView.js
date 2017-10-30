@@ -5,7 +5,9 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Post from './../components/Post';
 import FormConfigs from './../modules/FormConfigs';
-import Form from './../components/Form';
+import Authentication from './../modules/Authentication';
+import { Link } from 'react-router-dom';
+
 
 class CampaignView extends Component {
 
@@ -19,10 +21,9 @@ class CampaignView extends Component {
 			//TODO: edit charity
 			'campaign': null,
 			'posts': [],
-			'makePostForm': null
 		};
 		this.onSuccess = this.onSuccess.bind(this);
-
+		this.compare = this.compare.bind(this)
 	}
 
 
@@ -46,11 +47,10 @@ class CampaignView extends Component {
 			// Get campaign from response
 			var campaign = body.campaign;
 			if (!campaign) return;
-			var makePostForm = FormConfigs.makePost();
+
 			// Add campaign to state
 			this.setState({
 				'campaign': campaign,
-				'makePostForm': makePostForm
 			});
 		})
 
@@ -80,21 +80,19 @@ class CampaignView extends Component {
 		return (
 			<div>
 				<div className="heading">
-					<div className="container">
-						{ this.state.campaign
-							? <div className="profileHeading">
-								<h1>{this.state.campaign.name}</h1>
-								<p>{this.state.campaign.description}</p>
-							</div>
-							: <div className="loading">Loading Campaign</div> }
-						{ this.state.makePostForm
-							? <Form form={this.state.makePostForm} onSuccess={this.onSuccess} requestParams={params}/>
-							: <div className="loading">Uploading to campaign...</div>}
-					</div>
-				</div>
-				<div className="container row">
+					{ this.state.campaign
+						? <div className="profileHeading">
+							<h1>{this.state.campaign.name}</h1>
+							<p>{this.state.campaign.description}</p>
+						</div>
+						: <div className="loading">Loading Campaign</div> }
+					{ Authentication.status() === Authentication.USER
+		          ? <Link to={'/postCreate/' + this.props.match.params.guid} >
+									<p>Create a post for this campaign</p>
+							</Link>
+							: null }
 					{this.state.posts[0]
-						?  this.state.posts.map((post, index) => {
+						?	this.state.posts.sort(this.compare).map((post, index) => {
 							return <Post post={post} key={index}/>
 						})
 						: null }
@@ -102,10 +100,22 @@ class CampaignView extends Component {
 			</div>
 		);
 	}
-	onSuccess (response) {
-		console.log("success");
+	compare (a, b) {
+		if (a.dateCreated < b.dateCreated) {
+			return 1;
+		}
+		if(a.dateCreated > b.dateCreated) {
+			return -1;
+		}
+		return 0;
 	}
-
+	onSuccess (response) {
+		var posts = this.state.posts;
+		posts.push(response.post)
+		this.setState({
+			posts: posts
+		});
+	}  
 }
 
 export default CampaignView;

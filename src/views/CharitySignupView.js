@@ -15,7 +15,7 @@ class CharitySignupView extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			'charitySignupForm': FormConfigs.charitySignup(),
+			'charitySignupForm': FormConfigs.charitySignup(this.props.match.params.charityToken),
 		}
 	}
 
@@ -25,14 +25,9 @@ class CharitySignupView extends Component {
 	 */
 	render() {
 
-		// Add charityToken to charitySignupForm from route parameters
-		var params = {
-			'charityToken': this.props.match.params.charityToken,
-		};
-
 		return (
 			<div className="container">
-				<Form form={this.state.charitySignupForm} onSuccess={this.onSuccess} requestParams={params} />
+				<Form form={this.state.charitySignupForm} onSuccess={this.onSuccess} />
 			</div>
 		);
   	}
