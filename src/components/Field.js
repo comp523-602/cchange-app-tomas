@@ -3,7 +3,10 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
+import 'cropperjs/dist/cropper.css';
+import Cropper from 'react-cropper';
 import request from 'superagent';
+
 class Field extends Component {
 
 	/**
@@ -13,54 +16,27 @@ class Field extends Component {
 	constructor (props) {
 		super(props);
 		this.state = {
-			value: this.props.field.value
+			value: this.props.field.value,
+			imageUploaded: false,
+			src: null,
 		};
 		this.handleChange = this.handleChange.bind(this);
+		this.onImageDrop = this.onImageDrop.bind(this);
 	}
 
-	/**
-	 * Renders view based on field.type passed to props
-	 * @memberof components/Field#
-	 */
-	render() {
-		return (
-			<div className="field">
-				<span>{this.props.field.name}</span>
-
-				{ this.props.field.type === 'textarea'
-					? <textarea value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} ></textarea>
-					: null }
-
-				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password'
-					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
-					: null }
-
-				{ this.props.field.type === 'singleImage'
-					? (
-						<div>
-							{ this.state.value
-								? <img src={this.state.value} className="uploadedImage" alt="Uploaded" />
-								: null }
-							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*">
-								<div>Upload your image here</div>
-							</Dropzone>
-						</div>
-					)
-					: null }
-
-				{ this.props.field.instructions
-					? <span className="instructions">{this.props.field.instructions}</span>
-					: null }
-			</div>
-		);
-  	}
 	/**
 	 * Passed to components/Form to be executed on successful request
 	 * @memberof components/Field#
 	 */
 	onImageDrop(files) {
-        this.handleImageUpload(files[0]);
+		const reader = new FileReader();
+		reader.onload = () => {
+			this.setState({ src: reader.result });
+		};
+		reader.readAsDataURL(files[0]);
+    this.handleImageUpload(files[0]);
     }
+
 
     /**
      * Makes the post request to to the cloudinary server
@@ -96,6 +72,49 @@ class Field extends Component {
 	handleChange(event) {
 		this.setState({value: event.target.value});
 	}
+
+
+	/**
+	 * Renders view based on field.type passed to props
+	 * @memberof components/Field#
+	 */
+	render() {
+		return (
+			<div className="field">
+				<span>{this.props.field.name}</span>
+
+				{ this.props.field.type === 'textarea'
+					? <textarea value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} ></textarea>
+					: null }
+
+				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password'
+					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
+					: null }
+
+				{ this.props.field.type === 'singleImage'
+					? (
+						<div>
+							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*" disablePreview={true}>
+								<div>{this.state.src? 'Edit image' : 'Upload your image here'}</div>
+							</Dropzone>
+							{this.state.src
+								 ? <div>
+								 <Cropper style={{ height: '100%', width: '100%' }} preview=".img-preview" src={this.state.src}
+								 	ref={cropper => { this.cropper = cropper; }} aspectRatio={1}
+									background={false} movable={false} rotatable={false} scalable={false} zoomable={false}/>
+								 <div className="img-preview" style={{width: 300, height: 300, transform: "none !important"}} />
+								 </div>
+								 : null}
+						</div>
+					)
+					: null }
+
+				{ this.props.field.instructions
+					? <span className="instructions">{this.props.field.instructions}</span>
+					: null }
+			</div>
+		);
+  	}
 
 }
 

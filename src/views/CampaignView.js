@@ -81,22 +81,24 @@ class CampaignView extends Component {
 			<div>
 				<div className="heading">
 					{ this.state.campaign
-						? <div className="profileHeading">
-							<h1>{this.state.campaign.name}</h1>
-							<p>{this.state.campaign.description}</p>
-						</div>
-						: <div className="loading">Loading Campaign</div> }
-					{ Authentication.status() === Authentication.USER
-		          ? <Link to={'/postCreate/' + this.props.match.params.guid} >
-									<p>Create a post for this campaign</p>
-							</Link>
-							: null }
+						? <div className="Campaign">
+								<div className="profileHeading">
+									<h1>{this.state.campaign.name}</h1>
+									<p>{this.state.campaign.description}</p>
+									{ Authentication.status() === Authentication.USER
+						          ? <Link to={'/postCreate/' + this.props.match.params.guid} >
+													<p>Create a post for this campaign</p>
+											</Link>
+											: null }
 
-					{this.state.posts[0]
-						?	this.state.posts.sort(this.compare).map((post, index) => {
-							return <Post post={post} key={index}/>
-						})
-						: null }
+									{this.state.posts[0]
+										?	this.state.posts.sort(this.compare).map((post, index) => {
+											return <Post post={post} key={index}/>
+										})
+										: null }
+								</div>
+						</div>
+						: <div className="loading">Loading...</div> }
 				</div>
 			</div>
 		);
@@ -116,7 +118,7 @@ class CampaignView extends Component {
 		this.setState({
 			posts: posts
 		});
-	}  
+	}
 }
 
 export default CampaignView;

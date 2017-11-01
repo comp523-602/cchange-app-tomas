@@ -1,6 +1,7 @@
 /** @namespace modules/FormConfigs */
 
 import FieldConfigs from './FieldConfigs';
+import Authentication from './../modules/Authentication';
 
 /*
 form config object:
@@ -142,7 +143,7 @@ var FormConfigs = {
 			title: 'Make a post for this campaign',
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
-				image: FieldConfigs.singleImage('Logo'),
+				image: FieldConfigs.singleImage('Image'),
 			},
 			address: 'post.create',
 			base: function(ref) {
@@ -165,13 +166,11 @@ var FormConfigs = {
 			title: 'Edit your post',
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
-				image: FieldConfigs.singleImage('Logo'),
 			},
 			address: 'post.edit',
 			base: function(ref) {
 				return {
 					'caption': ref.caption.state.value,
-					'image': ref.image.state.value,
 					'post': postGUID,
 				}
 			}

@@ -4,6 +4,8 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Moment from 'moment';
+import Authentication from './../modules/Authentication';
+import { Link } from 'react-router-dom';
 
 class Post extends Component {
 
@@ -56,14 +58,24 @@ class Post extends Component {
      render() {
          return(
             <div className="item post row">
-                {this.props.post.image
-                    ? <img src={this.props.post.image} />
-                    : null}
-                <div className="info">
-                    <h3>Campaign: {this.state.campaign.name}</h3>
-                    <h3>Post: {this.props.post.caption}</h3>
-                    <h3>User: {this.state.user.name}, {Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
-                </div>
+                {this.props.post.image && this.state.campaign.name && this.state.user.name
+                  ? <div>
+                      <img src={this.props.post.image} />
+                      <div className="info">
+                          <Link to={"/campaign/" + this.props.post.campaign} >
+                            <h3>Campaign: {this.state.campaign.name}</h3>
+                          </Link>
+                          <h3>Post: {this.props.post.caption}</h3>
+                          <Link to={"/user/" + this.props.post.user} >
+                            <h3>User: {this.state.user.name}</h3>
+                          </Link>
+                          <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
+                      </div>
+                      { Authentication.getUser().guid === this.props.post.user
+                          ? <p>Edit Post</p>
+                          : null }
+                    </div>
+                  : <div className="loading">Loading Post...</div> }
             </div>
          )
      }
