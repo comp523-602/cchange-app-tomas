@@ -93,6 +93,8 @@ class Field extends Component {
 					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
 					: null }
 
+				
+
 				{ this.props.field.type === 'singleImageCrop'
 					? (
 						<div>
