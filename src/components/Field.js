@@ -70,6 +70,8 @@ class Field extends Component {
 	 * @memberof components/Field#
 	 */
 	handleChange(event) {
+		event.preventDefault();
+
 		this.setState({value: event.target.value});
 	}
 
@@ -91,7 +93,7 @@ class Field extends Component {
 					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
 					: null }
 
-				{ this.props.field.type === 'singleImage'
+				{ this.props.field.type === 'singleImageCrop'
 					? (
 						<div>
 							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*" disablePreview={true}>
