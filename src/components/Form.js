@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import Field from './Field';
 import Requests from './../modules/Requests';
+import request from 'superagent';
 import Validation from './../modules/Validation';
 
 class Form extends Component {
@@ -35,7 +36,6 @@ class Form extends Component {
 				<Field field={this.props.form.fields[key]} key={key} ref={key} />
 			);
 		}
-
 		// Render view
 		return (
 			<div className="row">
@@ -78,27 +78,63 @@ class Form extends Component {
 		// Initialize requst address
 		var address = this.props.form.address;
 
+		console.log(this.refs);
+
 		// Initialize request body
 		var body = this.props.form.base(this.refs);
 
 		// Save reference to component
 		var self = this;
 
-		// Make request
-		Requests.makeRequest(address, body, function (error, response) {
-			if (error) {
-				self.setState({
-					buttonText: 'Submit',
-					errorMessage: response.message,
-				});
-			} else {
-				self.setState({
-					buttonText: 'Submit',
-					errorMessage: null,
-				});
-				if (self.props.onSuccess) self.props.onSuccess(response);
-			}
-		})
+
+		if (this.props.form.fields.image && this.props.form.fields.image.type === "singleImageCrop") {
+			request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
+					 .field('upload_preset', 'kajpdwj4')
+					 .field('file', this.props.form.fields.image.value)
+			 .end((err, response) => {
+
+				 if (err) {
+					 self.setState({
+						 buttonText: 'Submit',
+						 errorMessage: response.message,
+					 });
+				 } else {
+		 				body.image = response.body.secure_url;
+
+					 	// Make request
+						Requests.makeRequest(address, body, function (error, response) {
+						 if (error) {
+							 self.setState({
+								 buttonText: 'Submit',
+								 errorMessage: response.message,
+							 });
+						 } else {
+							 self.setState({
+								 buttonText: 'Submit',
+								 errorMessage: null,
+							 });
+							 if (self.props.onSuccess) self.props.onSuccess(response);
+						 }
+					 });
+					}
+ 				})
+
+		} else {
+			Requests.makeRequest(address, body, function (error, response) {
+				if (error) {
+					self.setState({
+						buttonText: 'Submit',
+						errorMessage: response.message,
+					});
+				} else {
+					self.setState({
+						buttonText: 'Submit',
+						errorMessage: null,
+					});
+					if (self.props.onSuccess) self.props.onSuccess(response);
+				}
+			})
+		}
 	}
 }
 

@@ -33,6 +33,15 @@ var FieldConfigs = {
 
 	/**
 	 * @memberof modules/FieldConfigs
+	 * @param {String} name name of field
+	 * @return {Object} Image upload field configuration object with cropping
+	 */
+	singleImageCrop: function (name) {
+		return {name: name, type: 'singleImageCrop', value: null};
+	},
+
+	/**
+	 * @memberof modules/FieldConfigs
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Email field configuration object
 	 */

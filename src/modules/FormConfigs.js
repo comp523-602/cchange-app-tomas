@@ -143,13 +143,13 @@ var FormConfigs = {
 			title: 'Make a post for this campaign',
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
-				image: FieldConfigs.singleImage('Image'),
+				image: FieldConfigs.singleImageCrop('Image'),
 			},
 			address: 'post.create',
 			base: function(ref) {
 				return {
 					'caption': ref.caption.state.value,
-					'image': ref.image.state.value,
+					'image': null,
 					'campaign': campaignGUID,
 				}
 			}

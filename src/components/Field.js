@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'react-cropper';
-import request from 'superagent';
 
 class Field extends Component {
 
@@ -22,48 +21,34 @@ class Field extends Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.onImageDrop = this.onImageDrop.bind(this);
+		this.setCroppedImage = this.setCroppedImage.bind(this);
 	}
 
 	/**
-	 * Passed to components/Form to be executed on successful request
+	 * Handles flow of image upload value setting
 	 * @memberof components/Field#
 	 */
 	onImageDrop(files) {
-		const reader = new FileReader();
-		reader.onload = () => {
-			this.setState({ src: reader.result });
-		};
-		reader.readAsDataURL(files[0]);
-    this.handleImageUpload(files[0]);
-    }
+		if (this.props.field.type === "singleImageCrop") {
 
+			const reader = new FileReader();
+			reader.onload = () => {
+				this.setState({ src: reader.result });
+			};
+			reader.readAsDataURL(files[0]);
+		} else
+			this.setState({ value: files[0]});
+  }
 
-    /**
-     * Makes the post request to to the cloudinary server
-     * Success: updates field value with imageURL
-     * Error: print error message to console
+	/**
+	 * Sets value to cropped image
 	 * @memberof components/Field#
-     * @param {*} file
-     */
-    handleImageUpload(file) {
-	    request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
-	         .field('upload_preset', 'kajpdwj4')
-	         .field('file', file)
-			 .end((err, response) => {
-
-				// Handle image errors
-	        	if (err) console.error(err);
-
-				// Get URL from Cloudinary
-				var imageURL = response.body.secure_url;
-
-				// Update value with image URL
-				this.setState({
-					value: imageURL
-				});
-
-	    	});
-    }
+	 */
+	 setCroppedImage() {
+		 console.log("called");
+		//  this.setState({ value: this.cropper.getCroppedCanvas() });
+		console.log(this.refs);
+	 }
 
 	/**
 	 * Watches field changes, updates state
@@ -71,7 +56,6 @@ class Field extends Component {
 	 */
 	handleChange(event) {
 		event.preventDefault();
-
 		this.setState({value: event.target.value});
 	}
 
@@ -93,20 +77,33 @@ class Field extends Component {
 					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
 					: null }
 
-				
+				{ this.props.field.type === 'singleImage'
+					? (
+						<div>
+							{ this.state.value
+								? <img src={this.state.value} className="uploadedImage" alt="Uploaded" />
+								: null }
+							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*">
+								<div>Upload your image here</div>
+							</Dropzone>
+						</div>
+					)
+					: null }
 
 				{ this.props.field.type === 'singleImageCrop'
 					? (
 						<div>
-							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*" disablePreview={true}>
+							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*" disablePreview={true} onChange={this.hand} >
 								<div>{this.state.src? 'Edit image' : 'Upload your image here'}</div>
 							</Dropzone>
 							{this.state.src
 								 ? <div>
+								 <span>Crop your image</span>
 								 <Cropper style={{ height: '100%', width: '100%' }} preview=".img-preview" src={this.state.src}
-								 	ref={cropper => { this.cropper = cropper; }} aspectRatio={1}
+								 	ref="cropper" aspectRatio={1} guides={false} ready={this.setCroppedImage()} onChange={this.setCroppedImage()}
 									background={false} movable={false} rotatable={false} scalable={false} zoomable={false}/>
-								 <div className="img-preview" style={{width: 300, height: 300, transform: "none !important"}} />
+								 <span>Preview</span>
+								 <div className="img-preview" style={{width: 300, height: 300, overflow: 'hidden'}} />
 								 </div>
 								 : null}
 						</div>
@@ -117,7 +114,7 @@ class Field extends Component {
 					? <span className="instructions">{this.props.field.instructions}</span>
 					: null }
 			</div>
-		);
+			);
   	}
 
 }

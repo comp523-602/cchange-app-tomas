@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Post from './../components/Post';
-import FormConfigs from './../modules/FormConfigs';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
 
