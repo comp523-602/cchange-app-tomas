@@ -78,19 +78,17 @@ class Form extends Component {
 		// Initialize requst address
 		var address = this.props.form.address;
 
-		console.log(this.refs);
-
 		// Initialize request body
 		var body = this.props.form.base(this.refs);
 
 		// Save reference to component
 		var self = this;
 
-
-		if (this.props.form.fields.image && this.props.form.fields.image.type === "singleImageCrop") {
+		if (this.refs.image &&
+			((this.refs.image.props.field.type === "singleImageCrop" && this.refs.image.refs.cropper.getCroppedCanvas()) || (this.refs.image.props.field.type === "singleImage") && this.refs.value)) {
 			request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
 					 .field('upload_preset', 'kajpdwj4')
-					 .field('file', this.props.form.fields.image.value)
+					 .field('file', this.refs.image.props.field.type === "singleImageCrop"? this.refs.image.refs.cropper.getCroppedCanvas().toDataURL() : this.refs.image.props.field.value)
 			 .end((err, response) => {
 
 				 if (err) {
@@ -99,6 +97,7 @@ class Form extends Component {
 						 errorMessage: response.message,
 					 });
 				 } else {
+					 console.log(response.body.secure_url);
 		 				body.image = response.body.secure_url;
 
 					 	// Make request

@@ -21,7 +21,6 @@ class Field extends Component {
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.onImageDrop = this.onImageDrop.bind(this);
-		this.setCroppedImage = this.setCroppedImage.bind(this);
 	}
 
 	/**
@@ -39,16 +38,6 @@ class Field extends Component {
 		} else
 			this.setState({ value: files[0]});
   }
-
-	/**
-	 * Sets value to cropped image
-	 * @memberof components/Field#
-	 */
-	 setCroppedImage() {
-		 console.log("called");
-		//  this.setState({ value: this.cropper.getCroppedCanvas() });
-		console.log(this.refs);
-	 }
 
 	/**
 	 * Watches field changes, updates state
@@ -96,16 +85,15 @@ class Field extends Component {
 							<Dropzone onDrop={this.onImageDrop.bind(this)} multiple={false} accept="image/*" disablePreview={true} onChange={this.hand} >
 								<div>{this.state.src? 'Edit image' : 'Upload your image here'}</div>
 							</Dropzone>
-							{this.state.src
-								 ? <div>
+							{this.state.src?
+								<div>
 								 <span>Crop your image</span>
 								 <Cropper style={{ height: '100%', width: '100%' }} preview=".img-preview" src={this.state.src}
-								 	ref="cropper" aspectRatio={1} guides={false} ready={this.setCroppedImage()} onChange={this.setCroppedImage()}
+								 	ref="cropper" aspectRatio={1} guides={false}
 									background={false} movable={false} rotatable={false} scalable={false} zoomable={false}/>
 								 <span>Preview</span>
 								 <div className="img-preview" style={{width: 300, height: 300, overflow: 'hidden'}} />
-								 </div>
-								 : null}
+								 </div> : null}
 						</div>
 					)
 					: null }
