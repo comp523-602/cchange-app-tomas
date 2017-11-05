@@ -16,6 +16,7 @@ class CharityView extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			'user': Authentication.getUser(),
 			'charity': null,
 			'editLink': null,
 			'profilepictureURL': null,
@@ -89,7 +90,7 @@ class CharityView extends Component {
 								</div>
 							)
 							: <div className="loading">Loading...</div> }
-						{ Authentication.getUser().charity === this.props.match.params.guid
+						{ this.state.user && this.state.user.charity === this.props.match.params.guid
 							&& this.state.editLink
 							? <div className="editLinks">
 									<Link to="/campaignCreate">Create a Campaign</Link>
