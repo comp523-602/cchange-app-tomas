@@ -96,14 +96,14 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name', 'Enter new charity name'),
 				description: FieldConfigs.textarea('Description', 'Enter new charity description'),
-				logo: FieldConfigs.singleImage('Logo'),
+				image: FieldConfigs.singleImageCrop('Logo'),
 			},
 			address: 'charity.edit',
 			base: function (ref) {
 				return {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
-					'logo': ref.logo.state.value,
+					'logo': ref.image.state.value,
 				}
 			},
 		};

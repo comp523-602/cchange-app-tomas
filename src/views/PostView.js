@@ -82,6 +82,7 @@ class PostView extends Component {
 			 var post = body.post;
 			 if (!donation || !post) return;
 			 var donations = self.state.donations;
+			 if (!donations) donations = [];
 			 donations.push(donation);
 			 self.setState({
 				 'donations': donations,
