@@ -6,7 +6,7 @@ import Requests from './../modules/Requests';
 import Moment from 'moment';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
-
+import $ from 'jquery';
 class Post extends Component {
 
     constructor(props) {
@@ -15,7 +15,7 @@ class Post extends Component {
             'campaign': [],
             'user': []
 	};
-
+    this.editPost = this.editPost.bind(this);
     }
     /**
      * Gets a Post based on a campaign and gets the user's name
@@ -63,22 +63,24 @@ class Post extends Component {
                       <img src={this.props.post.image} />
                       <div className="info">
                           <Link to={"/campaign/" + this.props.post.campaign} >
-                            <h3>Campaign: {this.state.campaign.name}</h3>
+                            <h3 className="campaignText">Campaign: {this.state.campaign.name}</h3>
                           </Link>
-                          <h3>Post: {this.props.post.caption}</h3>
+                          <h3 className="captionText">Post: {this.props.post.caption}</h3>
                           <Link to={"/user/" + this.props.post.user} >
-                            <h3>User: {this.state.user.name}</h3>
+                            <h3 className="userText">User: {this.state.user.name}</h3>
                           </Link>
                           <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
-                      </div>
-                      { Authentication.getUser().guid === this.props.post.user
-                          ? <p>Edit Post</p>
-                          : null }
+                         { Authentication.getUser().guid === this.props.post.user
+                            ? <button onClick = {this.editPost}>Edit post</button>
+                            : null }
+                        </div>
                     </div>
                   : <div className="loading">Loading Post...</div> }
             </div>
          )
+     };
+     editPost() {
+         
      }
 }
-
 export default Post;

@@ -115,6 +115,7 @@ class CampaignView extends Component {
 			posts: posts
 		});
 	}
+	
 }
 
 export default CampaignView;
