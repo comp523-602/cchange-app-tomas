@@ -48,8 +48,8 @@ class Post extends Component {
 	          // Add campaign to state
             this.setState({
 		        'user': user
-	      });
-	})
+	      	});
+		})
     }
     /**
      * Renders a post with its image, caption, the campaign's name, and the user who posted it
@@ -65,15 +65,18 @@ class Post extends Component {
                           <Link to={"/campaign/" + this.props.post.campaign} >
                             <h3 className="campaignText">Campaign: {this.state.campaign.name}</h3>
                           </Link>
-                          <h3 className="captionText">Post: {this.props.post.caption}</h3>
+						  <Link to={"/post/" + this.props.post.guid} >
+                          	<h3>Post: {this.props.post.caption}</h3>
+						  </Link>
                           <Link to={"/user/" + this.props.post.user} >
                             <h3 className="userText">User: {this.state.user.name}</h3>
                           </Link>
                           <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
-                         { Authentication.getUser().guid === this.props.post.user
-                            ? <button onClick = {this.editPost}>Edit post</button>
-                            : null }
-                        </div>
+						  <h3>{this.props.post.donations.length} donations</h3>
+                      </div>
+                      { Authentication.getUser().guid === this.props.post.user
+                          ? <p>Edit Post</p>
+                          : null }
                     </div>
                   : <div className="loading">Loading Post...</div> }
             </div>

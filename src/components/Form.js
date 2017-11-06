@@ -99,6 +99,7 @@ class Form extends Component {
 				 } else {
 					 console.log(response.body.secure_url);
 		 				body.image = response.body.secure_url;
+						body.logo = response.body.secure_url;
 
 					 	// Make request
 						Requests.makeRequest(address, body, function (error, response) {

@@ -29,7 +29,6 @@ class Field extends Component {
 	 */
 	onImageDrop(files) {
 		if (this.props.field.type === "singleImageCrop") {
-
 			const reader = new FileReader();
 			reader.onload = () => {
 				this.setState({ src: reader.result });
@@ -47,7 +46,6 @@ class Field extends Component {
 		event.preventDefault();
 		this.setState({value: event.target.value});
 	}
-
 
 	/**
 	 * Renders view based on field.type passed to props

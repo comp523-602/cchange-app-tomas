@@ -45,7 +45,7 @@ class CharityEditView extends Component {
 			var charityEditForm = FormConfigs.charityEdit();
 			charityEditForm.fields.name.value = charity.name;
 			charityEditForm.fields.description.value = charity.description;
-			charityEditForm.fields.logo.value = charity.logo;
+			charityEditForm.fields.image.value = charity.logo;
 
 			// Add charity to state
 			self.setState({
