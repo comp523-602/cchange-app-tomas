@@ -1,3 +1,4 @@
+/** @namespace views/PostsView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -12,12 +13,12 @@ class PostsView extends Component {
 	 */
 
 	 constructor(props) {
-		 super(props) 
+		 super(props)
 			 this.state = {
 				 'posts': []
 			 };
 	}
-	
+
 	/**
 	 * Gets list of posts
 	 * @memberof views/PostView#
@@ -34,7 +35,7 @@ class PostsView extends Component {
 			});
 		}
 	)}
-	 
+
 	/**
 	 * Renders all posts based on the chosen criteria
 	 * @memberof views/PostsView#
@@ -47,7 +48,7 @@ class PostsView extends Component {
 					? this.state.posts.map((post, index) => {
 							return <Post post={post} key={index}/>
 					})
-					: <div className="loading">Loading...</div> }				
+					: <div className="loading">Loading...</div> }
 			</div>
 		);
   	}

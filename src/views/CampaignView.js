@@ -69,8 +69,8 @@ class CampaignView extends Component {
 		this.componentWillMount(newProps);
 	}
 	/**
-	 * Renders the campaign information and renders
-	 * All of the posts made to this campaign
+	 * Renders the campaign information and renders all of the posts made to this campaign
+	 * @memberof views/CampaignView#
  	*/
 	render() {
 		var params = {
@@ -99,6 +99,11 @@ class CampaignView extends Component {
 			</div>
 		);
 	}
+
+	/**
+	 * Sorting function for campaign posts
+	 * @memberof views/CampaignView#
+	*/
 	compare (a, b) {
 		if (a.dateCreated < b.dateCreated) {
 			return 1;
@@ -108,13 +113,14 @@ class CampaignView extends Component {
 		}
 		return 0;
 	}
-	onSuccess (response) {
-		var posts = this.state.posts;
-		posts.push(response.post)
-		this.setState({
-			posts: posts
-		});
-	}
+
+	// onSuccess (response) {
+	// 	var posts = this.state.posts;
+	// 	posts.push(response.post)
+	// 	this.setState({
+	// 		posts: posts
+	// 	});
+	// }
 }
 
 export default CampaignView;
