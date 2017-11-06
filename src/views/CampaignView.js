@@ -21,7 +21,7 @@ class CampaignView extends Component {
 			'campaign': null,
 			'posts': [],
 		};
-		this.onSuccess = this.onSuccess.bind(this);
+		//this.onSuccess = this.onSuccess.bind(this);
 		this.compare = this.compare.bind(this)
 	}
 
