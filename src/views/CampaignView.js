@@ -7,7 +7,6 @@ import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
 
-
 class CampaignView extends Component {
 
 	/**
@@ -85,6 +84,14 @@ class CampaignView extends Component {
 							<p>{this.state.campaign.description}</p>
 						</div>
 						: <div className="loading">Loading Campaign</div> }
+					<Link to={'/campaignEdit/' + this.props.match.params.guid} >
+						{this.state.campaign
+						?<p className="campaignName">
+							Edit {this.state.campaign.name}
+						</p>
+						: <p className="loading"></p> }
+						{console.log(this.state.campaign)}
+						</Link>
 					{ Authentication.status() === Authentication.USER
 		          ? <Link to={'/postCreate/' + this.props.match.params.guid} >
 									<p>Create a post for this campaign</p>

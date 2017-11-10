@@ -108,6 +108,27 @@ var FormConfigs = {
 			},
 		};
 	},
+	
+	/**
+	 * @memberof modules/FormConfigs
+	 * @return {Object} Campaign edit form configuration object
+	 */
+	campaignEdit: function(GUID) {
+		return {
+			title: 'Edit Campaign',
+			fields: {
+				name: FieldConfigs.text('Name', 'Enter new campaign name'),
+				description: FieldConfigs.textarea('Description', 'Enter new campaign description'),
+			},
+			address: 'campaign.edit',
+			base: function (ref) {
+				return {
+					'name': ref.name.state.value,
+					'description': ref.description.state.value,
+				}
+			},
+		};
+	},
 
 	/**
 	 * @memberof modules/FormConfigs
@@ -140,7 +161,7 @@ var FormConfigs = {
 	 */
 	postCreate: function(campaignGUID) {
 		return {
-			title: 'Make a post for this campaign',
+			title: 'Make a post for ', //campaign name is appended in ../views/PostCreateView.js
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
 				image: FieldConfigs.singleImageCrop('Image'),

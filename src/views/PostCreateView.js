@@ -2,9 +2,11 @@
 
 // Import dependencies
 import React, { Component } from 'react';
+import Requests from './../modules/Requests';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 import Authentication from './../modules/Authentication';
+import $ from 'jquery';
 
 class PostCreateView extends Component {
 
@@ -16,6 +18,7 @@ class PostCreateView extends Component {
     super(props);
     this.state = {
       postCreateForm: null,
+      campaign: null
     };
     this.onSuccess = this.onSuccess.bind(this);
   }
@@ -29,7 +32,14 @@ class PostCreateView extends Component {
 
     // Set up campaign create form
     var postCreateForm = FormConfigs.postCreate(campaignGUID);
-
+    Requests.makeRequest('campaign', {
+      'campaign': campaignGUID
+    }, (error, body) => {
+        this.setState({
+          'campaign': body.campaign
+        });
+        $("h2").append(this.state.campaign.name);
+    })
     // Add campaign form to state
     this.setState({
       'postCreateForm': postCreateForm,
@@ -43,6 +53,7 @@ class PostCreateView extends Component {
   render() {
     return (
       <div className="container">
+        {console.log(this.state.campaign)}
         {Authentication.status() === Authentication.USER
           ? this.state.postCreateForm
             ? <Form form={this.state.postCreateForm} onSuccess={this.onSuccess} />
@@ -58,8 +69,11 @@ class PostCreateView extends Component {
   * @memberof views/PostCreateView#
   */
   onSuccess (response) {
-	   var campaign = response.campaign;
-     window.location.href = '/campaign/' + response.post.campaign;
+     var campaign = response.campaign;
+     $(".container").append("<p>Post created!</p>");
+     window.setTimeout(function(){
+      window.location.href = '/campaign/' + response.post.campaign;      
+     }, 750);
   }
 }
 

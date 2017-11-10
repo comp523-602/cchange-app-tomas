@@ -60,19 +60,24 @@ class Post extends Component {
             <div className="item post row">
                 {this.props.post.image && this.state.campaign.name && this.state.user.name
                   ? <div>
-                      <img src={this.props.post.image} />
+                      <Link to={"/post/" + this.props.post.guid}>
+                        <img src={this.props.post.image} />
+                        </Link>
                       <div className="info">
                           <Link to={"/campaign/" + this.props.post.campaign} >
                             <h3 className="campaignText">Campaign: {this.state.campaign.name}</h3>
                           </Link>
-						  <Link to={"/post/" + this.props.post.guid} >
+
+						              <Link to={"/post/" + this.props.post.guid} >
                           	<h3>Post: {this.props.post.caption}</h3>
-						  </Link>
+						              </Link>
+
                           <Link to={"/user/" + this.props.post.user} >
                             <h3 className="userText">User: {this.state.user.name}</h3>
                           </Link>
+
                           <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
-						  <h3>{this.props.post.donations.length} donations</h3>
+						              <h3>{this.props.post.donations.length} donations</h3>
                       </div>
                       { Authentication.getUser().guid === this.props.post.user
                           ? <p>Edit Post</p>

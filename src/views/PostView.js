@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
 import Campaign from './../components/Campaign';
 import Moment from 'moment';
-
+import $ from 'jquery';
 class PostView extends Component {
 
 	/**
@@ -99,16 +99,16 @@ class PostView extends Component {
 	render() {
 		return (
 			<div className="container">
-				{ this.state.post
+				{ this.state.post && this.state.post.donations.length != null
 					? (
 						<div>
 							<h1>{this.state.post.caption}</h1>
 							<h3>{this.state.post.donations.length} donations</h3>
 							<img src={this.state.post.shareableImage} alt={this.state.post.caption} /><br />
-							<div onClick={this.donate}><b>Donate 5 cents</b></div><br /><br />
+							<div onClick={this.donate}><input type="submit" value = "Donate 5¢"/></div><br /><br />
 						</div>
 					)
-					: <div className="loading">Loading...</div> }
+					: <div className="loading">Loading...</div>}
 				{ this.state.donations
 					? (
 						this.state.donations.sort(function (a, b) {return b.dateCreated-a.dateCreated}).map((donation, index) => {
@@ -117,7 +117,7 @@ class PostView extends Component {
 							</div>
 						})
 					)
-					: "No donations" }
+					: "" }
 			</div>
 		)
   	}

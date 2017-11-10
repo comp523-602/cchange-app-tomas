@@ -50,7 +50,7 @@ class CharityEditView extends Component {
 			// Add charity to state
 			self.setState({
 				'charityEditForm': charityEditForm,
-			})
+			});
 		})
 	}
 
