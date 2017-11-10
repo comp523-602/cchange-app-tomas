@@ -35,7 +35,7 @@ class CampaignEditView extends Component {
           }, function(error, body) {
               var campaign = body.campaign;
 
-              var campaignEditForm = FormConfigs.campaignEdit();
+              var campaignEditForm = FormConfigs.campaignEdit(campaignGUID);
               campaignEditForm.fields.name.value = campaign.name;
               campaignEditForm.fields.description.value = campaign.description;
 

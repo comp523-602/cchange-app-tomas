@@ -123,6 +123,7 @@ var FormConfigs = {
 			address: 'campaign.edit',
 			base: function (ref) {
 				return {
+					'campaign': GUID,
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
 				}
