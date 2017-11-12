@@ -6,6 +6,9 @@ import Requests from './../modules/Requests';
 import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
+import FormConfigs from './../modules/FormConfigs';
+import Form from './../components/Form';
+import $ from 'jquery';
 
 class CampaignView extends Component {
 
@@ -45,7 +48,6 @@ class CampaignView extends Component {
 			// Get campaign from response
 			var campaign = body.campaign;
 			if (!campaign) return;
-
 			// Add campaign to state
 			this.setState({
 				'campaign': campaign,
@@ -84,19 +86,23 @@ class CampaignView extends Component {
 							<p>{this.state.campaign.description}</p>
 						</div>
 						: <div className="loading">Loading Campaign</div> }
-					<Link to={'/campaignEdit/' + this.props.match.params.guid} >
-						{this.state.campaign
-						?<p className="campaignName">
-							Edit {this.state.campaign.name}
-						</p>
-						: <p className="loading"></p> }
-						{console.log(this.state.campaign)}
-						</Link>
-					{ Authentication.status() === Authentication.USER
-		          ? <Link to={'/postCreate/' + this.props.match.params.guid} >
-									<p>Create a post for this campaign</p>
-							</Link>
-							: null }
+						{ this.state.campaign && Authentication.status() == Authentication.CHARITY && Authentication.getUser().charity === this.state.campaign.charity
+							?	<Link to={'/campaignEdit/' + this.props.match.params.guid} >
+									<p className="campaignName">
+										Edit {this.state.campaign.name}
+									</p>
+								</Link>
+							: null}
+						{ this.state.campaign && Authentication.status() == Authentication.USER
+							? <div>
+									<div className="donation">
+										<Form form={FormConfigs.donation(this.state.campaign.name, 'campaign', this.props.match.params.guid)} onSuccess={this.onDonate} />
+									</div>
+									<Link to={'/postCreate/' + this.props.match.params.guid} >
+											<p>Create a post for this campaign</p>
+									</Link>
+								</div>
+							: null}
 					{this.state.posts[0]
 						?	this.state.posts.sort(this.compare).map((post, index) => {
 							return <Post post={post} key={index}/>
@@ -123,10 +129,19 @@ class CampaignView extends Component {
 
 	onSuccess (response) {
   	var posts = this.state.posts;
-	posts.push(response.post)
-	this.setState({
+		posts.push(response.post)
+		this.setState({
 			posts: posts
  		});
+	}
+
+	/**
+	* Passed to components/Form to be exeuted on successful request
+	* @memberof views/CampaignView#
+	*/
+	onDonate (response) {
+		 var amount = response.donation.amount;
+		 $(".donation").append("<p>You just donated $" + amount + "!</p>");
 	}
 }
 

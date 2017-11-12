@@ -9,11 +9,12 @@ import { Link } from 'react-router-dom';
 import $ from 'jquery';
 class Post extends Component {
 
-    constructor(props) {
+  constructor(props) {
 	super(props)
-	this.state = {
+  this.state = {
             'campaign': [],
-            'user': []
+            'user': [],
+            'charity': [],
 	};
     this.editPost = this.editPost.bind(this);
     }
@@ -49,7 +50,20 @@ class Post extends Component {
             this.setState({
 		        'user': user
 	      	});
-		})
+	      })
+
+        Requests.makeRequest('charity', {
+          'charity': this.props.post.charity
+        }, (error, body) => {
+
+            // Get charity from response
+            var charity = body.charity;
+            if (!charity) return;
+            // Add charity to state
+            this.setState({
+            'charity': charity
+          });
+        })
     }
     /**
      * Renders a post with its image, caption, the campaign's name, and the user who posted it
@@ -58,7 +72,7 @@ class Post extends Component {
      render() {
          return(
             <div className="item post row">
-                {this.props.post.image && this.state.campaign.name && this.state.user.name
+                {this.props.post && this.props.post.image && this.state.campaign.name && this.state.user.name
                   ? <div>
                       <Link to={"/post/" + this.props.post.guid}>
                         <img src={this.props.post.image} />
@@ -66,6 +80,10 @@ class Post extends Component {
                       <div className="info">
                           <Link to={"/campaign/" + this.props.post.campaign} >
                             <h3 className="campaignText">Campaign: {this.state.campaign.name}</h3>
+                          </Link>
+
+                          <Link to={"/charity/" + this.props.post.charity} >
+                            <h3 className="charityText">Charity: {this.state.charity.name}</h3>
                           </Link>
 
 						              <Link to={"/post/" + this.props.post.guid} >
@@ -79,7 +97,7 @@ class Post extends Component {
                           <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
 						              <h3>{this.props.post.donations.length} donations</h3>
                       </div>
-                      { Authentication.getUser().guid === this.props.post.user
+                      { Authentication.getUser() && Authentication.getUser().guid === this.props.post.user
                           ? <p>Edit Post</p>
                           : null }
                     </div>
@@ -88,7 +106,7 @@ class Post extends Component {
          )
      };
      editPost() {
-         
+
      }
 }
 export default Post;

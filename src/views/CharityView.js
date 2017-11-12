@@ -6,6 +6,10 @@ import Requests from './../modules/Requests';
 import { Link } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
 import Campaign from './../components/Campaign';
+import FormConfigs from './../modules/FormConfigs';
+import Form from './../components/Form';
+import $ from 'jquery';
+
 
 class CharityView extends Component {
 
@@ -100,6 +104,11 @@ class CharityView extends Component {
 					</div>
 				</div>
 				<div className="container row">
+					{ this.state.charity && Authentication.status() == Authentication.USER
+						? <div className="donation">
+								<Form form={FormConfigs.donation(this.state.charity.name, 'charity', this.props.match.params.guid)} onSuccess={this.onDonate} />
+							</div>
+						: null}
 					{ this.state.campaigns
 						? this.state.campaigns.map((campaign, index) => {
 							return <Campaign campaign={campaign} key={index}/>
@@ -109,6 +118,15 @@ class CharityView extends Component {
 			</div>
 		)
   	}
+
+		/**
+		* Passed to components/Form to be exeuted on successful request
+		* @memberof views/CharityView#
+		*/
+		onDonate (response) {
+			 var amount = response.donation.amount;
+			 $(".donation").append("<p>You just donated " + amount + "!</p>");
+		}
 }
 
 export default CharityView;

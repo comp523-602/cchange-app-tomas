@@ -108,7 +108,7 @@ var FormConfigs = {
 			},
 		};
 	},
-	
+
 	/**
 	 * @memberof modules/FormConfigs
 	 * @return {Object} Campaign edit form configuration object
@@ -197,7 +197,29 @@ var FormConfigs = {
 				}
 			}
 		}
-	}
+	},
+
+	/**
+	 * @memberof modules/FormConfigs
+	 * @param {String} GUID
+	 * @return {Object} Donation form configuration object
+	 */
+	donation: function(name, type, GUID) {
+		return {
+			title: 'Donate to ' + name, //campaign or charity name is appended
+			fields: {
+				donation: FieldConfigs.donation('Amount', 'Enter a dollar amount'),
+			},
+			address: 'donation.create',
+			base: function(ref) {
+				var body = {
+					'amount': Number(ref.donation.state.value),
+				};
+				body[type] = GUID;
+				return body;
+			}
+		}
+	},
 };
 
 export default FormConfigs;

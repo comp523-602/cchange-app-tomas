@@ -64,6 +64,12 @@ class Field extends Component {
 					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
 					: null }
 
+					{ this.props.field.type === 'donation'
+					? <div>
+						<input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
+						</div>
+					: null }
+
 				{ this.props.field.type === 'singleImage'
 					? (
 						<div>
