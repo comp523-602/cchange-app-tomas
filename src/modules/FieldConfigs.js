@@ -57,7 +57,17 @@ var FieldConfigs = {
 	password: function (placeholder, instructions) {
 		return {name: 'Password', type: 'password', value: '', placeholder: placeholder,
 			instructions: instructions};
-	}
+	},
+
+	/**
+	 * @memberof modules/FieldConfigs
+	 * @param {String} placeholder Placeholder for field
+	 * @return {Object} Donation field configuration object
+	 */
+	donation: function (placeholder, instructions) {
+		return {name: 'Donation', type: 'donation', value: '', placeholder: placeholder,
+			instructions: instructions};
+	},
 };
 
 export default FieldConfigs;

@@ -53,7 +53,6 @@ class PostCreateView extends Component {
   render() {
     return (
       <div className="container">
-        {console.log(this.state.campaign)}
         {Authentication.status() === Authentication.USER
           ? this.state.postCreateForm
             ? <Form form={this.state.postCreateForm} onSuccess={this.onSuccess} />
@@ -72,7 +71,7 @@ class PostCreateView extends Component {
      var campaign = response.campaign;
      $(".container").append("<p>Post created!</p>");
      window.setTimeout(function(){
-      window.location.href = '/campaign/' + response.post.campaign;      
+      window.location.href = '/campaign/' + response.post.campaign;
      }, 750);
   }
 }

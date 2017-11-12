@@ -11,15 +11,22 @@ var Validation = {
 
 		// Get password fields
 		var passwordFields = [];
+		// Get donation field
+		var donationField;
 		for (var key in refs) {
 			var ref = refs[key];
 			var type = ref.props.field.type;
 			if (type === 'password') passwordFields.push(ref);
+			if (type === 'donation') donationField = ref;
 		}
 
 		// Check password fields
 		if (passwordFields.length === 2) {
 			if (!this.passwordMatch(passwordFields)) return "Passwords do not match";
+		}
+
+		if (donationField) {
+			if (!this.donationCheck(donationField)) return "Please enter a valid dollar amount";
 		}
 
 		return null;
@@ -36,6 +43,17 @@ var Validation = {
 		if (password === confirm) return true;
 		return false;
 	},
+
+	/**
+	 * @memberof modules/Validation
+	 * @param {ref} donationField donation field
+	 * @return {boolean} True if dollar amount matches regex
+	 */
+	donationCheck: function (donationField) {
+		if(donationField.state.value.match(/(^[0-9]+$)|(^\.[0-9]{2}$)|(^[0-9]+\.[0-9]{2}$)/)) {
+			return true;}
+		return false;
+	}
 };
 
 export default Validation;
