@@ -60,5 +60,8 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 .item .info p {line-height:20px; margin:0px;}
 
 button {
-	border:0px; background:#333; color:white; font-size:16px; align-self: left
+	border:0px; background:#333; color:white; font-size:12px; align-self: left
+}
+button:active {
+	transform: translateY(1px);
 }
