@@ -15,8 +15,9 @@ class Post extends Component {
             'campaign': [],
             'user': [],
             'charity': [],
+            'editing': false
 	};
-    this.editPost = this.editPost.bind(this);
+    this.editPost = this.editPost.bind(this, this.props.post.guid);
     }
     /**
      * Gets a Post based on a campaign and gets the user's name
@@ -83,30 +84,57 @@ class Post extends Component {
                           </Link>
 
                           <Link to={"/charity/" + this.props.post.charity} >
-                            <h3 className="charityText">Charity: {this.state.charity.name}</h3>
+                            <h3 className={"charityText_" + this.props.post.guid} >Charity: {this.state.charity.name}</h3>
                           </Link>
 
-						              <Link to={"/post/" + this.props.post.guid} >
-                          	<h3>Post: {this.props.post.caption}</h3>
-						              </Link>
-
+                          <h3 className={"postText_" + this.props.post.guid}>Post: {this.props.post.caption}</h3>
+						              
                           <Link to={"/user/" + this.props.post.user} >
-                            <h3 className="userText">User: {this.state.user.name}</h3>
+                            <h3 className={"userText_" + this.props.post.guid}>User: {this.state.user.name}</h3>
                           </Link>
 
                           <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
 						              <h3>{this.props.post.donations.length} donations</h3>
                       </div>
                       { Authentication.getUser() && Authentication.getUser().guid === this.props.post.user
-                          ? <p>Edit Post</p>
+                          ? <button id={"editPost_" + this.props.post.guid} onClick={() => {if(!this.state.editing){this.editPost(this.props.post.guid)}}}>Edit Post</button>
                           : null }
                     </div>
                   : <div className="loading">Loading Post...</div> }
             </div>
          )
      };
-     editPost() {
+     editPost(postguid) {
+          var userguid = Authentication.getUser();
+          //changes label to an editable text area        
+          //gets text and then sends changes to server
+          this.setState({
+            'editing': true
+          });
+          var editPostString;
+          debugger;
+          var previousString = $(".postText_" + postguid).text().substring(5,);
+          $(".postText_" + postguid).replaceWith("<textarea id=editPostTextArea_" + postguid + " + rows=3 cols = 35>");          
+          $("textarea").val(previousString); //put previous caption in textarea
+          $("#editPost_" + postguid).html("Done");            
 
-     }
+          $("#editPost_" + postguid).on('click', function() {  
+              editPostString = $("textarea").val();
+              Requests.makeRequest('post.edit', {
+                'post': postguid,
+                'caption': editPostString
+              }, (error, body) => {
+                //returns post object
+                var response = body.post;
+              });
+              $("#editPostTextArea_" + postguid).replaceWith("<h3 class = .postText_" + postguid + ">Post:" + editPostString + "</h3>");
+              $("#editPost_" + postguid).html("Edit Post");
+          });
+          console.log("about to set state");
+          this.setState({
+           'editing': false
+          });
+          return;
+    }
 }
 export default Post;
