@@ -105,44 +105,35 @@ class Post extends Component {
          )
      };
      editPost(postguid) {
-          console.log(this.state.user.guid);
-          console.log(this.props.post.guid);
           var userguid = Authentication.getUser();
           //changes label to an editable text area        
           //gets text and then sends changes to server
           this.setState({
             'editing': true
           });
+          var editPostString;
+          debugger;
+          var previousString = $(".postText_" + postguid).text().substring(5,);
           $(".postText_" + postguid).replaceWith("<textarea id=editPostTextArea_" + postguid + " + rows=3 cols = 35>");          
+          $("textarea").val(previousString); //put previous caption in textarea
           $("#editPost_" + postguid).html("Done");            
 
           $("#editPost_" + postguid).on('click', function() {  
-              var editPostString = $("textarea").val();
+              editPostString = $("textarea").val();
               Requests.makeRequest('post.edit', {
                 'post': postguid,
                 'caption': editPostString
               }, (error, body) => {
                 //returns post object
-                var response = body.post
-                if(!response) return;
+                var response = body.post;
               });
-              /**$.ajax({
-                type: "POST",
-                url: "http://api.cchange.ga/post.edit",
-                dataType: 'String',
-                headers: {
-                  "Authorization": userguid
-                },
-                data: '{"post":postguid, "caption":editPostString}',
-                success: function() {
-                  $("textarea").replaceWith("<h3 className=postText_" + postguid + ">" + editPostString + "</h3>")                    
-                }
-              })
-              */
+              $("#editPostTextArea_" + postguid).replaceWith("<h3 class = .postText_" + postguid + ">Post:" + editPostString + "</h3>");
+              $("#editPost_" + postguid).html("Edit Post");
           });
-            this.setState({
-              'editing': false
-            });
+          console.log("about to set state");
+          this.setState({
+           'editing': false
+          });
           return;
     }
 }
