@@ -35,6 +35,7 @@ class UserView extends Component {
 			this.setState({
 				'user': user,
 			});
+			console.log(user);
 		})
 
 		Requests.makeRequest('posts', {

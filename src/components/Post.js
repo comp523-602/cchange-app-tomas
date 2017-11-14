@@ -117,7 +117,9 @@ class Post extends Component {
 
                         <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
 					              <h3>{this.state.donations} donations</h3>
-                        <div onClick={this.donate}><button>Donate 5¢</button></div>
+                        {Authentication.status() === Authentication.USER
+                          ? <div onClick={this.donate}><button>Donate 5¢</button></div>
+                          : null}
                       </div>
                       { Authentication.getUser() && Authentication.getUser().guid === this.props.post.user
                           ? <button id={"editPost_" + this.props.post.guid} onClick={() => {if(!this.state.editing){this.editPost(this.props.post.guid)}}}>Edit Post</button>
