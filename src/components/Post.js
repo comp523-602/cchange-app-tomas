@@ -10,22 +10,23 @@ import $ from 'jquery';
 class Post extends Component {
 
   constructor(props) {
-	super(props)
-  this.state = {
-            'campaign': [],
-            'user': [],
-            'charity': [],
-            'editing': false
-	};
+  	super(props)
+    this.state = {
+      'campaign': [],
+      'user': [],
+      'charity': [],
+      'editing': false,
+      'donations': this.props.post.donations.length,
+  	};
     this.editPost = this.editPost.bind(this, this.props.post.guid);
-    }
+    this.donate = this.donate.bind(this);
+  }
     /**
      * Gets a Post based on a campaign and gets the user's name
      * who made the post
      * @memberof components/Post#
      */
     componentWillMount() {
-
         Requests.makeRequest('campaign', {
           'campaign': this.props.post.campaign
         }, (error, body) => {
@@ -66,6 +67,27 @@ class Post extends Component {
           });
         })
     }
+
+    /**
+     * Temporary donate function
+     * @memberof components/Post#
+     */
+     donate(event) {
+       var self = this;
+       Requests.makeRequest('donation.create', {
+         'post': self.props.post.guid,
+         'amount': 5,
+       }, function (error, body) {
+         var donation = body.donation;
+         var post = body.post;
+         if (!donation || !post) return;
+         self.setState({
+           'donations': self.state.donations + 1,
+         });
+       })
+
+     }
+
     /**
      * Renders a post with its image, caption, the campaign's name, and the user who posted it
      * @memberof components/Post#
@@ -77,24 +99,25 @@ class Post extends Component {
                   ? <div>
                       <Link to={"/post/" + this.props.post.guid}>
                         <img src={this.props.post.image} />
-                        </Link>
+                      </Link>
                       <div className="info">
-                          <Link to={"/campaign/" + this.props.post.campaign} >
-                            <h3 className="campaignText">Campaign: {this.state.campaign.name}</h3>
-                          </Link>
+                        <Link to={"/campaign/" + this.props.post.campaign} >
+                          <h3 className="campaignText">Campaign: {this.state.campaign.name}</h3>
+                        </Link>
 
-                          <Link to={"/charity/" + this.props.post.charity} >
-                            <h3 className={"charityText_" + this.props.post.guid} >Charity: {this.state.charity.name}</h3>
-                          </Link>
+                        <Link to={"/charity/" + this.props.post.charity} >
+                          <h3 className={"charityText_" + this.props.post.guid} >Charity: {this.state.charity.name}</h3>
+                        </Link>
 
-                          <h3 className={"postText_" + this.props.post.guid}>Post: {this.props.post.caption}</h3>
-						              
-                          <Link to={"/user/" + this.props.post.user} >
-                            <h3 className={"userText_" + this.props.post.guid}>User: {this.state.user.name}</h3>
-                          </Link>
+                        <h3 className={"postText_" + this.props.post.guid}>Post: {this.props.post.caption}</h3>
 
-                          <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
-						              <h3>{this.props.post.donations.length} donations</h3>
+                        <Link to={"/user/" + this.props.post.user} >
+                          <h3 className={"userText_" + this.props.post.guid}>User: {this.state.user.name}</h3>
+                        </Link>
+
+                        <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
+					              <h3>{this.state.donations} donations</h3>
+                        <div onClick={this.donate}><button>Donate 5¢</button></div>
                       </div>
                       { Authentication.getUser() && Authentication.getUser().guid === this.props.post.user
                           ? <button id={"editPost_" + this.props.post.guid} onClick={() => {if(!this.state.editing){this.editPost(this.props.post.guid)}}}>Edit Post</button>
@@ -104,9 +127,10 @@ class Post extends Component {
             </div>
          )
      };
+
      editPost(postguid) {
           var userguid = Authentication.getUser();
-          //changes label to an editable text area        
+          //changes label to an editable text area
           //gets text and then sends changes to server
           this.setState({
             'editing': true
@@ -114,11 +138,11 @@ class Post extends Component {
           var editPostString;
           debugger;
           var previousString = $(".postText_" + postguid).text().substring(5,);
-          $(".postText_" + postguid).replaceWith("<textarea id=editPostTextArea_" + postguid + " + rows=3 cols = 35>");          
+          $(".postText_" + postguid).replaceWith("<textarea id=editPostTextArea_" + postguid + " + rows=3 cols = 35>");
           $("textarea").val(previousString); //put previous caption in textarea
-          $("#editPost_" + postguid).html("Done");            
+          $("#editPost_" + postguid).html("Done");
 
-          $("#editPost_" + postguid).on('click', function() {  
+          $("#editPost_" + postguid).on('click', function() {
               editPostString = $("textarea").val();
               Requests.makeRequest('post.edit', {
                 'post': postguid,

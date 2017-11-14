@@ -2,6 +2,8 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
+import Post from './../components/Post';
+import Authentication from './../modules/Authentication';
 
 class UserView extends Component {
 
@@ -35,6 +37,19 @@ class UserView extends Component {
 			});
 		})
 
+		Requests.makeRequest('posts', {
+			'user': userGUID,
+			'sortKey': 'dateCreated',
+			'sort': 'desc',
+		}, (error, body) => {
+			var posts = body.posts;
+			if(!posts) return;
+
+			this.setState({
+				'posts': posts
+			});
+		})
+
 	}
 
 	componentWillReceiveProps(newProps) {
@@ -43,8 +58,17 @@ class UserView extends Component {
 
 	render() {
 		return (
-			<div className="container">
-				<h1>User</h1>
+			<div>
+				{this.state.user
+					?	<div className="container">
+							<h1>{this.state.user.name}</h1>
+							{this.state.posts[0]
+								?	this.state.posts.map((post, index) => {
+									return <Post post={post} key={index}/>
+								})
+								: null }
+						</div>
+				: <div className="loading">Loading...</div> }
 			</div>
 		);
   	}
