@@ -26,6 +26,8 @@ class CharityView extends Component {
 			'profilepictureURL': null,
 			'campaigns': null,
 		};
+		this.follow = this.follow.bind(this);
+		this.unfollow = this.unfollow.bind(this);
 	}
 
 	/**
@@ -77,6 +79,41 @@ class CharityView extends Component {
 	}
 
 	/**
+	 * Follows charity for User
+	 * @memberof views/CharityView#
+	 */
+	 follow() {
+		 console.log("called");
+		 Requests.makeRequest('user.followCharity', {
+			 	'charity': this.props.match.params.guid,
+ 			}, (error, body) => {
+				console.log(body.user);
+				var user = body.user;
+				if (!user) return;
+				this.setState({
+					'user': user
+				});
+			})
+	 }
+
+	 /**
+ 	 * Unfollows charity for user
+ 	 * @memberof views/CharityView#
+ 	 */
+	 unfollow() {
+		 Requests.makeRequest('user.unfollowCharity', {
+			 	'charity': this.props.match.params.guid,
+ 			}, (error, body) => {
+				console.log(body.user);
+				var user = body.user;
+				if (!user) return;
+				this.setState({
+					'user': user
+				});
+			})
+	 }
+
+	/**
 	 * Renders view
 	 * @memberof views/CharityView#
 	 */
@@ -104,8 +141,11 @@ class CharityView extends Component {
 					</div>
 				</div>
 				<div className="container row">
-					{ this.state.charity && Authentication.status() == Authentication.USER
-						? <div className="donation">
+					{ this.state.charity && this.state.user && Authentication.status() == Authentication.USER
+						? <div className="user actions">
+								{ Authentication.getUser().followingCharities.indexOf(this.props.match.params.guid) > -1
+									? <button onClick={this.unfollow}>Unfollow</button>
+									: <button onClick={this.follow}>Follow</button> }
 								<Form form={FormConfigs.donation(this.state.charity.name, 'charity', this.props.match.params.guid)} onSuccess={this.onDonate} />
 							</div>
 						: null}

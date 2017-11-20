@@ -44,6 +44,7 @@ var Requests = {
 			// Handle successful responses
 			if (response.statusCode === 200) {
 				if (body.token) Authentication.handleAuthResponse(body);
+				if (body.user) Authentication.updateUser(body);
 				return callback(false, body);
 			}
 

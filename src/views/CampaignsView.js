@@ -44,7 +44,7 @@ class CampaignsView extends Component {
 		return (
 			<div className="container">
 				<h1 className="row">Campaigns</h1>
-				{ this.state.campaigns[0]
+				{ this.state.campaigns && this.state.campaigns[0]
 					?  this.state.campaigns.map((campaign, index) => {
 							return <Campaign campaign={campaign} key={index}/>
 						})

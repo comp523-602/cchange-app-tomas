@@ -72,7 +72,17 @@ var Authentication = {
 		} else {
 			window.location.href = '/';
 		}
-	}
+	},
+
+	/**
+	 * Updates user object
+	 * @memberof modules/authentication
+	 */
+	 updateUser: function (body) {
+		 console.log(body.user);
+		 if (this.status() === this.USER && body.user.guid === this.getUser().guid)
+		 	Storage.set('user', body.user);
+	 },
 };
 
 export default Authentication;

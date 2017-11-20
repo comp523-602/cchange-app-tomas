@@ -41,13 +41,13 @@ class HomeView extends Component {
 		return (
 			<div className="container row">
 				<h1>Home</h1>
-				{this.state.charities[0]
+				{this.state.charities && this.state.charities[0]
 					? this.state.charities.map((charity, index) => {
 						return <Charity charity={charity} key={index}/>
 					})
 				: <div className="loading">Loading...</div>}
 
-				{this.state.campaigns[0]
+				{this.state.campaigns && this.state.campaigns[0]
 					? this.state.campaigns.map((campaign, index) => {
 						return <Campaign campaign={campaign} key={index}/>
 					})
