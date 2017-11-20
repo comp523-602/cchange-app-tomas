@@ -4,53 +4,26 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Charity from './../components/Charity';
+import List from './../components/List';
 
 class CharitiesView extends Component {
-
-	/**
-	 * Creates initial state with null values
-	 * @memberof views/CharitiesView#
-	 */
-	 constructor(props) {
-		 super(props)
-		 this.state = {
-			 'charities': [],
-			 'pageSize': null, //create html element for user ot choose number
-		 };
-	 }
-
-	 /**
-	  * Gets list of charities
-	  * @memberof views/CharitiesView#
-	  */
-	componentWillMount() {
-		//Get list of 10 charities from the server
-		Requests.makeRequest('charities', {
-			'pageSize' : 10,
-			'sort': 'desc',
-			'sortKey' : 'dateCreated'
-		}, (error, body) => {
-			this.setState({
-				charities: body.charities,
-			})
-		})
-	}
 
 	/**
 	 * Renders view
 	 * @memberof views/CharitiesView#
 	 */
 	render() {
+
+		const listConfig = {
+			address: 'charities',
+			responseKey: 'charities',
+		};
+
 		return (
 			<div className="container">
 				<h1 className="row">Charities</h1>
-				{ this.state.charities[0]
-					? this.state.charities.map((charity, index) => {
-							return <Charity charity={charity} key={index}/>
-						})
-					: <div className="loading">Loading...</div> }
+				<List config={listConfig} />
 			</div>
-
 		);
 	}
 }
