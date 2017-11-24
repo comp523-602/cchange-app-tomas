@@ -122,7 +122,6 @@ class Post extends Component {
               console.log(this.state.editing + " " + this.state.buttonText);
               })
             }
-          }
-
+      }
 }
 export default Post;
