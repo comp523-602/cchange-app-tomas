@@ -46,7 +46,7 @@ class CampaignCreateView extends Component {
           ? this.state.campaignCreateForm
             ? <Form form={this.state.campaignCreateForm} onSuccess={this.onSuccess} />
             : null
-          : <h1>Whoops! Looks like youve navigated somewhere you shouldnt.</h1>
+          : <h1>Whoops! Looks like you've navigated somewhere you shouldnt.</h1>
         }
       </div>
     );

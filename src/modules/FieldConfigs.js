@@ -41,6 +41,15 @@ var FieldConfigs = {
 	},
 
 	/**
+	 * @memberOf modules/FieldConfigs
+	 * @param {String} name name of field
+	 * @return {Object} Image upload field configuration object
+	 */
+	multipleImage: function(name) {
+		return {name: name, type: 'multipleImage', value: null};
+	},
+	
+	/**
 	 * @memberof modules/FieldConfigs
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Email field configuration object

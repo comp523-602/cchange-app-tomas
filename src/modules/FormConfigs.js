@@ -141,12 +141,14 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name', 'Enter new campaign name'),
 				description: FieldConfigs.textarea('Description', 'Enter new campaign description'),
+				pictures: FieldConfigs.multipleImage('Add Images')
 			},
 			address: GUID ? 'campaign.edit':'campaign.create',
 			base: function (ref) {
 				var returnObject = {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
+					'pictures': ref.pictures.state.value
 				};
 				if (GUID)
 					returnObject['campaign'] = GUID;

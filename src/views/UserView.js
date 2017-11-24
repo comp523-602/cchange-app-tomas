@@ -12,7 +12,11 @@ class UserView extends Component {
 		this.state = {
 			'user': null,
 			'posts': [],
-			'following': Authentication.getUser().followingUsers.indexOf(this.props.match.params.guid) > -1
+			'following': Authentication.getUser().followingUsers.indexOf(this.props.match.params.guid) > -1,
+			'donationview': false,
+			'postview': true,
+			'postViewButton': "Change to Donation view",
+			'donationViewButton': "Change to Post View"
 		};
 		this.follow = this.follow.bind(this);
 		this.unfollow = this.unfollow.bind(this);
@@ -98,21 +102,22 @@ class UserView extends Component {
 	render() {
 		return (
 			<div>
-				{this.state.user
-					?	<div className="container">
-							<h1>{this.state.user.name}</h1>
-							{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
-								? this.state.following
-									? <button onClick={this.unfollow}>Unfollow</button>
-									: <button onClick={this.follow}>Follow</button>
-								: null }
-							{this.state.posts[0]
-								?	this.state.posts.map((post, index) => {
-									return <Post post={post} key={index}/>
-								})
-								: null }
-						</div>
-				: <div className="loading">Loading...</div> }
+				
+						{this.state.user
+						?	<div className="container">
+								<h1>{this.state.user.name}</h1>
+								{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
+									? this.state.following
+										? <button onClick={this.unfollow}>Unfollow</button>
+										: <button onClick={this.follow}>Follow</button>
+									: null }
+								{this.state.posts[0]
+									?	this.state.posts.map((post, index) => {
+										return <Post post={post} key={index}/>
+									})
+									: null }
+							</div>
+					: <div className="loading">Loading...</div> }
 			</div>
 		);
   	}

@@ -85,7 +85,7 @@ class Form extends Component {
 		var self = this;
 
 		if (this.refs.image &&
-			((this.refs.image.props.field.type === "singleImageCrop" && this.refs.image.refs.cropper.getCroppedCanvas()) || (this.refs.image.props.field.type === "singleImage") && this.refs.value)) {
+			((this.refs.image.props.field.type === "singleImageCrop" && this.refs.image.refs.cropper.getCroppedCanvas()) || (this.refs.image.props.field.type === "multipleImage") || (this.refs.image.props.field.type === "singleImage") && this.refs.value)) {
 			request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
 					 .field('upload_preset', 'kajpdwj4')
 					 .field('file', this.refs.image.props.field.type === "singleImageCrop"? this.refs.image.refs.cropper.getCroppedCanvas().toDataURL() : this.refs.image.props.field.value)

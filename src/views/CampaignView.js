@@ -44,9 +44,9 @@ class CampaignView extends Component {
 		Requests.makeRequest('campaign', {
 			'campaign': campaignGUID
 		}, (error, body) => {
-
 			// Get campaign from response
 			var campaign = body.campaign;
+			console.log(campaign);
 			if (!campaign) return;
 			// Add campaign to state
 			this.setState({
@@ -82,6 +82,9 @@ class CampaignView extends Component {
 				<div className="heading">
 					{ this.state.campaign
 						? <div className="profileHeading">
+							{this.state.campaign.pictures
+							?	<img src={this.state.campaign.pictures[0]}/>
+							: null}
 							<h1>{this.state.campaign.name}</h1>
 							<p>{this.state.campaign.description}</p>
 						</div>

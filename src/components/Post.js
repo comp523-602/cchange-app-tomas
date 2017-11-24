@@ -93,14 +93,14 @@ class Post extends Component {
           var previousString = this.props.post.caption;
 
           if(this.state.editing) {
-              console.log("editing true");
+              //console.log("editing true");
               editPostString = $("#textarea").val();              
               self.setState({
                 editing: false,
                 buttonText: "Edit Post",
                 caption: editPostString
               }, function() {
-                console.log(self.state.editing + " " + this.state.buttonText);
+               // console.log(self.state.editing + " " + this.state.buttonText);
               })
               Requests.makeRequest('post.edit', {
                'post': postguid,
@@ -108,8 +108,6 @@ class Post extends Component {
               }, (error, body) => {
                 //returns post object
                 var response = body.post;
-                console.log("response: " + response);
-                console.log("error: " + error);
               });
              
           }
@@ -119,7 +117,7 @@ class Post extends Component {
               editing: true,
               buttonText: "Done"
               }, function() {
-              console.log(this.state.editing + " " + this.state.buttonText);
+              //console.log(this.state.editing + " " + this.state.buttonText);
               })
             }
       }

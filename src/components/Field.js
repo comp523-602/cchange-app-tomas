@@ -18,7 +18,9 @@ class Field extends Component {
 			value: this.props.field.value,
 			imageUploaded: false,
 			src: null,
+			pictures: []
 		};
+		console.log(this.state.value);
 		this.handleChange = this.handleChange.bind(this);
 		this.onImageDrop = this.onImageDrop.bind(this);
 	}
@@ -101,6 +103,20 @@ class Field extends Component {
 						</div>
 					)
 					: null }
+				
+				{ this.props.field.type === 'multipleImage'
+					?
+					(
+						<div>
+							{ this.state.value
+								? <img src={this.state.value} className="uploadedImage" alt="Uploaded" />
+								: null }
+							<Dropzone onDrop={this.onImageDrop.bind(this)} accept="image/*">
+								<div>Upload your images here</div>
+							</Dropzone>
+						</div>
+					)
+					: null}
 
 				{ this.props.field.instructions
 					? <span className="instructions">{this.props.field.instructions}</span>
