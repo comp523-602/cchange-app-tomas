@@ -84,56 +84,34 @@ class Form extends Component {
 		// Save reference to component
 		var self = this;
 
-		if (this.refs.image &&
-			((this.refs.image.props.field.type === "singleImageCrop" && this.refs.image.refs.cropper.getCroppedCanvas()) || (this.refs.image.props.field.type === "multipleImage") || (this.refs.image.props.field.type === "singleImage") && this.refs.value)) {
-			request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
-					 .field('upload_preset', 'kajpdwj4')
-					 .field('file', this.refs.image.props.field.type === "singleImageCrop"? this.refs.image.refs.cropper.getCroppedCanvas().toDataURL() : this.refs.image.props.field.value)
-			 .end((err, response) => {
+			// request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
+			// 		 .field('upload_preset', 'kajpdwj4')
+			// 		 .field('file', this.refs.image.props.field.type === "singleImageCrop"? this.refs.image.refs.cropper.getCroppedCanvas().toDataURL() : this.refs.image.props.field.value)
+			//  .end((err, response) => {
+			//
+			// 	 if (err) {
+			// 		 self.setState({
+			// 			 buttonText: 'Submit',
+			// 			 errorMessage: response.message,
+			// 		 });
+			// 	 }
+			//  });
 
-				 if (err) {
-					 self.setState({
-						 buttonText: 'Submit',
-						 errorMessage: response.message,
-					 });
-				 } else {
-					 console.log(response.body.secure_url);
-		 				body.image = response.body.secure_url;
-						body.logo = response.body.secure_url;
-					 	// Make request
-						Requests.makeRequest(address, body, function (error, response) {
-						 if (error) {
-							 self.setState({
-								 buttonText: 'Submit',
-								 errorMessage: response.message,
-							 });
-						 } else {
-							 self.setState({
-								 buttonText: 'Submit',
-								 errorMessage: null,
-							 });
-							 if (self.props.onSuccess) self.props.onSuccess(response);
-						 }
-					 });
-					}
- 				})
 
-		} else {
-			Requests.makeRequest(address, body, function (error, response) {
-				if (error) {
-					self.setState({
-						buttonText: 'Submit',
-						errorMessage: response.message,
-					});
-				} else {
-					self.setState({
-						buttonText: 'Submit',
-						errorMessage: null,
-					});
-					if (self.props.onSuccess) self.props.onSuccess(response);
-				}
-			})
-		}
+		Requests.makeRequest(address, body, function (error, response) {
+			if (error) {
+				self.setState({
+					buttonText: 'Submit',
+					errorMessage: response.message,
+				});
+			} else {
+				self.setState({
+					buttonText: 'Submit',
+					errorMessage: null,
+				});
+				if (self.props.onSuccess) self.props.onSuccess(response);
+			}
+		})
 	}
 }
 

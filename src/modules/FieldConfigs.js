@@ -25,19 +25,10 @@ var FieldConfigs = {
 	/**
 	 * @memberof modules/FieldConfigs
 	 * @param {String} name name of field
-	 * @return {Object} Image upload field configuration object
-	 */
-	singleImage: function (name) {
-		return {name: name, type: 'singleImage', value: null};
-	},
-
-	/**
-	 * @memberof modules/FieldConfigs
-	 * @param {String} name name of field
 	 * @return {Object} Image upload field configuration object with cropping
 	 */
-	singleImageCrop: function (name) {
-		return {name: name, type: 'singleImageCrop', value: null};
+	singleImageCrop: function (name, requestKey) {
+		return {name: name, type: 'singleImageCrop', value: null, requestKey: requestKey};
 	},
 
 	/**
@@ -45,10 +36,10 @@ var FieldConfigs = {
 	 * @param {String} name name of field
 	 * @return {Object} Image upload field configuration object
 	 */
-	multipleImage: function(name) {
-		return {name: name, type: 'multipleImage', value: null};
+	multipleImage: function(name, requestKey) {
+		return {name: name, type: 'multipleImage', value: [], requestKey: requestKey};
 	},
-	
+
 	/**
 	 * @memberof modules/FieldConfigs
 	 * @param {String} placeholder Placeholder for field
@@ -71,10 +62,10 @@ var FieldConfigs = {
 	/**
 	 * @memberof modules/FieldConfigs
 	 * @param {String} placeholder Placeholder for field
-	 * @return {Object} Donation field configuration object
+	 * @return {Object} Number field configuration object
 	 */
-	donation: function (placeholder, instructions) {
-		return {name: 'Donation', type: 'donation', value: '', placeholder: placeholder,
+	number: function (placeholder, instructions) {
+		return {name: 'Donation', type: 'number', value: '', placeholder: placeholder,
 			instructions: instructions};
 	},
 };

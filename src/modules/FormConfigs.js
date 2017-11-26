@@ -103,29 +103,6 @@ var FormConfigs = {
 				return {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
-					'logo': ref.image.state.value,
-				}
-			},
-		};
-	},
-
-	/**
-	 * @memberof modules/FormConfigs
-	 * @return {Object} Campaign edit form configuration object
-	 */
-	campaignEdit: function(GUID) {
-		return {
-			title: 'Edit Campaign',
-			fields: {
-				name: FieldConfigs.text('Name', 'Enter new campaign name'),
-				description: FieldConfigs.textarea('Description', 'Enter new campaign description'),
-			},
-			address: 'campaign.edit',
-			base: function (ref) {
-				return {
-					'campaign': GUID,
-					'name': ref.name.state.value,
-					'description': ref.description.state.value,
 				}
 			},
 		};
@@ -139,19 +116,17 @@ var FormConfigs = {
 		return {
 			title: 'Edit campaign',
 			fields: {
-				name: FieldConfigs.text('Name', 'Enter new campaign name'),
-				description: FieldConfigs.textarea('Description', 'Enter new campaign description'),
-				pictures: FieldConfigs.multipleImage('Add Images')
+				name: FieldConfigs.text('Name', 'Name your campaign'),
+				description: FieldConfigs.textarea('Description', 'Enter a description'),
+				pictures: FieldConfigs.multipleImage('Add Images'),
 			},
 			address: GUID ? 'campaign.edit':'campaign.create',
 			base: function (ref) {
 				var returnObject = {
 					'name': ref.name.state.value,
 					'description': ref.description.state.value,
-					'pictures': ref.pictures.state.value
 				};
-				if (GUID)
-					returnObject['campaign'] = GUID;
+				if (GUID) returnObject.campaign = GUID;
 				return returnObject;
 			},
 		};
@@ -173,7 +148,6 @@ var FormConfigs = {
 			base: function(ref) {
 				return {
 					'caption': ref.caption.state.value,
-					'image': null,
 					'campaign': campaignGUID,
 				}
 			}
@@ -210,12 +184,12 @@ var FormConfigs = {
 		return {
 			title: 'Donate to ' + name, //campaign or charity name is appended
 			fields: {
-				donation: FieldConfigs.donation('Amount', 'Enter a dollar amount'),
+				donation: FieldConfigs.number('Amount', 'Enter a dollar amount'),
 			},
 			address: 'donation.create',
 			base: function(ref) {
 				var body = {
-					'amount': Number(ref.donation.state.value),
+					'amount': parseInt(ref.donation.state.value*100),
 				};
 				body[type] = GUID;
 				return body;
