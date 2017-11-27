@@ -88,7 +88,7 @@ class Header extends Component {
 	getUserMenu (user) {
 		return (
 			<div className="authmenu">
-				<NavLink to={"/user/"+user.guid} activeClassName="active">${user.balance + " " + user.name}</NavLink>
+				<NavLink to={"/user/"+user.guid} activeClassName="active">{/*user.balance + " " + */user.name}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);
