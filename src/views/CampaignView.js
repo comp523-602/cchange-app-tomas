@@ -83,7 +83,9 @@ class CampaignView extends Component {
 					{ this.state.campaign
 						? <div className="profileHeading">
 							{this.state.campaign.pictures
-							?	<img src={this.state.campaign.pictures[0]}/>
+							? this.state.campaign.pictures.map((image, index) => {
+								return <img src={image} key={index} />
+							})
 							: null}
 							<h1>{this.state.campaign.name}</h1>
 							<p>{this.state.campaign.description}</p>

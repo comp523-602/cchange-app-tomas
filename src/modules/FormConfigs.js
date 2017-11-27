@@ -27,11 +27,11 @@ var FormConfigs = {
 				confirmPassword: FieldConfigs.password('Confirm your password'),
 			},
 			address: 'user.create',
-			base: function (ref) {
+			base: function (refs) {
 				return {
-					'name': ref.name.state.value,
-					'email': ref.email.state.value,
-					'password': ref.password.state.value,
+					'name': refs.name.state.value,
+					'email': refs.email.state.value,
+					'password': refs.password.state.value,
 				}
 			},
 		};
@@ -49,10 +49,10 @@ var FormConfigs = {
 				password: FieldConfigs.password('Enter your password'),
 			},
 			address: 'user.login',
-			base: function (ref) {
+			base: function (refs) {
 				return {
-					'email': ref.email.state.value,
-					'password': ref.password.state.value,
+					'email': refs.email.state.value,
+					'password': refs.password.state.value,
 				}
 			},
 		};
@@ -74,12 +74,12 @@ var FormConfigs = {
 				charityName: FieldConfigs.text('Charity Name', "Enter your charity's name"),
 			},
 			address: 'user.create.charity',
-			base: function (ref) {
+			base: function (refs) {
 				return {
-					'name': ref.name.state.value,
-					'email': ref.email.state.value,
-					'password': ref.password.state.value,
-					'charityName': ref.charityName.state.value,
+					'name': refs.name.state.value,
+					'email': refs.email.state.value,
+					'password': refs.password.state.value,
+					'charityName': refs.charityName.state.value,
 					'charityToken': token,
 				}
 			},
@@ -96,13 +96,18 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name', 'Enter new charity name'),
 				description: FieldConfigs.textarea('Description', 'Enter new charity description'),
-				image: FieldConfigs.singleImageCrop('Logo'),
+				logo: FieldConfigs.singleImageCrop('Logo'),
 			},
 			address: 'charity.edit',
-			base: function (ref) {
+			base: function (refs) {
 				return {
-					'name': ref.name.state.value,
-					'description': ref.description.state.value,
+					'name': refs.name.state.value,
+					'description': refs.description.state.value,
+				}
+			},
+			images: function (refs) {
+				return {
+					'logo': refs.logo.refs.cropper.getCroppedCanvas().toDataURL(),
 				}
 			},
 		};
@@ -114,20 +119,25 @@ var FormConfigs = {
 	 */
 	campaignCreateEdit: function (GUID) {
 		return {
-			title: 'Edit campaign',
+			title: GUID ? 'Edit campaign':'Create campaign',
 			fields: {
 				name: FieldConfigs.text('Name', 'Name your campaign'),
 				description: FieldConfigs.textarea('Description', 'Enter a description'),
 				pictures: FieldConfigs.multipleImage('Add Images'),
 			},
 			address: GUID ? 'campaign.edit':'campaign.create',
-			base: function (ref) {
+			base: function (refs) {
 				var returnObject = {
-					'name': ref.name.state.value,
-					'description': ref.description.state.value,
+					'name': refs.name.state.value,
+					'description': refs.description.state.value,
 				};
 				if (GUID) returnObject.campaign = GUID;
 				return returnObject;
+			},
+			images: function (refs) {
+				return {
+					'pictures': refs.pictures.state.value,
+				};
 			},
 		};
 	},
@@ -145,12 +155,17 @@ var FormConfigs = {
 				image: FieldConfigs.singleImageCrop('Image'),
 			},
 			address: 'post.create',
-			base: function(ref) {
+			base: function (refs) {
 				return {
-					'caption': ref.caption.state.value,
+					'caption': refs.caption.state.value,
 					'campaign': campaignGUID,
 				}
-			}
+			},
+			images: function (refs) {
+				return {
+					'image': refs.image.refs.cropper.getCroppedCanvas().toDataURL(),
+				};
+			},
 		}
 	},
 
@@ -166,9 +181,9 @@ var FormConfigs = {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
 			},
 			address: 'post.edit',
-			base: function(ref) {
+			base: function(refs) {
 				return {
-					'caption': ref.caption.state.value,
+					'caption': refs.caption.state.value,
 					'post': postGUID,
 				}
 			}
@@ -187,9 +202,9 @@ var FormConfigs = {
 				donation: FieldConfigs.number('Amount', 'Enter a dollar amount'),
 			},
 			address: 'donation.create',
-			base: function(ref) {
+			base: function(refs) {
 				var body = {
-					'amount': parseInt(ref.donation.state.value*100),
+					'amount': parseInt(refs.donation.state.value*100),
 				};
 				body[type] = GUID;
 				return body;

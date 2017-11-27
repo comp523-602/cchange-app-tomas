@@ -34,7 +34,8 @@ class Field extends Component {
 			const reader = new FileReader();
 			reader.onload = () => {
 				this.setState({
-					value: reader.result
+					value: null,
+					uncroppedImage: reader.result
 				});
 			};
 			reader.readAsDataURL(files[0]);
@@ -54,6 +55,11 @@ class Field extends Component {
 				reader.readAsDataURL(files[i]);
 			}
 		}
+	}
+
+	crop () {
+		var newValue = this.refs.cropper.getCroppedCanvas().toDataURL();
+		if (newValue) this.setState({'value': newValue});
 	}
 
 	removeImage (event) {
@@ -93,6 +99,9 @@ class Field extends Component {
 				{ this.props.field.type === 'singleImageCrop'
 					? (
 						<div>
+							{ this.state.value
+								? <img src={this.state.value} className="imageThumbnail" />
+								: null }
 							<Dropzone
 								onDrop={this.onImageDrop}
 								multiple={false}
@@ -100,13 +109,13 @@ class Field extends Component {
 								disablePreview={true}>
 								<div>{this.state.value ? 'Edit image' : 'Upload your image here'}</div>
 							</Dropzone>
-							{this.state.value ?
+							{this.state.uncroppedImage ?
 								<div>
 									<span>Crop your image</span>
 									<Cropper
 										style={{ height: '100%', width: '100%' }}
 										preview=".img-preview"
-										src={this.state.value}
+										src={this.state.uncroppedImage}
 									 	ref="cropper"
 										aspectRatio={1}
 										guides={false}

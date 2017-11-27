@@ -27,8 +27,8 @@ var FieldConfigs = {
 	 * @param {String} name name of field
 	 * @return {Object} Image upload field configuration object with cropping
 	 */
-	singleImageCrop: function (name, requestKey) {
-		return {name: name, type: 'singleImageCrop', value: null, requestKey: requestKey};
+	singleImageCrop: function (name) {
+		return {name: name, type: 'singleImageCrop', value: null};
 	},
 
 	/**
@@ -36,8 +36,8 @@ var FieldConfigs = {
 	 * @param {String} name name of field
 	 * @return {Object} Image upload field configuration object
 	 */
-	multipleImage: function(name, requestKey) {
-		return {name: name, type: 'multipleImage', value: [], requestKey: requestKey};
+	multipleImage: function(name) {
+		return {name: name, type: 'multipleImage', value: []};
 	},
 
 	/**

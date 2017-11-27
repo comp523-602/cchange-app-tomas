@@ -6,6 +6,7 @@ import Field from './Field';
 import Requests from './../modules/Requests';
 import request from 'superagent';
 import Validation from './../modules/Validation';
+import Async from 'async';
 
 class Form extends Component {
 
@@ -57,6 +58,9 @@ class Form extends Component {
 	 */
 	handleSubmit(event) {
 
+		// Get form from properties
+		var form = this.props.form;
+
 		// Prevent default action
 		event.preventDefault();
 
@@ -76,42 +80,100 @@ class Form extends Component {
 		}
 
 		// Initialize requst address
-		var address = this.props.form.address;
+		var address = form.address;
 
 		// Initialize request body
-		var body = this.props.form.base(this.refs);
+		var body = form.base(this.refs);
 
 		// Save reference to component
 		var self = this;
 
-			// request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
-			// 		 .field('upload_preset', 'kajpdwj4')
-			// 		 .field('file', this.refs.image.props.field.type === "singleImageCrop"? this.refs.image.refs.cropper.getCroppedCanvas().toDataURL() : this.refs.image.props.field.value)
-			//  .end((err, response) => {
-			//
-			// 	 if (err) {
-			// 		 self.setState({
-			// 			 buttonText: 'Submit',
-			// 			 errorMessage: response.message,
-			// 		 });
-			// 	 }
-			//  });
+		// Synchronously setup request with images
+		Async.waterfall([
 
+			// Upload images if neccesary
+			function (callback) {
 
-		Requests.makeRequest(address, body, function (error, response) {
+				// If form contains images..
+				if (form.images) {
+
+					// Update state
+					self.setState({buttonText: 'Uploading images...'});
+
+					// Get image parameters object from form
+					var imageParameters = form.images(self.refs);
+
+					// Iterate through each key in image groups
+					Async.eachOf(imageParameters, function (parameter, key, callback) {
+
+						// Handle array of images
+						if (parameter instanceof Array) {
+							body[key] = [];
+							Async.each(parameter, function (image, callback) {
+								request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
+									.field('upload_preset', 'kajpdwj4')
+									.field('file', image)
+									.end((err, response) => {
+										if (response && response.body && response.body.secure_url) {
+											body[key].push(response.body.secure_url);
+										}
+										callback(err);
+									 });
+							}, function (err) {
+								callback(err);
+							});
+						}
+
+						// Hangle single image
+						else {
+							request.post('https://api.cloudinary.com/v1_1/cchange/image/upload')
+								.field('upload_preset', 'kajpdwj4')
+								.field('file', parameter)
+								.end((err, response) => {
+									if (response && response.body && response.body.secure_url)
+										body[key] = response.body.secure_url;
+									callback(err);
+								 });
+						}
+
+					}, function (err) {
+						callback(err);
+					});
+				}
+
+				else callback();
+			},
+
+			// Make request to cChnage server
+			function (callback) {
+				self.setState({buttonText: 'Loading...'});
+				Requests.makeRequest(address, body, function (err, response) {
+					callback(err, response);
+				})
+			}
+
+		], function (err, response) {
+
+			// Handle form after error
 			if (error) {
+				var errorMessage = 'An error occurred';
+				if (response && response.message) errorMessage = response.message;
 				self.setState({
 					buttonText: 'Submit',
-					errorMessage: response.message,
+					errorMessage: errorMessage,
 				});
-			} else {
+			}
+
+			// Handle success
+			else {
 				self.setState({
 					buttonText: 'Submit',
 					errorMessage: null,
 				});
 				if (self.props.onSuccess) self.props.onSuccess(response);
 			}
-		})
+
+		});
 	}
 }
 

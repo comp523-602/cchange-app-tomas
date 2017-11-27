@@ -35,12 +35,13 @@ class CampaignEditView extends Component {
           }, function(error, body) {
               var campaign = body.campaign;
 
-              var campaignEditForm = FormConfigs.campaignEdit(campaignGUID);
-              campaignEditForm.fields.name.value = campaign.name;
-              campaignEditForm.fields.description.value = campaign.description;
+              var campaignForm = FormConfigs.campaignCreateEdit(campaignGUID);
+              campaignForm.fields.name.value = campaign.name;
+              campaignForm.fields.description.value = campaign.description;
+			  campaignForm.fields.pictures.value = campaign.pictures;
 
               self.setState({
-                  'campaignEditForm': campaignEditForm
+                  'campaignForm': campaignForm
               });
           })
       }
@@ -52,8 +53,8 @@ class CampaignEditView extends Component {
       render() {
         return (
 			<div className="container">
-				{ this.state.campaignEditForm
-					? <Form form={this.state.campaignEditForm} onSuccess={this.onSuccess} />
+				{ this.state.campaignForm
+					? <Form form={this.state.campaignForm} onSuccess={this.onSuccess} />
 					: <div className="loading">Loading...</div> }
 			</div>
 		);
