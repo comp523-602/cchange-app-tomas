@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
+import User from './../components/User';
 
 class UserView extends Component {
 
@@ -13,17 +14,20 @@ class UserView extends Component {
 			'user': null,
 			'posts': [],
 			'following': Authentication.getUser().followingUsers.indexOf(this.props.match.params.guid) > -1,
-			'donationview': false,
-			'postview': true,
-			'postViewButton': "Change to Donation view",
-			'donationViewButton': "Change to Post View"
+			'followerView': false,
+			'followingList': [],			
+			'postView': true, //default
+			
 		};
+		this._isMounted = true;
 		this.follow = this.follow.bind(this);
 		this.unfollow = this.unfollow.bind(this);
+		this.getFollowing = this.getFollowing.bind(this);
+
 	}
 
 	componentWillMount(newProps) {
-
+		this._isMounted = false;
 		// Get user GUID from props
 		var userGUID = null;
 		if (newProps) userGUID = newProps.match.params.guid;
@@ -41,8 +45,9 @@ class UserView extends Component {
 			// Add user to state
 			this.setState({
 				'user': user,
+			}, function(){
+				console.log(this.state.user.name);
 			});
-			console.log(user);
 		})
 
 		Requests.makeRequest('posts', {
@@ -57,6 +62,7 @@ class UserView extends Component {
 				'posts': posts
 			});
 		})
+
 
 	}
 
@@ -99,25 +105,55 @@ class UserView extends Component {
 			})
 	 }
 
+	 getFollowing() {
+		for(var x = 0; x < this.state.user.followingUsers.length; x++){
+			Requests.makeRequest('user', {
+				'user': this.state.user.followingUsers[x],
+			}, (error, body) => {
+				console.log(this._isMounted);
+				this.setState({
+					followingList: this.state.followingList.concat(body.user)
+				})
+			})
+		}
+	 }
+
 	render() {
 		return (
 			<div>
-				
-						{this.state.user
-						?	<div className="container">
-								<h1>{this.state.user.name}</h1>
-								{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
-									? this.state.following
-										? <button onClick={this.unfollow}>Unfollow</button>
-										: <button onClick={this.follow}>Follow</button>
-									: null }
-								{this.state.posts[0]
-									?	this.state.posts.map((post, index) => {
-										return <Post post={post} key={index}/>
+
+				{this.state.user
+					?	<div className="container">
+							<button id="postHistoryButn" onClick={()=>{this.setState({'postView': true, 'followerView': false})}}>Post History</button>
+							{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
+								? <button className="followerViewBtn" onClick={()=>{this.setState({'postView': false, 'followerView': true}, function() {return}), this.getFollowing()}}>See who you follow</button>
+								: <button className="followerViewBtn" onClick={()=>{this.setState({'postView': false, 'followerView': true}, function() {console.log("just set state")}), this.getFollowing()}}>See who {this.state.user.name} follows</button>
+							}
+
+							<h1>{this.state.user.name}</h1>
+
+							{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
+								? this.state.following
+									? <button onClick={this.unfollow}>Unfollow</button>
+									: <button onClick={this.follow}>Follow</button>
+								: null }
+
+							{this.state.postView
+								? this.state.posts[0]
+									? this.state.posts.map((post, index) => {
+											return <Post post={post} key={index}/>
+										})
+									: null 
+								: null}
+							{this.state.followerView
+								? this.state.user.followingList[0]
+									? this.state.followingList.map((user, index) => {
+											return <User user={user} key={index}/>
 									})
-									: null }
-							</div>
-					: <div className="loading">Loading...</div> }
+									: null
+								: <div>{this.state.user.name}isn't following anyone.</div> }
+						</div>
+				: <div className="loading">Loading...</div> }
 			</div>
 		);
   	}

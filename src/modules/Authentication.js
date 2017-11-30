@@ -79,7 +79,7 @@ var Authentication = {
 	 * @memberof modules/authentication
 	 */
 	 updateUser: function (body) {
-		 console.log(body.user);
+		 //console.log(body.user);
 		 if (this.status() === this.USER && body.user.guid === this.getUser().guid)
 		 	Storage.set('user', body.user);
 	 },

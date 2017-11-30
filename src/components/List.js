@@ -7,6 +7,7 @@ import Requests from './../modules/Requests';
 import Post from './Post.js';
 import Charity from './Charity.js';
 import Campaign from './Campaign.js';
+import User from './User.js';
 
 class List extends Component {
 
@@ -86,6 +87,7 @@ class List extends Component {
 						if (item.objectType == "post") return <Post post={item} key={index}/>;
 						if (item.objectType == "campaign") return <Campaign campaign={item} key={index}/>;
 						if (item.objectType == "charity") return <Charity charity={item} key={index}/>;
+						if (item.objectType == "user") return <User user={item} key={index}/>;
 					})
 					: null }
 			</div>
