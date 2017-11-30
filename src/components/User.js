@@ -10,10 +10,21 @@ class User extends Component {
     constructor(props) {
         super(props) 
         this.state = {
-            'user': this.props.user
+            'user': null
         }
     }
-
+    componentWillMount() {
+        Requests.makeRequest('user', {
+            'user': this.props.user
+        }, (error, body) => {
+            var user = body.user;
+            this.setState({
+                'user': user
+            }, function() {
+                return;
+            })
+        })
+    } 
     render() {
         return(
             <div className="item post row">

@@ -5,6 +5,7 @@ import Requests from './../modules/Requests';
 import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
 import User from './../components/User';
+import { Link } from 'react-router-dom';
 
 class UserView extends Component {
 
@@ -126,8 +127,8 @@ class UserView extends Component {
 					?	<div className="container">
 							<button id="postHistoryButn" onClick={()=>{this.setState({'postView': true, 'followerView': false})}}>Post History</button>
 							{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
-								? <button className="followerViewBtn" onClick={()=>{this.setState({'postView': false, 'followerView': true}, function() {return}), this.getFollowing()}}>See who you follow</button>
-								: <button className="followerViewBtn" onClick={()=>{this.setState({'postView': false, 'followerView': true}, function() {console.log("just set state")}), this.getFollowing()}}>See who {this.state.user.name} follows</button>
+								? <Link to={"/followingView/" + this.state.user.guid}><button className="followerViewBtn">See who you follow</button></Link>
+								: <Link to={"/followingView/" + this.state.user.guid}><button className="followerViewBtn">See who {this.state.user.name} follows</button></Link>
 							}
 
 							<h1>{this.state.user.name}</h1>
@@ -137,21 +138,11 @@ class UserView extends Component {
 									? <button onClick={this.unfollow}>Unfollow</button>
 									: <button onClick={this.follow}>Follow</button>
 								: null }
-
-							{this.state.postView
-								? this.state.posts[0]
-									? this.state.posts.map((post, index) => {
-											return <Post post={post} key={index}/>
-										})
-									: null 
-								: null}
-							{this.state.followerView
-								? this.state.user.followingList[0]
-									? this.state.followingList.map((user, index) => {
-											return <User user={user} key={index}/>
+							{this.state.posts[0]
+								?	this.state.posts.map((post, index) => {
+										return <Post post={post} key={index}/>
 									})
-									: null
-								: <div>{this.state.user.name}isn't following anyone.</div> }
+								: null }						
 						</div>
 				: <div className="loading">Loading...</div> }
 			</div>

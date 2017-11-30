@@ -13,7 +13,9 @@ class Header extends Component {
 	 */
 	constructor (props) {
 		super(props)
-		this.state = {};
+		this.state = {
+			balance: 0.0
+		};
 
 		this.renderAuthMenu = this.renderAuthMenu.bind(this);
 		this.getVisitorMenu = this.getVisitorMenu.bind(this);
@@ -58,6 +60,7 @@ class Header extends Component {
 	renderAuthMenu () {
 		var user = Authentication.getUser();
 		if (!user) this.setState({
+			balance: user.balance,
 			authmenu: this.getVisitorMenu()
 		})
 		else if (user.charity) this.setState({
@@ -86,9 +89,11 @@ class Header extends Component {
 	 * @memberof components/Header#
 	 */
 	getUserMenu (user) {
+		console.log(user);
 		return (
 			<div className="authmenu">
-				<NavLink to={"/user/"+user.guid} activeClassName="active">{/*user.balance + " " + */user.name}</NavLink>
+				{this.returnBalance()}
+				<NavLink to={"/user/"+user.guid} activeClassName="active">{" " + user.name}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);
@@ -115,6 +120,10 @@ class Header extends Component {
 	logout (event) {
 		event.preventDefault();
 		Authentication.logout();
+	}
+	returnBalance() {
+		var balance = this.state.balance;
+		return "$" + balance.toFixed(2);
 	}
 }
 
