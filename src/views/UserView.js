@@ -23,8 +23,6 @@ class UserView extends Component {
 		this._isMounted = true;
 		this.follow = this.follow.bind(this);
 		this.unfollow = this.unfollow.bind(this);
-		this.getFollowing = this.getFollowing.bind(this);
-
 	}
 
 	componentWillMount(newProps) {
@@ -106,23 +104,9 @@ class UserView extends Component {
 			})
 	 }
 
-	 getFollowing() {
-		for(var x = 0; x < this.state.user.followingUsers.length; x++){
-			Requests.makeRequest('user', {
-				'user': this.state.user.followingUsers[x],
-			}, (error, body) => {
-				console.log(this._isMounted);
-				this.setState({
-					followingList: this.state.followingList.concat(body.user)
-				})
-			})
-		}
-	 }
-
 	render() {
 		return (
 			<div>
-
 				{this.state.user
 					?	<div className="container">
 							<button id="postHistoryButn" onClick={()=>{this.setState({'postView': true, 'followerView': false})}}>Post History</button>
