@@ -74,6 +74,12 @@ class PostCreateView extends Component {
       window.location.href = '/campaign/' + response.post.campaign;
      }, 750);
   }
+
+  onDonate(response){
+    //more to be added once we have microtransactions
+    var amount = response.donation.amount;
+    //$(".donation").append("<p>You just donated $" + amount + "!</p>");
+ }
 }
 
 export default PostCreateView;

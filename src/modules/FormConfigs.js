@@ -153,12 +153,14 @@ var FormConfigs = {
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
 				image: FieldConfigs.singleImageCrop('Image'),
+				donation: FieldConfigs.number('Amount', 'Enter a dollar amount'),				
 			},
 			address: 'post.create',
 			base: function (refs) {
 				return {
 					'caption': refs.caption.state.value,
 					'campaign': campaignGUID,
+					'amount': refs.donation.state.value
 				}
 			},
 			images: function (refs) {

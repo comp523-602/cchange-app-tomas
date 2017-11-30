@@ -116,7 +116,8 @@ class UserView extends Component {
 							}
 
 							<h1>{this.state.user.name}</h1>
-
+							<p id="totalDonationAmt">{this.state.user.name} has donated ${/*this.state.user.totalDonationAmt*/} .</p> 
+							
 							{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
 								? this.state.following
 									? <button onClick={this.unfollow}>Unfollow</button>
