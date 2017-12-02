@@ -141,7 +141,7 @@ class CharityView extends Component {
 					</div>
 				</div>
 				<div className="container row">
-					{ this.state.charity && this.state.user && Authentication.status() == Authentication.USER
+					{ this.state.charity && this.state.user && Authentication.status() === Authentication.USER
 						? <div className="user actions">
 								{ Authentication.getUser().followingCharities.indexOf(this.props.match.params.guid) > -1
 									? <button onClick={this.unfollow}>Unfollow</button>
