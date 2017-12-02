@@ -23,6 +23,7 @@ class CharityView extends Component {
 			'user': Authentication.getUser(),
 			'charity': null,
 			'editLink': null,
+			'updateLink': null,
 			'profilepictureURL': null,
 			'campaigns': null,
 		};
@@ -54,6 +55,7 @@ class CharityView extends Component {
 			this.setState({
 				'charity': charity,
 				'editLink': '/charityEdit/'+charity.guid,
+				'updateLink': '/update/'+charity.guid,
 				'profilepictureURL': charity.logo,
 			})
 		})
@@ -136,6 +138,7 @@ class CharityView extends Component {
 							? <div className="editLinks">
 									<Link to="/campaignCreate">Create a Campaign</Link>
 									<Link to={this.state.editLink}>Edit charity</Link>
+									<Link to={this.state.updateLink}>Send an update</Link>
 								</div>
 							: null }
 					</div>

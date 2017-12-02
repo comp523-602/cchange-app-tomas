@@ -213,6 +213,24 @@ var FormConfigs = {
 			}
 		}
 	},
+
+	update: function(charityGUID) {
+		return {
+			name: 'Send out an update',
+			fields: {
+				updateName: FieldConfigs.text('Name', 'Enter a name for your charity\'s update'),
+				description: FieldConfigs.text('Description', 'Enter a description for your charity\'s update')
+			},
+			address: 'update.create',
+			base: function(refs) {
+				return {
+					'authorization': charityGUID,
+					'name': refs.updateName.state.value,
+					'description': refs.description.state.value
+				}
+			}
+		}
+	}
 };
 
 export default FormConfigs;

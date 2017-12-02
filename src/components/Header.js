@@ -60,13 +60,13 @@ class Header extends Component {
 	renderAuthMenu () {
 		var user = Authentication.getUser();
 		if (!user) this.setState({
-			balance: user.balance,
 			authmenu: this.getVisitorMenu()
 		})
 		else if (user.charity) this.setState({
 			authmenu: this.getCharityUserMenu(user)
 		})
 		else this.setState({
+			balance: user.balance,			
 			authmenu: this.getUserMenu(user)
 		})
 	}

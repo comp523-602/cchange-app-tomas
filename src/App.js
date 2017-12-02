@@ -22,6 +22,7 @@ import UpdateView from './views/UpdateView';
 import PostCreateView from './views/PostCreateView';
 import PostView from './views/PostView';
 import LogoutView from './views/LogoutView';
+import DonationHistoryView from './views/DonationHistoryView';
 
 // Import components
 import Header from './components/Header';
@@ -40,6 +41,7 @@ class App extends Component {
 					<Route path="/charities" component={CharitiesView} />
 					<Route path="/posts" component={PostsView} />
 					<Route path="/user/:guid" component={UserView} />
+					<Route path="/donationHistoryView/:guid" component={DonationHistoryView} />
 					<Route path="/followingView/:guid" component={FollowingView}/>
 					<Route path="/charity/:guid" component={CharityView} />
 					<Route path="/charityEdit/:guid" component={CharityEditView} />
