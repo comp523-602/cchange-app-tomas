@@ -92,7 +92,7 @@ class Header extends Component {
 		console.log(user);
 		return (
 			<div className="authmenu">
-				{this.returnBalance()}
+				{this.returnBalance(user.balance)}
 				<NavLink to={"/user/"+user.guid} activeClassName="active">{" " + user.name}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
@@ -121,9 +121,8 @@ class Header extends Component {
 		event.preventDefault();
 		Authentication.logout();
 	}
-	returnBalance() {
-		var balance = this.state.balance;
-		return "$" + balance.toFixed(2);
+	returnBalance(balance) {
+		return "$" + (balance/1000).toFixed(2);
 	}
 }
 

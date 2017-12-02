@@ -206,7 +206,7 @@ var FormConfigs = {
 			address: 'donation.create',
 			base: function(refs) {
 				var body = {
-					'amount': parseInt(refs.donation.state.value*100),
+					'amount': parseInt(refs.donation.state.value*1000),
 				};
 				body[type] = GUID;
 				return body;
@@ -227,6 +227,21 @@ var FormConfigs = {
 					'authorization': charityGUID,
 					'name': refs.updateName.state.value,
 					'description': refs.description.state.value
+				}
+			}
+		}
+	},
+
+	addFunds: function() {
+		return {
+			name: 'Add funds to your account',
+			fields: {
+				amount: FieldConfigs.number('Amount', 'Enter an amount to add to your account'),
+			},
+			address: 'user.addFunds',
+			base: function(refs) {
+				return {
+					'amount': parseInt(refs.amount.state.value * 1000)
 				}
 			}
 		}

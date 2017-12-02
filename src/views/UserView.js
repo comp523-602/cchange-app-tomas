@@ -1,3 +1,4 @@
+/** @namespace views/UserView */
 
 // Import dependencies
 import React, { Component } from 'react';
@@ -114,6 +115,11 @@ class UserView extends Component {
 						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
 							? <Link to={"/followingView/" + this.state.user.guid}><button className="followerViewBtn">See who you follow</button></Link>
 							: <Link to={"/followingView/" + this.state.user.guid}><button className="followerViewBtn">See who {this.state.user.name} follows</button></Link>
+						}
+
+						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
+							? <Link to={"/addFundsView/" + this.state.user.guid}><button className="addFundsBtn">Add funds</button></Link>
+							: null
 						}
 						
 						<h1>{this.state.user.name}</h1>
