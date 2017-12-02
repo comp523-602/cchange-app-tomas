@@ -206,7 +206,7 @@ var FormConfigs = {
 			address: 'donation.create',
 			base: function(refs) {
 				var body = {
-					'amount': parseInt(refs.donation.state.value*1000),
+					'amount': parseInt(refs.donation.state.value*100),
 				};
 				body[type] = GUID;
 				return body;
@@ -241,7 +241,7 @@ var FormConfigs = {
 			address: 'user.addFunds',
 			base: function(refs) {
 				return {
-					'amount': parseInt(refs.amount.state.value * 1000)
+					'amount': parseInt(refs.amount.state.value * 100)
 				}
 			}
 		}

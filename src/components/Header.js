@@ -122,7 +122,7 @@ class Header extends Component {
 		Authentication.logout();
 	}
 	returnBalance(balance) {
-		return "$" + (balance/1000).toFixed(2);
+		return "$" + (balance/100).toFixed(2);
 	}
 }
 
