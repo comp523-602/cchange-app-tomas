@@ -51,7 +51,7 @@ class DonationHistoryView extends Component {
                 : <h1>Loading</h1>
                 }
                 {this.state.donations[0]
-                ? this.state.donations.map((donation, index) => {
+                ? this.state.donations.sort(this.compare).map((donation, index) => {
                     return <Donation donation={donation} key={index}/>
                 })
                 : <h3>No donations to show</h3>
@@ -59,5 +59,18 @@ class DonationHistoryView extends Component {
             </div>
         )
     }
+    /**
+	 * Sorting function for campaign posts
+	 * @memberof views/CampaignView#
+	*/
+	compare (a, b) {
+		if (a.dateCreated < b.dateCreated) {
+			return 1;
+		}
+		if(a.dateCreated > b.dateCreated) {
+			return -1;
+		}
+		return 0;
+	}
 }
 export default DonationHistoryView
