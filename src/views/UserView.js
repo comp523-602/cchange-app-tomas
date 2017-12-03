@@ -131,7 +131,7 @@ class UserView extends Component {
 							: null 
 						}
 						{this.state.posts[0]
-							?	this.state.posts.map((post, index) => {
+							?	this.state.posts.sort(this.compare).map((post, index) => {
 									return <Post post={post} key={index}/>
 									})
 							: null 
@@ -140,7 +140,20 @@ class UserView extends Component {
 					: <div className="loading">Loading...</div> }
 			</div>
 		);
-  	}
+	  }
+	  /**
+	 * Sorting function for campaign posts
+	 * @memberof views/UserView#
+	*/
+	compare (a, b) {
+		if (a.dateCreated < b.dateCreated) {
+			return 1;
+		}
+		if(a.dateCreated > b.dateCreated) {
+			return -1;
+		}
+		return 0;
+	}
 }
 
 export default UserView;
