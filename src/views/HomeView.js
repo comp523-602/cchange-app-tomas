@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Campaign from './../components/Campaign';
 import Charity from './../components/Charity';
+import List from './../components/List';
+import 'react-tabs/style/react-tabs.css';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 class HomeView extends Component {
 	constructor(props) {
@@ -38,20 +41,32 @@ class HomeView extends Component {
 	}
 
 	render() {
+		const causesConfig = {
+			address: 'user.causesFeed',
+			responseKey: 'causesFeed',
+		};
+
+		const peopleConfig = {
+			address: 'user.peopleFeed',
+			responseKey: 'peopleFeed',
+		};
+
 		return (
 			<div className="container row">
 				<h1>Home</h1>
-				{this.state.charities && this.state.charities[0]
-					? this.state.charities.map((charity, index) => {
-						return <Charity charity={charity} key={index}/>
-					})
-				: <div className="loading">Loading...</div>}
+				<Tabs>
+					<TabList>
+						<Tab>Causes</Tab>
+						<Tab>People</Tab>
+					</TabList>
 
-				{this.state.campaigns && this.state.campaigns[0]
-					? this.state.campaigns.map((campaign, index) => {
-						return <Campaign campaign={campaign} key={index}/>
-					})
-				: null }
+					<TabPanel>
+						<List config={causesConfig} />
+					</TabPanel>
+					<TabPanel>
+						<List config={peopleConfig} />
+					</TabPanel>
+				</Tabs>
 			</div>
 		);
   	}

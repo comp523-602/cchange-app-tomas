@@ -9,6 +9,8 @@ import Charity from './Charity.js';
 import Campaign from './Campaign.js';
 import User from './User.js';
 
+import InfiniteScroll from 'react-infinite-scroller';
+
 class List extends Component {
 
 	/**
@@ -21,20 +23,25 @@ class List extends Component {
 			items: [],
 			loading: false,
 			pageNumber: 0,
+			shouldScrollBottom: false,
 		};
 		this.pageObjects = this.pageObjects.bind(this);
 	}
 
 	/**
 	 * Gets charity object, updates state with charity object
-	 * @memberof views/CharityView#
+	 * @memberof views/List#
 	 */
 	componentWillMount (props) {
 		if (this.state.items && !this.state.items.length) this.pageObjects();
 	}
 
+	/**
+	 * Get a page of objects from server
+	 * @memberof views/List#
+	 */
 	pageObjects () {
-
+		console.log("called");
 		// Initialize config object
 		var config = this.props.config;
 
@@ -53,9 +60,10 @@ class List extends Component {
 		// Get items from server
 		var self = this;
 		Requests.makeRequest(config.address, request, function (error, body) {
-
+			console.log(body);
 			// Get new items from response
 			var newItems = body[config.responseKey];
+			console.log(body['peopleFeed']);
 			if (!newItems) return;
 
 			// Get items from state
@@ -75,6 +83,8 @@ class List extends Component {
 
 	}
 
+	test(){console.log("called");}
+
 	/**
 	* Renders list
 	* @memberof components/List#
@@ -82,14 +92,16 @@ class List extends Component {
 	render() {
 		return (
 			<div className="list">
-				{ this.state.items.length
-					? this.state.items.map((item, index) => {
-						if (item.objectType == "post") return <Post post={item} key={index}/>;
-						if (item.objectType == "campaign") return <Campaign campaign={item} key={index}/>;
-						if (item.objectType == "charity") return <Charity charity={item} key={index}/>;
-						if (item.objectType == "user") return <User user={item} key={index}/>;
-					})
-					: null }
+				<InfiniteScroll loadMore={this.test} loader={<div className="loader">Loading ...</div>}>
+					{ this.state.items.length
+						? this.state.items.map((item, index) => {
+							if (item.objectType == "post") return <Post post={item} key={index}/>;
+							if (item.objectType == "campaign") return <Campaign campaign={item} key={index}/>;
+							if (item.objectType == "charity") return <Charity charity={item} key={index}/>;
+							if (item.objectType == "user") return <User user={item} key={index}/>;
+						})
+					: <div>Loading...</div> }
+				</InfiniteScroll>
 			</div>
 		)
 	}
