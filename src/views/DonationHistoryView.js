@@ -10,7 +10,7 @@ class DonationHistoryView extends Component {
         super(props)
         this.state = {
             'user': null,
-            'donations': []
+            'donations': null
         }
     }
 
@@ -35,9 +35,11 @@ class DonationHistoryView extends Component {
             'user': userGUID
         }, (error, body) => {
             console.log(userGUID)
-            var donations = body.updates;
+            var donations = body.donations;
             this.setState({
                 'donations': donations
+            },function() {
+                console.log(this.state.donations);
             })
         })
     }

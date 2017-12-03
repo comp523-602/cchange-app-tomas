@@ -31,12 +31,18 @@ class Post extends Component {
          'post': self.props.post.guid,
          'amount': 5,
        }, function (error, body) {
-         var donation = body.donation;
-         var post = body.post;
-         if (!donation || !post) return;
-         self.setState({
-           'donations': self.state.donations + 1,
-         });
+         if(error){
+           $("#donateDiv").append("<p>Insufficient funds</p>");
+         }
+         else{
+            var donation = body.donation;
+            var post = body.post;
+            if (!donation || !post) return;
+            self.setState({
+              'donations': self.state.donations + 1,
+            });
+         }
+
        })
 
      }
@@ -74,7 +80,7 @@ class Post extends Component {
                         <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
 					              <h3>{this.state.donations} donations</h3>
                         {Authentication.status() === Authentication.USER
-                          ? <div onClick={this.donate}><button>Donate 5¢</button></div>
+                          ? <div id="donateDiv" onClick={this.donate}><button>Donate 5¢</button></div>
                           : null}
                       </div>
                       { Authentication.getUser() && Authentication.getUser().guid === this.props.post.user

@@ -8,6 +8,7 @@ import Authentication from './../modules/Authentication';
 import Campaign from './../components/Campaign';
 import Moment from 'moment';
 import $ from 'jquery';
+import Header from './../components/Header';
 class PostView extends Component {
 
 	/**
