@@ -4,13 +4,14 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import User from './../components/User';
 import { Link } from 'react-router-dom';
+import Donation from './../components/Donation';
 
 class DonationHistoryView extends Component {
     constructor(props){
         super(props)
         this.state = {
             'user': null,
-            'donations': null
+            'donations': []
         }
     }
 
@@ -34,12 +35,11 @@ class DonationHistoryView extends Component {
         Requests.makeRequest('donations', {
             'user': userGUID
         }, (error, body) => {
-            console.log(userGUID)
             var donations = body.donations;
             this.setState({
                 'donations': donations
             },function() {
-                console.log(this.state.donations);
+                return;
             })
         })
     }
@@ -50,8 +50,10 @@ class DonationHistoryView extends Component {
                 ? <h1>{this.state.user.name}'s donation history</h1>
                 : <h1>Loading</h1>
                 }
-                {this.state.donations
-                ? <h3>Placeholder for returning donations</h3>
+                {this.state.donations[0]
+                ? this.state.donations.map((donation, index) => {
+                    return <Donation donation={donation} key={index}/>
+                })
                 : <h3>No donations to show</h3>
                 }
             </div>
