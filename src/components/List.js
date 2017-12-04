@@ -8,8 +8,7 @@ import Post from './Post.js';
 import Charity from './Charity.js';
 import Campaign from './Campaign.js';
 import User from './User.js';
-
-import InfiniteScroll from 'react-infinite-scroller';
+import Donation from './Donation.js';
 
 class List extends Component {
 
@@ -23,9 +22,11 @@ class List extends Component {
 			items: [],
 			loading: false,
 			pageNumber: 0,
-			shouldScrollBottom: false,
+			atBottom: false,
+			hasMore: true,
 		};
 		this.pageObjects = this.pageObjects.bind(this);
+		this.handleScroll = this.handleScroll.bind(this);
 	}
 
 	/**
@@ -34,6 +35,29 @@ class List extends Component {
 	 */
 	componentWillMount (props) {
 		if (this.state.items && !this.state.items.length) this.pageObjects();
+	}
+
+	componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+
+	handleScroll() {
+		const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const body = document.body;
+    const html = document.documentElement;
+    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
+    const windowBottom = windowHeight + window.pageYOffset;
+    if (windowBottom >= docHeight && this.state.hasMore) {
+      this.pageObjects();
+		} else {
+      this.setState({
+        'atBottom': false
+      });
+    }
 	}
 
 	/**
@@ -63,8 +87,10 @@ class List extends Component {
 			console.log(body);
 			// Get new items from response
 			var newItems = body[config.responseKey];
-			console.log(body['peopleFeed']);
-			if (!newItems) return;
+			if (!newItems) {
+				self.setState({'hasMore': false});
+				return;
+			}
 
 			// Get items from state
 			var items = self.state.items;
@@ -72,7 +98,7 @@ class List extends Component {
 
 			// Get current page number
 			var currentPageNumber = self.state.pageNumber;
-
+			console.log(self.state.pageNumber);
 			// Add charity to state
 			self.setState({
 				'items': items,
@@ -83,8 +109,6 @@ class List extends Component {
 
 	}
 
-	test(){console.log("called");}
-
 	/**
 	* Renders list
 	* @memberof components/List#
@@ -92,16 +116,15 @@ class List extends Component {
 	render() {
 		return (
 			<div className="list">
-				<InfiniteScroll loadMore={this.test} loader={<div className="loader">Loading ...</div>}>
-					{ this.state.items.length
-						? this.state.items.map((item, index) => {
-							if (item.objectType == "post") return <Post post={item} key={index}/>;
-							if (item.objectType == "campaign") return <Campaign campaign={item} key={index}/>;
-							if (item.objectType == "charity") return <Charity charity={item} key={index}/>;
-							if (item.objectType == "user") return <User user={item} key={index}/>;
-						})
-					: <div>Loading...</div> }
-				</InfiniteScroll>
+				{ this.state.items.length
+					? this.state.items.map((item, index) => {
+								if (item.objectType == "post") return <Post post={item} key={index}/>;
+								if (item.objectType == "donation") return <Donation donation={item} key={index}/>;
+								if (item.objectType == "campaign") return <Campaign campaign={item} key={index}/>;
+								if (item.objectType == "charity") return <Charity charity={item} key={index}/>;
+								if (item.objectType == "user") return <User user={item} key={index}/>;
+							})
+					: <div>Loading...</div>}
 			</div>
 		)
 	}
