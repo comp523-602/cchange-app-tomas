@@ -141,6 +141,25 @@ var FormConfigs = {
 		};
 	},
 
+	updateCreateEdit: function(GUID) {
+		return {
+			title: GUID ? 'Edit update':'Create update',
+			fields: {
+				name: FieldConfigs.text('Name', 'Enter a name for your charity\'s update'),
+				description: FieldConfigs.text('Description', 'Enter a description for your charity\'s update')
+			},
+			address: GUID ? 'update.edit':'update.create',
+			base: function(refs) {
+				var returnObject = {
+					'name': refs.name.state.value,
+					'description': refs.description.state.value,
+				};
+				if (GUID) returnObject.update = GUID;
+				return returnObject;
+			}
+		}
+	},
+
 	/**
 	 * @memberof modules/FormConfigs
 	 * @param {String} campaignGUID
@@ -209,24 +228,6 @@ var FormConfigs = {
 				};
 				body[type] = GUID;
 				return body;
-			}
-		}
-	},
-
-	update: function(charityGUID) {
-		return {
-			name: 'Send out an update',
-			fields: {
-				updateName: FieldConfigs.text('Name', 'Enter a name for your charity\'s update'),
-				description: FieldConfigs.text('Description', 'Enter a description for your charity\'s update')
-			},
-			address: 'update.create',
-			base: function(refs) {
-				return {
-					'authorization': charityGUID,
-					'name': refs.updateName.state.value,
-					'description': refs.description.state.value
-				}
 			}
 		}
 	},

@@ -5,59 +5,50 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
+import Authentication from './../modules/Authentication';
+import { Link } from 'react-router-dom';
 
 class UpdateView extends Component {
 
 	constructor(props) {
 		super(props)
-		this.state={
-			'charity': null
-		}
+		this.state = {};
 	}
 
 	componentWillMount(newProps) {
-		var charityGUID = null;
-		if(newProps) charityGUID = newProps.match.params.gui;
-		else charityGUID = this.props.match.params.guid;
 
-		Requests.makeRequest('charity', {
-			'charity': charityGUID
+		var updateGUID = null;
+		if(newProps) updateGUID = newProps.match.params.guid;
+		else updateGUID = this.props.match.params.guid;
+
+		Requests.makeRequest('update', {
+			'update': updateGUID
 		}, (error, body) => {
-			var charity = body.charity;
+			var update = body.update;
 			this.setState({
-				'charity': charity
+				'update': update
 			})
 		})
 
 	}
 	render() {
 		return (
-			<div className="container">
-
-				{/*Multiple this.state.charity statements because this
-					{this.state.charity
-						?(<h1>Make an update for {this.state.charity.name}</h1>,
-							<Form form = {FormConfigs.update(this.state.charity.guid, this.state.charity.name)} onSuccess={this.onUpdate}/>)
-						: null}}
-					doesn't return both the name and form - just the form*/}
-
-				{this.state.charity
-				?<h1>Make an update for {this.state.charity.name}</h1>
-				: null}
-
-				{this.state.charity
-					? <Form form = {FormConfigs.update(this.state.charity.guid, this.state.charity.name)} onSuccess={this.onUpdate}/>
-					: <div>Loading...</div>}
+			<div className="heading">
+				<div className="container">
+				{ this.state.update
+					? <div className="profileHeading">
+						<h1>{this.state.update.name}</h1>
+						<p>{this.state.update.description}</p>
+					</div>
+					: <div className="loading">Loading update...</div> }
+				{ this.state.update && Authentication.status() === Authentication.CHARITY && Authentication.getUser().charity === this.state.update.charity
+					?	<Link to={'/updateEdit/' + this.props.match.params.guid}>Edit update</Link>
+					: null}
+					</div>
 			</div>
 		);
 	}
 
-	onUpdate(response) {
-		console.log(response);
-		var charity = response.update.charity; // .charity is the charity's guid
-		window.location.href = '/charity/' + charity;
-
-	}
 }
 
 export default UpdateView;

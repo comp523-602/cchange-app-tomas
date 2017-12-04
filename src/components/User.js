@@ -6,36 +6,15 @@ import Requests from './../modules/Requests';
 import { Link } from 'react-router-dom';
 
 class User extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            'user': null
-        }
-    }
-    componentWillMount() {
-        Requests.makeRequest('user', {
-            'user': this.props.user
-        }, (error, body) => {
-            var user = body.user;
-            this.setState({
-                'user': user
-            }, function() {
-                return;
-            })
-        })
-    }
+
     render() {
         return(
-            <div className="item post row">
-                {console.log("User.js reports: " + this.state.user)}
-                {this.state.user
-                    ?<div>
-                        <Link to={"/user/" + this.state.user.guid}>
-                            <p>{this.state.user.name}</p>
-                        </Link>
-                     </div>
-                    : <div className="loading">Loading User...</div>}
-            </div>
+			<Link to={'/user/' + this.props.user.guid}>
+  		  <div className="item update row">
+  			    <h3>{this.props.user.name}</h3>
+  	            <p>{this.props.user.bio}</p>
+  	      </div>
+  		  </Link>
         )
     }
 }

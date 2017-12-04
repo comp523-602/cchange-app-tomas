@@ -30,7 +30,7 @@ header span {font-weight:bold;}
 header .logo {display:inline-block; margin-right:20px; font-weight:bold;}
 header .navigation {display:inline-block; margin-right:20px;}
 header .authmenu {display:inline-block; float:right; text-align:right;}
-header .authmenu a, header .authmenu span {margin-right:0px; margin-left:15px;}
+header .authmenu a, header .authmenu span {display:inline-block; margin-right:0px; margin-left:15px;}
 
 /* Form */
 form {}

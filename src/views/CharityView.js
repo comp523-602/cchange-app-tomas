@@ -9,7 +9,9 @@ import Campaign from './../components/Campaign';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 import $ from 'jquery';
-
+import 'react-tabs/style/react-tabs.css';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import List from './../components/List';
 
 class CharityView extends Component {
 
@@ -59,21 +61,6 @@ class CharityView extends Component {
 				'profilepictureURL': charity.logo,
 			})
 		})
-
-		// Get campaigns from server
-		Requests.makeRequest('campaigns', {
-			'charity': charityGUID
-		}, (error, body) => {
-
-			// Get charity from response
-			var campaigns = body.campaigns;
-			if (!campaigns || !campaigns.length) return;
-
-			// Add charity to state
-			this.setState({
-				'campaigns': campaigns
-			})
-		})
 	}
 
 	componentWillReceiveProps(newProps) {
@@ -85,11 +72,9 @@ class CharityView extends Component {
 	 * @memberof views/CharityView#
 	 */
 	 follow() {
-		 console.log("called");
 		 Requests.makeRequest('user.followCharity', {
 			 	'charity': this.props.match.params.guid,
  			}, (error, body) => {
-				console.log(body.user);
 				var user = body.user;
 				if (!user) return;
 				this.setState({
@@ -106,7 +91,6 @@ class CharityView extends Component {
 		 Requests.makeRequest('user.unfollowCharity', {
 			 	'charity': this.props.match.params.guid,
  			}, (error, body) => {
-				console.log(body.user);
 				var user = body.user;
 				if (!user) return;
 				this.setState({
@@ -136,27 +120,41 @@ class CharityView extends Component {
 						{ this.state.user && this.state.user.charity === this.props.match.params.guid
 							&& this.state.editLink
 							? <div className="editLinks">
-									<Link to="/campaignCreate">Create a Campaign</Link>
+									<Link to="/campaignCreate">Create a campaign</Link>
+									<Link to="/updateCreate">Create an update</Link>
 									<Link to={this.state.editLink}>Edit charity</Link>
-									<Link to={this.state.updateLink}>Send an update</Link>
 								</div>
 							: null }
+						{ this.state.charity && this.state.user && Authentication.status() === Authentication.USER
+							? <div className="user actions">
+									{ Authentication.getUser().followingCharities.indexOf(this.props.match.params.guid) > -1
+										? <button onClick={this.unfollow}>Unfollow</button>
+										: <button onClick={this.follow}>Follow</button> }
+									<Form form={FormConfigs.donation(this.state.charity.name, 'charity', this.props.match.params.guid)} onSuccess={this.onDonate} />
+								</div>
+							: null}
 					</div>
 				</div>
 				<div className="container row">
-					{ this.state.charity && this.state.user && Authentication.status() === Authentication.USER
-						? <div className="user actions">
-								{ Authentication.getUser().followingCharities.indexOf(this.props.match.params.guid) > -1
-									? <button onClick={this.unfollow}>Unfollow</button>
-									: <button onClick={this.follow}>Follow</button> }
-								<Form form={FormConfigs.donation(this.state.charity.name, 'charity', this.props.match.params.guid)} onSuccess={this.onDonate} />
-							</div>
-						: null}
-					{ this.state.campaigns
-						? this.state.campaigns.map((campaign, index) => {
-							return <Campaign campaign={campaign} key={index}/>
-						})
-						: null}
+					<Tabs>
+						<TabList>
+							<Tab>Campaigns</Tab>
+							<Tab>Updates</Tab>
+							<Tab>Donations</Tab>
+						</TabList>
+						<TabPanel>
+							<List config={{address: 'campaigns', responseKey: 'campaigns',
+								params: {charity: this.props.match.params.guid}}} />
+						</TabPanel>
+						<TabPanel>
+							<List config={{address: 'updates', responseKey: 'updates',
+								params: {charity: this.props.match.params.guid}}} />
+						</TabPanel>
+						<TabPanel>
+							<List config={{address: 'donations', responseKey: 'donations',
+								params: {charity: this.props.match.params.guid}}} />
+						</TabPanel>
+					</Tabs>
 				</div>
 			</div>
 		)

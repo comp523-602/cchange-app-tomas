@@ -2,7 +2,7 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
 
 class Header extends Component {
@@ -13,9 +13,7 @@ class Header extends Component {
 	 */
 	constructor (props) {
 		super(props)
-		this.state = {
-			balance: 0.0
-		};
+		this.state = {};
 
 		this.renderAuthMenu = this.renderAuthMenu.bind(this);
 		this.getVisitorMenu = this.getVisitorMenu.bind(this);
@@ -40,12 +38,10 @@ class Header extends Component {
 			<header>
 				<div className="container">
 					<div className="logo">
-						<Link to="/">cChange</Link>
+						<NavLink exact to="/" activeClassName="active">cChange</NavLink>
 					</div>
 					<div className="navigation">
-						<NavLink to="/campaigns" activeClassName="active">Campaigns</NavLink>
-						<NavLink to="/charities" activeClassName="active">Charities</NavLink>
-						<NavLink to="/posts" activeClassName="active">Posts</NavLink>
+						<NavLink to="/search" activeClassName="active">Browse & Search</NavLink>
 					</div>
 					{this.state.authmenu}
 				</div>
@@ -66,7 +62,6 @@ class Header extends Component {
 			authmenu: this.getCharityUserMenu(user)
 		})
 		else this.setState({
-			balance: user.balance,			
 			authmenu: this.getUserMenu(user)
 		})
 	}
@@ -89,11 +84,10 @@ class Header extends Component {
 	 * @memberof components/Header#
 	 */
 	getUserMenu (user) {
-		console.log(user);
 		return (
 			<div className="authmenu">
-				{this.returnBalance(user.balance)}
 				<NavLink to={"/user/"+user.guid} activeClassName="active">{" " + user.name}</NavLink>
+				<NavLink to={"/userAddFunds/"+user.guid} activeClassName="active">{this.returnBalance(user.balance)}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);
@@ -104,10 +98,9 @@ class Header extends Component {
 	 * @memberof components/Header#
 	 */
 	getCharityUserMenu (user) {
-		console.log(user);
 		return (
 			<div className="authmenu">
-				<NavLink to={"/charity/"+user.charity} activeClassName="active">{user.name}</NavLink>
+				<NavLink to={"/charity/"+user.charity} activeClassName="active">{user.charityName}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);

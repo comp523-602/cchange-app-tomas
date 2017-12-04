@@ -1,9 +1,9 @@
-/** @namespace views/FollowingView */
+/** @namespace views/UserFollowingView */
 
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import User from './../components/User';
+import FollowUser from './../components/FollowUser';
 
 class FollowingView extends Component {
 
@@ -42,7 +42,7 @@ class FollowingView extends Component {
                 <div className={"item post row"}>
                     {this.state.followingArr[0]
                         ? this.state.followingArr.map((user, index) => {
-                            return <User user={user} key={index}/>
+                            return <FollowUser user={user} key={index}/>
                         })
                         : null}
                 </div>

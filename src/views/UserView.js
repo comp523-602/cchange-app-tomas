@@ -6,6 +6,9 @@ import Requests from './../modules/Requests';
 import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
+import 'react-tabs/style/react-tabs.css';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import List from './../components/List';
 
 class UserView extends Component {
 
@@ -73,7 +76,6 @@ class UserView extends Component {
 	 * @memberof views/CharityView#
 	 */
 	 follow() {
-		 console.log("called");
 		 Requests.makeRequest('user.followUser', {
 			 	'user': this.props.match.params.guid,
  			}, (error, body) => {
@@ -106,14 +108,10 @@ class UserView extends Component {
 			<div>
 				{this.state.user
 					?	<div className="container">
-						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
-							?<Link to={'/donationHistoryView/' + this.state.user.guid}><button className="donationHistorybtn">Your donation history</button></Link>
-							:<Link to={'/donationHistoryView/' + this.state.user.guid}><button className="donationHistorybtn">{this.state.user.name}'s donation history</button></Link>
-						}
 
 						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
-							? <Link to={"/followingView/" + this.state.user.guid}><button className="followerViewBtn">See who you follow</button></Link>
-							: <Link to={"/followingView/" + this.state.user.guid}><button className="followerViewBtn">See who {this.state.user.name} follows</button></Link>
+							? <Link to={"/userFollowing/" + this.state.user.guid}><button className="followerViewBtn">See who you follow</button></Link>
+							: <Link to={"/userFollowing/" + this.state.user.guid}><button className="followerViewBtn">See who {this.state.user.name} follows</button></Link>
 						}
 
 						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
@@ -122,19 +120,30 @@ class UserView extends Component {
 						}
 
 						<h1>{this.state.user.name}</h1>
-						<p id="totalDonationAmt">{this.state.user.name} has donated ${/*this.state.user.totalDonationAmt*/} .</p>
+						<p id="totalDonationAmt">{this.state.user.name} has donated ${this.state.user.totalDonationAmount}</p>
 						{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
 							? this.state.following
 								? <button onClick={this.unfollow}>Unfollow</button>
 								: <button onClick={this.follow}>Follow</button>
 							: null
 						}
-						{this.state.posts[0]
-							?	this.state.posts.sort(this.compare).map((post, index) => {
-									return <Post post={post} key={index}/>
-									})
-							: null
-						}
+
+						<Tabs>
+							<TabList>
+								<Tab>Posts</Tab>
+								<Tab>Donations</Tab>
+							</TabList>
+							<TabPanel>
+								<List config={{address: 'posts', responseKey: 'posts',
+									params: {user: this.props.match.params.guid}}} />
+							</TabPanel>
+							<TabPanel>
+								<List config={{address: 'donations', responseKey: 'donations',
+									params: {user: this.props.match.params.guid}}} />
+							</TabPanel>
+						</Tabs>
+
+
 						</div>
 					: <div className="loading">Loading...</div> }
 			</div>

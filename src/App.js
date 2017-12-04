@@ -5,22 +5,19 @@ import { Route } from 'react-router-dom';
 
 // Import views
 import HomeView from './views/HomeView';
+import SearchView from './views/SearchView';
 import LoginView from './views/LoginView';
 import SignupView from './views/SignupView';
 import CharitySignupView from './views/CharitySignupView';
-import CampaignsView from './views/CampaignsView';
-import CampaignCreateView from './views/CampaignCreateView';
-import CharitiesView from './views/CharitiesView';
-import PostsView from './views/PostsView';
 import UserView from './views/UserView';
-import UserDonationsView from './views/UserDonationsView';
 import UserAddFundsView from './views/UserAddFundsView';
 import UserFollowingView from './views/UserFollowingView';
 import CharityView from './views/CharityView';
 import CharityEditView from './views/CharityEditView';
 import CampaignView from './views/CampaignView';
-import CampaignEditView from './views/CampaignEditView';
+import CampaignCreateEditView from './views/CampaignCreateEditView';
 import UpdateView from './views/UpdateView';
+import UpdateCreateEditView from './views/UpdateCreateEditView';
 import PostCreateView from './views/PostCreateView';
 import PostView from './views/PostView';
 import LogoutView from './views/LogoutView';
@@ -35,22 +32,21 @@ class App extends Component {
 				<Header />
 				<div className="view">
 					<Route exact path="/" component={HomeView} />
+					<Route path="/search" component={SearchView} />
 					<Route path="/login" component={LoginView} />
 					<Route path="/signup" component={SignupView} />
 					<Route path="/charitySignup/:charityToken" component={CharitySignupView} />
-					<Route path="/campaigns" component={CampaignsView} />
-					<Route path="/charities" component={CharitiesView} />
-					<Route path="/posts" component={PostsView} />
 					<Route path="/user/:guid" component={UserView} />
-					<Route path="/userDonations/:guid" component={UserDonationsView} />
 					<Route path="/userAddFunds/:guid" component={UserAddFundsView} />
 					<Route path="/userFollowing/:guid" component={UserFollowingView}/>
 					<Route path="/charity/:guid" component={CharityView} />
 					<Route path="/charityEdit/:guid" component={CharityEditView} />
 					<Route path="/campaign/:guid" component={CampaignView} />
-					<Route path="/campaignEdit/:guid" component={CampaignEditView} />
-					<Route path="/campaignCreate" component={CampaignCreateView} />
+					<Route path="/campaignCreate" component={CampaignCreateEditView} />
+					<Route path="/campaignEdit/:guid" component={CampaignCreateEditView} />
 					<Route path="/update/:guid" component={UpdateView} />
+					<Route path="/updateCreate" component={UpdateCreateEditView} />
+					<Route path="/updateEdit/:guid" component={UpdateCreateEditView} />
 					<Route path="/post/:guid" component={PostView} />
 					<Route path="/postCreate/:guid" component={PostCreateView} />
 					<Route path="/logout" component={LogoutView} />

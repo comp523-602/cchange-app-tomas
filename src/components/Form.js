@@ -144,7 +144,7 @@ class Form extends Component {
 				else callback();
 			},
 
-			// Make request to cChnage server
+			// Make request to cChange server
 			function (callback) {
 				self.setState({buttonText: 'Loading...'});
 				Requests.makeRequest(address, body, function (err, response) {
@@ -155,7 +155,7 @@ class Form extends Component {
 		], function (err, response) {
 
 			// Handle form after error
-			if (error) {
+			if (err) {
 				var errorMessage = 'An error occurred';
 				if (response && response.message) errorMessage = response.message;
 				self.setState({
