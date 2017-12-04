@@ -2,8 +2,6 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import Requests from './../modules/Requests';
-import Charity from './../components/Charity';
 import List from './../components/List';
 
 class CharitiesView extends Component {

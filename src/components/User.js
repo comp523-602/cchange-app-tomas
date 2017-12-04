@@ -3,12 +3,11 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
-import $ from 'jquery';
+
 class User extends Component {
     constructor(props) {
-        super(props) 
+        super(props)
         this.state = {
             'user': null
         }
@@ -24,7 +23,7 @@ class User extends Component {
                 return;
             })
         })
-    } 
+    }
     render() {
         return(
             <div className="item post row">

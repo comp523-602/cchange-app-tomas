@@ -74,9 +74,6 @@ class CampaignView extends Component {
 	 * @memberof views/CampaignView#
  	*/
 	render() {
-		var params = {
-			'campaign': this.props.match.params.guid
-		}
 		return (
 			<div>
 				<div className="heading">
@@ -84,21 +81,21 @@ class CampaignView extends Component {
 						? <div className="profileHeading">
 							{this.state.campaign.pictures
 							? this.state.campaign.pictures.map((image, index) => {
-								return <img src={image} key={index} />
+								return <img src={image} alt={this.state.campaign.title} key={index} />
 							})
 							: null}
 							<h1>{this.state.campaign.name}</h1>
 							<p>{this.state.campaign.description}</p>
 						</div>
 						: <div className="loading">Loading Campaign</div> }
-						{ this.state.campaign && Authentication.status() == Authentication.CHARITY && Authentication.getUser().charity === this.state.campaign.charity
+						{ this.state.campaign && Authentication.status() === Authentication.CHARITY && Authentication.getUser().charity === this.state.campaign.charity
 							?	<Link to={'/campaignEdit/' + this.props.match.params.guid} >
 									<p className="campaignName">
 										Edit {this.state.campaign.name}
 									</p>
 								</Link>
 							: null}
-						{ this.state.campaign && Authentication.status() == Authentication.USER
+						{ this.state.campaign && Authentication.status() === Authentication.USER
 							? <div>
 									<div className="donation">
 										<Form form={FormConfigs.donation(this.state.campaign.name, 'campaign', this.props.match.params.guid)} onSuccess={this.onDonate} />

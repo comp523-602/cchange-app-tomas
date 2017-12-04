@@ -2,8 +2,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Campaign from './../components/Campaign';
-import Charity from './../components/Charity';
 import List from './../components/List';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';

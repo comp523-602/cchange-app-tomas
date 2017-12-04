@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
-import User from './../components/User';
 import { Link } from 'react-router-dom';
 
 class UserView extends Component {

@@ -2,8 +2,6 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import Requests from './../modules/Requests';
-import Authentication from './../modules/Authentication';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 

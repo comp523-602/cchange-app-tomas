@@ -3,12 +3,9 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
-import Campaign from './../components/Campaign';
 import Moment from 'moment';
-import $ from 'jquery';
-import Header from './../components/Header';
+
 class PostView extends Component {
 
 	/**
@@ -106,7 +103,7 @@ class PostView extends Component {
 							<h1>{this.state.post.caption}</h1>
 							<h3>{this.state.post.donations.length} donations</h3>
 							<img src={this.state.post.shareableImage} alt={this.state.post.caption} /><br />
-							{Authentication.status() === Authentication.USER 
+							{Authentication.status() === Authentication.USER
 								? <div onClick={this.donate}><button>Donate 5¢</button></div>
 								: null}
 							<br /><br />

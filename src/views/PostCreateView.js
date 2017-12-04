@@ -68,7 +68,6 @@ class PostCreateView extends Component {
   * @memberof views/PostCreateView#
   */
   onSuccess (response) {
-     var campaign = response.campaign;
      $(".container").append("<p>Post created!</p>");
      window.setTimeout(function(){
       window.location.href = '/campaign/' + response.post.campaign;
@@ -77,7 +76,7 @@ class PostCreateView extends Component {
 
   onDonate(response){
     //more to be added once we have microtransactions
-    var amount = response.donation.amount;
+    //var amount = response.donation.amount;
     //$(".donation").append("<p>You just donated $" + amount + "!</p>");
  }
 }

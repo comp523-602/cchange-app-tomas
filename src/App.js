@@ -13,7 +13,9 @@ import CampaignCreateView from './views/CampaignCreateView';
 import CharitiesView from './views/CharitiesView';
 import PostsView from './views/PostsView';
 import UserView from './views/UserView';
-import FollowingView from './views/FollowingView';
+import UserDonationsView from './views/UserDonationsView';
+import UserAddFundsView from './views/UserAddFundsView';
+import UserFollowingView from './views/UserFollowingView';
 import CharityView from './views/CharityView';
 import CharityEditView from './views/CharityEditView';
 import CampaignView from './views/CampaignView';
@@ -22,8 +24,6 @@ import UpdateView from './views/UpdateView';
 import PostCreateView from './views/PostCreateView';
 import PostView from './views/PostView';
 import LogoutView from './views/LogoutView';
-import DonationHistoryView from './views/DonationHistoryView';
-import AddFundsView from './views/AddFundsView';
 
 // Import components
 import Header from './components/Header';
@@ -42,9 +42,9 @@ class App extends Component {
 					<Route path="/charities" component={CharitiesView} />
 					<Route path="/posts" component={PostsView} />
 					<Route path="/user/:guid" component={UserView} />
-					<Route path="/donationHistoryView/:guid" component={DonationHistoryView} />
-					<Route path="/addFundsView/:guid" component={AddFundsView} />
-					<Route path="/followingView/:guid" component={FollowingView}/>
+					<Route path="/userDonations/:guid" component={UserDonationsView} />
+					<Route path="/userAddFunds/:guid" component={UserAddFundsView} />
+					<Route path="/userFollowing/:guid" component={UserFollowingView}/>
 					<Route path="/charity/:guid" component={CharityView} />
 					<Route path="/charityEdit/:guid" component={CharityEditView} />
 					<Route path="/campaign/:guid" component={CampaignView} />

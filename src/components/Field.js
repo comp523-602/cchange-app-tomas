@@ -2,7 +2,6 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import $ from 'jquery';
 import Dropzone from 'react-dropzone';
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'react-cropper';
@@ -65,7 +64,7 @@ class Field extends Component {
 	removeImage (event) {
 		var images = this.state.value;
 		for (var i in images) {
-			if (images[i] == event.target.src) images.splice(i, 1);
+			if (images[i] === event.target.src) images.splice(i, 1);
 		}
 		this.setState({
 			value: images,
@@ -90,7 +89,7 @@ class Field extends Component {
 			<div className="field">
 				<span>{this.props.field.name}</span>
 				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password' ||
-					this.props.field.type == 'number'
+					this.props.field.type === 'number'
 					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
 					: null }
 				{ this.props.field.type === 'textarea'
@@ -100,7 +99,7 @@ class Field extends Component {
 					? (
 						<div>
 							{ this.state.value
-								? <img src={this.state.value} className="imageThumbnail" />
+								? <img src={this.state.value} alt="To upload" className="imageThumbnail" />
 								: null }
 							<Dropzone
 								onDrop={this.onImageDrop}
@@ -142,7 +141,7 @@ class Field extends Component {
 							</Dropzone>
 							{ this.state.value instanceof Array
 								? this.state.value.map((image, index) => {
-									return <img src={image} className="imageThumbnail" key={index} onClick={this.removeImage} />
+									return <img src={image} alt="To upload" className="imageThumbnail" key={index} onClick={this.removeImage} />
 								})
 								: null }
 							{ this.state.value instanceof Array && this.state.value.length

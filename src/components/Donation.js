@@ -2,11 +2,9 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import Requests from './../modules/Requests';
 import Moment from 'moment';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
-import $ from 'jquery';
 class Donation extends Component {
 
   render() {
@@ -21,7 +19,7 @@ class Donation extends Component {
             { this.props.donation.post || this.props.donation.campaign
             ? <div>
               <Link to={"/post/" + this.props.donation.post}>
-                  <p>{this.props.donation.postingUserName}'s post</p>
+                  <p>{this.props.donation.postingUserName + "'s post'"}</p>
                 </Link>
                 <Link to={"/campaign/" + this.props.donation.campaign}>
                   <h3>Campaign: {this.props.donation.campaignName}</h3>

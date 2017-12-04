@@ -1,7 +1,6 @@
 /** @namespace modules/FormConfigs */
 
 import FieldConfigs from './FieldConfigs';
-import Authentication from './../modules/Authentication';
 
 /*
 form config object:
@@ -153,7 +152,7 @@ var FormConfigs = {
 			fields: {
 				caption: FieldConfigs.text('Caption', 'Enter a caption for your picture'),
 				image: FieldConfigs.singleImageCrop('Image'),
-				donation: FieldConfigs.number('Amount', 'Enter a dollar amount'),				
+				donation: FieldConfigs.number('Amount', 'Enter a dollar amount'),
 			},
 			address: 'post.create',
 			base: function (refs) {
@@ -206,7 +205,7 @@ var FormConfigs = {
 			address: 'donation.create',
 			base: function(refs) {
 				var body = {
-					'amount': parseInt(refs.donation.state.value*100),
+					'amount': parseInt(refs.donation.state.value*100, 10),
 				};
 				body[type] = GUID;
 				return body;
@@ -241,7 +240,7 @@ var FormConfigs = {
 			address: 'user.addFunds',
 			base: function(refs) {
 				return {
-					'amount': parseInt(refs.amount.state.value * 100)
+					'amount': parseInt(refs.amount.state.value * 100, 10)
 				}
 			}
 		}

@@ -3,8 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Authentication from './../modules/Authentication';
-import { Link } from 'react-router-dom';
 import User from './../components/User';
 
 class FollowingView extends Component {
@@ -28,7 +26,7 @@ class FollowingView extends Component {
             console.log(user);
             this.setState({
                 'user': user,
-                'followingArr': user.followingUsers 
+                'followingArr': user.followingUsers
             }, function() {
                 console.log(this.state.followingArr);
             });

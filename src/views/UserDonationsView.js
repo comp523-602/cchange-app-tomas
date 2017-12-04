@@ -2,8 +2,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import User from './../components/User';
-import { Link } from 'react-router-dom';
 import Donation from './../components/Donation';
 
 class DonationHistoryView extends Component {

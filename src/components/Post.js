@@ -7,6 +7,7 @@ import Moment from 'moment';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
+
 class Post extends Component {
 
   constructor(props) {
@@ -57,7 +58,7 @@ class Post extends Component {
                 {this.props.post && this.props.post.image
                   ? <div>
                       <Link to={"/post/" + this.props.post.guid}>
-                        <img src={this.props.post.image} />
+                        <img src={this.props.post.image} alt={this.props.post.caption} />
                       </Link>
                       <div className="info">
                         <Link to={"/campaign/" + this.props.post.campaign} >
@@ -68,7 +69,7 @@ class Post extends Component {
                           <h3 className={"charityText_" + this.props.post.guid} >Charity: {this.props.post.charityName}</h3>
                         </Link>
 
-                        {!this.state.editing 
+                        {!this.state.editing
                         ?  <h3 className={"postText_" + this.props.post.guid}>Post: {this.state.caption}</h3>
                         : <textarea id="textarea">{this.state.caption}</textarea>
                         }
@@ -93,14 +94,12 @@ class Post extends Component {
      };
 
      editPost(postguid) {
-          var userguid = Authentication.getUser();
           var self = this;
           var editPostString;
-          var previousString = this.props.post.caption;
 
           if(this.state.editing) {
               //console.log("editing true");
-              editPostString = $("#textarea").val();              
+              editPostString = $("#textarea").val();
               self.setState({
                 editing: false,
                 buttonText: "Edit Post",
@@ -113,9 +112,8 @@ class Post extends Component {
                'caption': editPostString
               }, (error, body) => {
                 //returns post object
-                var response = body.post;
               });
-             
+
           }
 
           else {

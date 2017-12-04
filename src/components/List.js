@@ -2,7 +2,6 @@
 
 // Import dependencies
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Requests from './../modules/Requests';
 import Post from './Post.js';
 import Charity from './Charity.js';
@@ -118,12 +117,13 @@ class List extends Component {
 			<div className="list">
 				{ this.state.items.length
 					? this.state.items.map((item, index) => {
-								if (item.objectType == "post") return <Post post={item} key={index}/>;
-								if (item.objectType == "donation") return <Donation donation={item} key={index}/>;
-								if (item.objectType == "campaign") return <Campaign campaign={item} key={index}/>;
-								if (item.objectType == "charity") return <Charity charity={item} key={index}/>;
-								if (item.objectType == "user") return <User user={item} key={index}/>;
-							})
+						if (item.objectType === "post") return <Post post={item} key={index}/>;
+						if (item.objectType === "donation") return <Donation donation={item} key={index}/>;
+						if (item.objectType === "campaign") return <Campaign campaign={item} key={index}/>;
+						if (item.objectType === "charity") return <Charity charity={item} key={index}/>;
+						if (item.objectType === "user") return <User user={item} key={index}/>;
+						return null;
+					})
 					: <div>Loading...</div>}
 			</div>
 		)

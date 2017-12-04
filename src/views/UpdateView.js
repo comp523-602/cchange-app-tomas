@@ -3,8 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import { Link } from 'react-router-dom';
-import Authentication from './../modules/Authentication';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 
@@ -34,11 +32,11 @@ class UpdateView extends Component {
 	}
 	render() {
 		return (
-			<div className="container"> 
+			<div className="container">
 
 				{/*Multiple this.state.charity statements because this
 					{this.state.charity
-						?(<h1>Make an update for {this.state.charity.name}</h1>, 
+						?(<h1>Make an update for {this.state.charity.name}</h1>,
 							<Form form = {FormConfigs.update(this.state.charity.guid, this.state.charity.name)} onSuccess={this.onUpdate}/>)
 						: null}}
 					doesn't return both the name and form - just the form*/}
@@ -53,12 +51,12 @@ class UpdateView extends Component {
 			</div>
 		);
 	}
-	
+
 	onUpdate(response) {
 		console.log(response);
 		var charity = response.update.charity; // .charity is the charity's guid
 		window.location.href = '/charity/' + charity;
-		
+
 	}
 }
 
