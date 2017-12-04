@@ -17,18 +17,16 @@ class FollowingView extends Component {
 
     componentWillMount() {
         var userGUID = this.props.match.params.guid
-        console.log(userGUID);
 
-        Requests.makeRequest('user', {
-            'user': userGUID
+        Requests.makeRequest('list.single', {
+			'type': "user",
+            'guid': userGUID
         }, (error, body) => {
-            var user = body.user;
-            console.log(user);
+            var user = body.object;
+			if (!user) return;
             this.setState({
                 'user': user,
                 'followingArr': user.followingUsers
-            }, function() {
-                console.log(this.state.followingArr);
             });
         });
     }

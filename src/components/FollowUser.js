@@ -3,29 +3,31 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
-import $ from 'jquery';
 class FollowUser extends Component {
+
     constructor(props) {
-		console.log('this loads!');
         super(props)
         this.state = {
             'user': null
         }
     }
+
     componentWillMount() {
-        Requests.makeRequest('user', {
-            'user': this.props.user
+
+        Requests.makeRequest('list.single', {
+			'type': "user",
+            'guid': this.props.user
         }, (error, body) => {
-            var user = body.user;
+            var user = body.object;
+			if (!user) return;
             this.setState({
                 'user': user
-            }, function() {
-                return;
-            })
+            });
         })
+
     }
+
     render() {
         return(
             <div className="item post row">

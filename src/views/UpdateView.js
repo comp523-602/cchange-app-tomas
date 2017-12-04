@@ -3,8 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import FormConfigs from './../modules/FormConfigs';
-import Form from './../components/Form';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
 
@@ -21,10 +19,11 @@ class UpdateView extends Component {
 		if(newProps) updateGUID = newProps.match.params.guid;
 		else updateGUID = this.props.match.params.guid;
 
-		Requests.makeRequest('update', {
-			'update': updateGUID
+		Requests.makeRequest('list.single', {
+			'type': "update",
+			'guid': updateGUID
 		}, (error, body) => {
-			var update = body.update;
+			var update = body.object;
 			this.setState({
 				'update': update
 			})

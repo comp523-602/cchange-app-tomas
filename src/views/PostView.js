@@ -29,13 +29,14 @@ class PostView extends Component {
 		if (newProps) postGUID = newProps.match.params.guid;
 		else postGUID = this.props.match.params.guid;
 
-		// Get charity from server
-		Requests.makeRequest('post', {
-			'post': postGUID
+		// Get post from server
+		Requests.makeRequest('list.single', {
+			'type': "post",
+			'guid': postGUID,
 		}, (error, body) => {
 
 			// Get charity from response
-			var post = body.post;
+			var post = body.object;
 			if (!post) return;
 
 			// Add charity to state
@@ -45,8 +46,9 @@ class PostView extends Component {
 			})
 		})
 
-		// Get campaigns from server
-		Requests.makeRequest('donations', {
+		// Get donations from server
+		Requests.makeRequest('list.type', {
+			'type': "donation",
 			'post': postGUID
 		}, (error, body) => {
 

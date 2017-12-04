@@ -23,27 +23,27 @@ class SearchView extends Component {
 
 
 					<TabPanel>
-						<List config={{address: 'campaigns', responseKey: 'campaigns'}} />
+						<List config={{address: 'list.type', params: {type: 'campaign'}}} />
 					</TabPanel>
 
 					<TabPanel>
-						<List config={{address: 'charities', responseKey: 'charities'}} />
+						<List config={{address: 'list.type', params: {type: 'charity'}}} />
 					</TabPanel>
 
 					<TabPanel>
-						<List config={{address: 'updates', responseKey: 'updates'}} />
+						<List config={{address: 'list.type', params: {type: 'update'}}} />
 					</TabPanel>
 
 					<TabPanel>
-						<List config={{address: 'users', responseKey: 'users'}} />
+						<List config={{address: 'list.type', params: {type: 'user'}}} />
 					</TabPanel>
 
 					<TabPanel>
-						<List config={{address: 'posts', responseKey: 'posts'}} />
+						<List config={{address: 'list.type', params: {type: 'post'}}} />
 					</TabPanel>
 
 					<TabPanel>
-						<List config={{address: 'donations', responseKey: 'donations'}} />
+						<List config={{address: 'list.type', params: {type: 'donation'}}} />
 					</TabPanel>
 				</Tabs>
 			</div>

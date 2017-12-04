@@ -32,11 +32,13 @@ class PostCreateView extends Component {
 
     // Set up campaign create form
     var postCreateForm = FormConfigs.postCreate(campaignGUID);
-    Requests.makeRequest('campaign', {
-      'campaign': campaignGUID
+    Requests.makeRequest('list.single', {
+		'type': "campaign",
+      'guid': campaignGUID
     }, (error, body) => {
+		if (!body.object) return;
         this.setState({
-          'campaign': body.campaign
+          'campaign': body.object
         });
         $("h2").append(this.state.campaign.name);
     })

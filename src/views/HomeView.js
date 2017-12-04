@@ -12,14 +12,14 @@ class HomeView extends Component {
 			<div className="container row">
 				<Tabs>
 					<TabList>
-						<Tab>Causes</Tab>
-						<Tab>People</Tab>
+						<Tab>Causes You Follow</Tab>
+						<Tab>People You Follow</Tab>
 					</TabList>
 					<TabPanel>
-						<List config={{address: 'list.causesFeed', responseKey: 'causesFeed'}} />
+						<List config={{address: 'list.causesFeed'}} />
 					</TabPanel>
 					<TabPanel>
-						<List config={{address: 'list.peopleFeed', responseKey: 'peopleFeed'}} />
+						<List config={{address: 'list.peopleFeed'}} />
 					</TabPanel>
 				</Tabs>
 			</div>

@@ -37,7 +37,7 @@ class App extends Component {
 					<Route path="/signup" component={SignupView} />
 					<Route path="/charitySignup/:charityToken" component={CharitySignupView} />
 					<Route path="/user/:guid" component={UserView} />
-					<Route path="/userAddFunds/:guid" component={UserAddFundsView} />
+					<Route path="/userAddFunds" component={UserAddFundsView} />
 					<Route path="/userFollowing/:guid" component={UserFollowingView}/>
 					<Route path="/charity/:guid" component={CharityView} />
 					<Route path="/charityEdit/:guid" component={CharityEditView} />

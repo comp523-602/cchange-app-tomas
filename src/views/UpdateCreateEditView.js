@@ -30,10 +30,12 @@ class UpdateCreateEditView extends Component {
 
 		  if (updateGUID) {
 			  var self = this;
-			  Requests.makeRequest('update', {
-				  'update': updateGUID
+			  Requests.makeRequest('list.single', {
+				  'type': "update",
+				  'guid': updateGUID
 			  }, function(error, body) {
-				  var update = body.update;
+				  var update = body.object;
+				  if (!update) return;
 
 				  var updateForm = FormConfigs.updateCreateEdit(updateGUID);
 				  updateForm.fields.name.value = update.name;

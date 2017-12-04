@@ -19,7 +19,6 @@ class CampaignView extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			//TODO: edit charity
 			'campaign': null,
 			'posts': [],
 		};
@@ -41,12 +40,12 @@ class CampaignView extends Component {
 		else campaignGUID = this.props.match.params.guid;
 
 		// Get campaign from server
-		Requests.makeRequest('campaign', {
-			'campaign': campaignGUID
+		Requests.makeRequest('list.single', {
+			'type': "campaign",
+			'guid': campaignGUID
 		}, (error, body) => {
 			// Get campaign from response
-			var campaign = body.campaign;
-			console.log(campaign);
+			var campaign = body.object;
 			if (!campaign) return;
 			// Add campaign to state
 			this.setState({
@@ -55,14 +54,15 @@ class CampaignView extends Component {
 		})
 
 		//Retrieve all posts made for this specific campaign
-		Requests.makeRequest('posts', {
-			'campaign': campaignGUID
+		Requests.makeRequest('list.type', {
+			'type': "post",
+			'campaign': campaignGUID,
 		}, (error, body) => {
-			var posts = body.posts;
-			if(!posts) return;
+			var posts = body.objects;
+			if (!posts) return;
 
 			this.setState({
-				'posts': body.posts
+				'posts': posts
 			});
 		})
 	}

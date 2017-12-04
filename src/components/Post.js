@@ -12,6 +12,7 @@ class Post extends Component {
 
   constructor(props) {
   	super(props)
+	console.log(this);
     this.state = {
       'editing': false,
       'donations': this.props.post.donations.length,

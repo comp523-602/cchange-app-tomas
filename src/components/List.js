@@ -99,10 +99,7 @@ class List extends Component {
 			}
 
 			// Get new items from response
-			var newItems = body[config.responseKey];
-
-			console.log(request.pageSize);
-			console.log(newItems);
+			var newItems = body.objects;
 
 			// Check if items have been exhausted
 			if (newItems.length < request.pageSize) {

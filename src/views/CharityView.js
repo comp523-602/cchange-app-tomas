@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import { Link } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
-import Campaign from './../components/Campaign';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
 import $ from 'jquery';
@@ -45,12 +44,13 @@ class CharityView extends Component {
 		else charityGUID = this.props.match.params.guid;
 
 		// Get charity from server
-		Requests.makeRequest('charity', {
-			'charity': charityGUID
+		Requests.makeRequest('list.single', {
+			'type': "charity",
+			'guid': charityGUID
 		}, (error, body) => {
 
 			// Get charity from response
-			var charity = body.charity;
+			var charity = body.object;
 			if (!charity) return;
 
 			// Add charity to state
@@ -143,16 +143,13 @@ class CharityView extends Component {
 							<Tab>Donations</Tab>
 						</TabList>
 						<TabPanel>
-							<List config={{address: 'campaigns', responseKey: 'campaigns',
-								params: {charity: this.props.match.params.guid}}} />
+							<List config={{address: 'list.type', params: {type: "campaign", charity: this.props.match.params.guid}}} />
 						</TabPanel>
 						<TabPanel>
-							<List config={{address: 'updates', responseKey: 'updates',
-								params: {charity: this.props.match.params.guid}}} />
+							<List config={{address: 'list.type', params: {type: "update", charity: this.props.match.params.guid}}} />
 						</TabPanel>
 						<TabPanel>
-							<List config={{address: 'donations', responseKey: 'donations',
-								params: {charity: this.props.match.params.guid}}} />
+							<List config={{address: 'list.type', params: {type: "donation", charity: this.props.match.params.guid}}} />
 						</TabPanel>
 					</Tabs>
 				</div>

@@ -30,15 +30,16 @@ class CampaignCreateEditView extends Component {
 
 		  if (campaignGUID) {
 			  var self = this;
-			  Requests.makeRequest('campaign', {
-				  'campaign': campaignGUID
+			  Requests.makeRequest('list.single', {
+				  'type': "campaign",
+				  'guid': campaignGUID
 			  }, function(error, body) {
-				  var campaign = body.campaign;
+				  var campaign = body.object;
 
 				  var campaignForm = FormConfigs.campaignCreateEdit(campaignGUID);
 				  campaignForm.fields.name.value = campaign.name;
 				  campaignForm.fields.description.value = campaign.description;
-				campaignForm.fields.pictures.value = campaign.pictures;
+				  campaignForm.fields.pictures.value = campaign.pictures;
 
 				  self.setState({
 					  'campaignForm': campaignForm

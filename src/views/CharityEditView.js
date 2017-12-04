@@ -33,12 +33,13 @@ class CharityEditView extends Component {
 		var self = this;
 
 		// Get charity from server
-		Requests.makeRequest('charity', {
-			'charity': charityGUID
+		Requests.makeRequest('list.single', {
+			'type': "charity",
+			'guid': charityGUID
 		}, function (error, body) {
 
 			// Get charity from response
-			var charity = body.charity;
+			var charity = body.object;
 			if (!charity) return;
 
 			// Setup charity edit form

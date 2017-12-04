@@ -3,7 +3,6 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
@@ -35,35 +34,20 @@ class UserView extends Component {
 		else userGUID = this.props.match.params.guid;
 
 		// Get user from server
-		Requests.makeRequest('user', {
-			'user': userGUID
+		Requests.makeRequest('list.single', {
+			'type': "user",
+			'guid': userGUID
 		}, (error, body) => {
 
 			// Get user from response
-			var user = body.user;
+			var user = body.object;
 			if (!user) return;
 
 			// Add user to state
 			this.setState({
 				'user': user,
-			}, function(){
-				console.log(this.state.user.name);
 			});
 		})
-
-		Requests.makeRequest('posts', {
-			'user': userGUID,
-			'sortKey': 'dateCreated',
-			'sort': 'desc',
-		}, (error, body) => {
-			var posts = body.posts;
-			if(!posts) return;
-
-			this.setState({
-				'posts': posts
-			});
-		})
-
 
 	}
 
@@ -115,7 +99,7 @@ class UserView extends Component {
 						}
 
 						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
-							? <Link to={"/addFundsView/" + this.state.user.guid}><button className="addFundsBtn">Add funds</button></Link>
+							? <Link to={"/userAddFunds"}><button className="addFundsBtn">Add funds</button></Link>
 							: null
 						}
 
@@ -134,12 +118,10 @@ class UserView extends Component {
 								<Tab>Donations</Tab>
 							</TabList>
 							<TabPanel>
-								<List config={{address: 'posts', responseKey: 'posts',
-									params: {user: this.props.match.params.guid}}} />
+								<List config={{address: 'list.type', params: {type: "post", user: this.props.match.params.guid}}} />
 							</TabPanel>
 							<TabPanel>
-								<List config={{address: 'donations', responseKey: 'donations',
-									params: {user: this.props.match.params.guid}}} />
+								<List config={{address: 'list.type', params: {type: "donation", user: this.props.match.params.guid}}} />
 							</TabPanel>
 						</Tabs>
 
