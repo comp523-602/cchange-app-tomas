@@ -3,6 +3,7 @@
 // Import dependencies
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Format from './../modules/Format';
 
 class Campaign extends Component {
 
@@ -17,10 +18,12 @@ class Campaign extends Component {
 	  	{ this.props.campaign.pictures.length
 		  ? <img src={this.props.campaign.pictures[0]} alt={this.props.campaign.name} />
 		  : null }
-		  <div className="info">
+		  <div className="inside">
+		  	<div class="time">Started {Format.time(this.props.campaign.dateCreated)}</div>
 		    <h3>{this.props.campaign.name}</h3>
             <p>{this.props.campaign.description}</p>
 		  </div>
+		  <div className="clear"></div>
       </div>
 	  </Link>
     )

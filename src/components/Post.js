@@ -56,40 +56,45 @@ class Post extends Component {
      render() {
          return(
             <div className="item post row">
-                {this.props.post && this.props.post.image
-                  ? <div>
-                      <Link to={"/post/" + this.props.post.guid}>
-                        <img src={this.props.post.image} alt={this.props.post.caption} />
-                      </Link>
-                      <div className="info">
-                        <Link to={"/campaign/" + this.props.post.campaign} >
-                          <h3 className="campaignText">Campaign: {this.props.post.campaignName}</h3>
-                        </Link>
 
-                        <Link to={"/charity/" + this.props.post.charity} >
-                          <h3 className={"charityText_" + this.props.post.guid} >Charity: {this.props.post.charityName}</h3>
-                        </Link>
+				<Link to={"/post/" + this.props.post.guid}>
+                	<img src={this.props.post.image} alt={this.props.post.caption} />
+                </Link>
 
-                        {!this.state.editing
-                        ?  <h3 className={"postText_" + this.props.post.guid}>Post: {this.state.caption}</h3>
-                        : <textarea id="textarea">{this.state.caption}</textarea>
-                        }
+                <div className="inside">
+                    <Link to={"/campaign/" + this.props.post.campaign} >
+                    	<h3 className="campaignText">Campaign: {this.props.post.campaignName}</h3>
+                    </Link>
 
-                        <Link to={"/user/" + this.props.post.user} >
-                          <h3 className={"userText_" + this.props.post.guid}>User: {this.props.post.userName}</h3>
-                        </Link>
+                    <Link to={"/charity/" + this.props.post.charity} >
+                    	<h3 className={"charityText_" + this.props.post.guid} >Charity: {this.props.post.charityName}</h3>
+                    </Link>
 
-                        <h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
-					              <h3>{this.state.donations} donations</h3>
-                        {Authentication.status() === Authentication.USER
-                          ? <div id="donateDiv" onClick={this.donate}><button>Donate 5¢</button></div>
-                          : null}
-                      </div>
-                      { Authentication.getUser() && Authentication.getUser().guid === this.props.post.user
-                          ? <button id={"editPost_" + this.props.post.guid} onClick={()=> this.editPost(this.props.post.guid)}>{this.state.buttonText}</button>
-                          : null }
-                    </div>
-                  : <div className="loading">Loading Post...</div> }
+                    {!this.state.editing
+                        ? <h3 className={"postText_" + this.props.post.guid}>Caption: {this.state.caption}</h3>
+                        : <textarea id="textarea">{this.state.caption}</textarea> }
+
+                    <Link to={"/user/" + this.props.post.user} >
+                    	<h3 className={"userText_" + this.props.post.guid}>User: {this.props.post.userName}</h3>
+                    </Link>
+
+
+					<div className="time">
+						<h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
+					</div>
+					<h3>{this.state.donations} donations</h3>
+
+					<div className="buttons">
+	                    {Authentication.status() === Authentication.USER
+	                    	? <div id="donateDiv" onClick={this.donate}><button>Donate 5¢</button></div>
+	                        : null}
+						{ Authentication.getUser() && Authentication.getUser().guid === this.props.post.user
+		                    ? <button id={"editPost_" + this.props.post.guid} onClick={()=> this.editPost(this.props.post.guid)}>{this.state.buttonText}</button>
+		                    : null }
+					</div>
+                </div>
+				<div className="clear"></div>
+
             </div>
          )
      };

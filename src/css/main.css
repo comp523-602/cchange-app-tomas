@@ -5,6 +5,7 @@ html, body {font-family:'Helvetica', 'Arial', sans-serif};
 div {box-sizing:border-box;}
 img {max-width:100%;}
 a {color:inherit; text-decoration:none;}
+.clear {clear:both}
 
 /* View */
 .view {padding-bottom:30px;}
@@ -54,11 +55,18 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 .heading .editLinks a {display:inline-block; margin:0px 10px;}
 
 /* Item */
-.item {display:block; border:3px solid #ccc; padding:10px;}
-.item img {display:inline-block; vertical-align:top; max-height:100px; margin-right:10px;}
-.item .info {display:inline-block; vertical-align:top; margin-top:20px; }
-.item .info h3 {line-height:40px;}
-.item .info p {line-height:20px; margin:0px;}
+.item {display:block; border:1px solid #ccc; line-height:1.5;}
+.item img {float:left; height:150px; margin-right:20px;}
+.item .time {float:right; margin-left:30px; text-align:right; font-size:14px; color:#333;}
+.item .inside {padding:20px;}
+.item .inside .time {float:none; margin-left:0px; text-align:left; margin-bottom:6px;}
+
+.item.post img {height:300px;}
+.item.post h3 {font-size:16px;}
+
+.item.donation {border:0px; border-bottom:1px solid #ddd; padding-bottom:15px;}
+.item.donation a {font-weight:bold;}
+.item.donation a:hover {color:blue}
 
 button {
 	border:0px; background:#333; color:white; font-size:12px; align-self: left

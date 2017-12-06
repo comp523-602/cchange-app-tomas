@@ -17,10 +17,11 @@ class Charity extends Component {
 	  	{ this.props.charity.logo
 		  ? <img src={this.props.charity.logo} alt={this.props.charity.name} />
 		  : null }
-		  <div className="info">
+		  <div className="inside">
 		    <h3>{this.props.charity.name}</h3>
             <p>{this.props.charity.description}</p>
 		  </div>
+		  <div className="clear"></div>
       </div>
 	  </Link>
     )
