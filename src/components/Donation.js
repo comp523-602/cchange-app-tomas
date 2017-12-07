@@ -11,7 +11,7 @@ class Donation extends Component {
   render() {
     return(
       <div className="item donation row">
-	  		<div class="time">{Format.time(this.props.donation.dateCreated)}</div>
+	  		<div className="time">{Format.time(this.props.donation.dateCreated)}</div>
 	  		<Link to={"/user/" + this.props.donation.user}>
 		  	{Authentication.getUser() && Authentication.getUser().guid === this.props.donation.user
 				? "You"

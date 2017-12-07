@@ -245,6 +245,29 @@ var FormConfigs = {
 				}
 			}
 		}
+	},
+
+	editUser: function() {
+		return {
+			title: "Edit your profile",
+			fields: {
+				name: FieldConfigs.text('Name', 'Edit your name'),
+				bio: FieldConfigs.textarea('Description', 'Edit your bio'),
+				picture: FieldConfigs.singleImageCrop('Image'),				
+			},
+			address: 'user.edit',
+			base: function (refs) {
+				var returnObject = {
+					'name': refs.name.state.value,
+					'bio': refs.bio.state.value,
+				};
+			},
+			images: function (refs) {
+				return {
+					'picture': refs.picture.refs.cropper.getCroppedCanvas().toDataURL(),
+				};
+			},
+		};
 	}
 };
 

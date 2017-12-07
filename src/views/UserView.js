@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import List from './../components/List';
+import Form from './../components/Form';
+import FormConfigs from './../modules/FormConfigs';
 
 class UserView extends Component {
 
@@ -92,17 +94,6 @@ class UserView extends Component {
 			<div>
 				{this.state.user
 					?	<div className="container">
-
-						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
-							? <Link to={"/userFollowing/" + this.state.user.guid}><button className="followerViewBtn">See who you follow</button></Link>
-							: <Link to={"/userFollowing/" + this.state.user.guid}><button className="followerViewBtn">See who {this.state.user.name} follows</button></Link>
-						}
-
-						{ Authentication.status() === Authentication.USER && this.state.user.guid === Authentication.getUser().guid
-							? <Link to={"/userAddFunds"}><button className="addFundsBtn">Add funds</button></Link>
-							: null
-						}
-
 						<h1>{this.state.user.name}</h1>
 						<p id="totalDonationAmt">{this.state.user.name} has donated ${this.state.user.totalDonationAmount}</p>
 						{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
@@ -116,12 +107,20 @@ class UserView extends Component {
 							<TabList>
 								<Tab>Posts</Tab>
 								<Tab>Donations</Tab>
+								<Tab>Following</Tab>
+								<Tab>Edit</Tab>
 							</TabList>
 							<TabPanel>
 								<List config={{address: 'list.type', params: {type: "post", user: this.props.match.params.guid}}} />
 							</TabPanel>
 							<TabPanel>
 								<List config={{address: 'list.type', params: {type: "donation", user: this.props.match.params.guid}}} />
+							</TabPanel>
+							<TabPanel>
+								<List config={{address: 'list.type', params: {type: "user", user:this.props.match.params.guid}}} />
+							</TabPanel>
+							<TabPanel>
+								<Form form={FormConfigs.editUser()} onSuccess={this.onSuccess()}/>
 							</TabPanel>
 						</Tabs>
 
@@ -143,6 +142,10 @@ class UserView extends Component {
 			return -1;
 		}
 		return 0;
+	}
+
+	onSuccess(response){
+		console.log(response);
 	}
 }
 
