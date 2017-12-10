@@ -96,17 +96,21 @@ var FormConfigs = {
 				name: FieldConfigs.text('Name', 'Enter new charity name'),
 				description: FieldConfigs.textarea('Description', 'Enter new charity description'),
 				logo: FieldConfigs.singleImageCrop('Logo'),
+				categories: FieldConfigs.categories("Choose your campaign's category"),				
 			},
 			address: 'charity.edit',
 			base: function (refs) {
 				return {
 					'name': refs.name.state.value,
 					'description': refs.description.state.value,
+					'category': refs.categories.state.value					
 				}
 			},
 			images: function (refs) {
-				return {
-					'logo': refs.logo.refs.cropper.getCroppedCanvas().toDataURL(),
+				if(refs.logo.refs.cropper != null) {
+					return {
+						'logo': refs.logo.refs.cropper.getCroppedCanvas().toDataURL(),
+					}
 				}
 			},
 		};
@@ -123,20 +127,24 @@ var FormConfigs = {
 				name: FieldConfigs.text('Name', 'Name your campaign'),
 				description: FieldConfigs.textarea('Description', 'Enter a description'),
 				pictures: FieldConfigs.multipleImage('Add Images'),
+				categories: FieldConfigs.categories("Choose your campaign's category"),
 			},
 			address: GUID ? 'campaign.edit':'campaign.create',
 			base: function (refs) {
 				var returnObject = {
 					'name': refs.name.state.value,
 					'description': refs.description.state.value,
+					'categories': refs.categories.state.value
 				};
 				if (GUID) returnObject.campaign = GUID;
 				return returnObject;
 			},
 			images: function (refs) {
-				return {
-					'pictures': refs.pictures.state.value,
-				};
+				if(refs.pictures.state.value != null){
+					return {
+						'pictures': refs.pictures.state.value,
+					}
+				}
 			},
 		};
 	},
@@ -263,10 +271,12 @@ var FormConfigs = {
 				};
 			},
 			images: function (refs) {
-				return {
+				if(refs.picture.refs.cropper != null) {
+					return {
 					'picture': refs.picture.refs.cropper.getCroppedCanvas().toDataURL(),
-				};
-			},
+					}
+				}
+			}
 		};
 	}
 };

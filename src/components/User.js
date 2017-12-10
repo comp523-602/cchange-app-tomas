@@ -13,7 +13,7 @@ class User extends Component {
 				{console.log(this.props.user.name)}
 				<div className="item update row">
 					<div className="inside">
-						<div class="time">Joined {Format.time(this.props.user.dateCreated)}</div>
+						<div className="time">Joined {Format.time(this.props.user.dateCreated)}</div>
 						<h3>{this.props.user.name}</h3>
 						<p>{this.props.user.bio}</p>
 					</div>

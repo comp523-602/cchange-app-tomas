@@ -16,7 +16,7 @@ class Update extends Component {
 		  <Link to={'/update/' + this.props.update.guid}>
 		  <div className="item update row">
 		 		<div className="inside">
-					<div class="time">Posted {Format.time(this.props.update.dateCreated)}</div>
+					<div className="time">Posted {Format.time(this.props.update.dateCreated)}</div>
 			    	<h3>{this.props.update.name}</h3>
 	            	<p>{this.props.update.description}</p>
 				</div>

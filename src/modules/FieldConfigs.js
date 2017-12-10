@@ -41,6 +41,15 @@ var FieldConfigs = {
 	},
 
 	/**
+	 * @memberOf modules/FieldConfigs
+	 * @param {String} label label showing on the dropdown menu
+	 * @return {Object} Category selection field configuration object
+	 */
+	categories: function(label) {
+		return {label: label, type: 'categories', value: ''};
+	},
+
+	/**
 	 * @memberof modules/FieldConfigs
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Email field configuration object

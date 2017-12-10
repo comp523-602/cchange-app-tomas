@@ -95,7 +95,7 @@ class UserView extends Component {
 				{this.state.user
 					?	<div className="container">
 						<h1>{this.state.user.name}</h1>
-						<p id="totalDonationAmt">{this.state.user.name} has donated ${this.state.user.totalDonationAmount}</p>
+						<p id="totalDonationAmt">{this.state.user.name} has donated ${this.state.user.totalDonationAmount/100.0}</p>
 						{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
 							? this.state.following
 								? <button onClick={this.unfollow}>Unfollow</button>
@@ -145,7 +145,7 @@ class UserView extends Component {
 	}
 
 	onSuccess(response){
-		console.log(response);
+		//window.location.href="/user/" + this.props.match.params.guid
 	}
 }
 

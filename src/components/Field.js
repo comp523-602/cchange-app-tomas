@@ -5,6 +5,8 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import 'cropperjs/dist/cropper.css';
 import Cropper from 'react-cropper';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
 
 class Field extends Component {
 
@@ -16,10 +18,20 @@ class Field extends Component {
 		super(props);
 		this.state = {
 			value: this.props.field.value,
+			options: [
+				{value: "health", label: "Health"},
+				{value: "environment", label: "Environment"},
+				{value: "education", label: "Education"},
+				{value: "socialJustice", label: "Social Justice"},
+				{value: "housing", label: "Housing"},
+				{value: "animalProtection", label: "Animal Protection"}
+			],
+			selectedOption: ""
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.onImageDrop = this.onImageDrop.bind(this);
 		this.removeImage = this.removeImage.bind(this);
+		this.handleCategorySelect = this.handleCategorySelect.bind(this);
 	}
 
 	/**
@@ -80,6 +92,10 @@ class Field extends Component {
 		this.setState({value: event.target.value});
 	}
 
+	handleCategorySelect(option) {
+		this.setState({value: option.value});
+	}
+
 	/**
 	 * Renders view based on field.type passed to props
 	 * @memberof components/Field#
@@ -90,11 +106,26 @@ class Field extends Component {
 				<span>{this.props.field.name}</span>
 				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password' ||
 					this.props.field.type === 'number'
-					? <input type={this.props.field.type} value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} />
+					? <input type={this.props.field.type} 
+						value={this.state.value} 
+						onChange={this.handleChange} 
+						placeholder={this.props.field.placeholder} />
 					: null }
 				{ this.props.field.type === 'textarea'
-					? <textarea value={this.state.value} onChange={this.handleChange} placeholder={this.props.field.placeholder} ></textarea>
+					? <textarea value={this.state.value} 
+						onChange={this.handleChange} 
+						placeholder={this.props.field.placeholder} ></textarea>
 					: null }
+				{ this.props.field.type === 'categories'
+					? (<div className="selectDiv">
+						<Select id="categorySelect" 
+							value={this.state.selectedOption.value} 
+							onChange={this.handleCategorySelect} 
+							options={this.state.options} 
+							/>
+						</div>
+						)
+					: null}
 				{ this.props.field.type === 'singleImageCrop'
 					? (
 						<div>
@@ -141,7 +172,11 @@ class Field extends Component {
 							</Dropzone>
 							{ this.state.value instanceof Array
 								? this.state.value.map((image, index) => {
-									return <img src={image} alt="To upload" className="imageThumbnail" key={index} onClick={this.removeImage} />
+									return <img src={image} 
+										alt="To upload" 
+										className="imageThumbnail" 
+										key={index} 
+										onClick={this.removeImage} />
 								})
 								: null }
 							{ this.state.value instanceof Array && this.state.value.length
