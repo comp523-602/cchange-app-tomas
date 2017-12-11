@@ -4,7 +4,6 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Authentication from './../modules/Authentication';
-import { Link } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import List from './../components/List';

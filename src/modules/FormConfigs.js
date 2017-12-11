@@ -96,14 +96,14 @@ var FormConfigs = {
 				name: FieldConfigs.text('Name', 'Enter new charity name'),
 				description: FieldConfigs.textarea('Description', 'Enter new charity description'),
 				logo: FieldConfigs.singleImageCrop('Logo'),
-				categories: FieldConfigs.categories("Choose your campaign's category"),				
+				categories: FieldConfigs.categories("Choose your campaign's category"),
 			},
 			address: 'charity.edit',
 			base: function (refs) {
 				return {
 					'name': refs.name.state.value,
 					'description': refs.description.state.value,
-					'category': refs.categories.state.value					
+					'category': refs.categories.state.value
 				}
 			},
 			images: function (refs) {
@@ -261,11 +261,11 @@ var FormConfigs = {
 			fields: {
 				name: FieldConfigs.text('Name', 'Edit your name'),
 				bio: FieldConfigs.textarea('Description', 'Edit your bio'),
-				picture: FieldConfigs.singleImageCrop('Image'),				
+				picture: FieldConfigs.singleImageCrop('Image'),
 			},
 			address: 'user.edit',
 			base: function (refs) {
-				var returnObject = {
+				return {
 					'name': refs.name.state.value,
 					'bio': refs.bio.state.value,
 				};
@@ -273,7 +273,7 @@ var FormConfigs = {
 			images: function (refs) {
 				if(refs.picture.refs.cropper != null) {
 					return {
-					'picture': refs.picture.refs.cropper.getCroppedCanvas().toDataURL(),
+						'picture': refs.picture.refs.cropper.getCroppedCanvas().toDataURL(),
 					}
 				}
 			}
