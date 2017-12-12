@@ -50,7 +50,7 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 /* Heading */
 .heading {padding:30px; background:#f9f9f9;}
 .heading .profileHeading {text-align:center;}
-.heading .profileHeading img {max-height:120px; border-radius:10px; margin-bottom:20px;}
+.heading .profileHeading img {max-height:120px; border-radius:9px; margin-bottom:20px;}
 .heading .editLinks {text-align:center; margin-top:20px;}
 .heading .editLinks a {display:inline-block; margin:0px 10px;}
 

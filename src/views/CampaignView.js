@@ -86,6 +86,7 @@ class CampaignView extends Component {
 							: null}
 							<h1>{this.state.campaign.name}</h1>
 							<p>{this.state.campaign.description}</p>
+							<p>Purpose: {this.state.campaign.categories}</p>
 						</div>
 						: <div className="loading">Loading Campaign</div> }
 						{ this.state.campaign && Authentication.status() === Authentication.CHARITY && Authentication.getUser().charity === this.state.campaign.charity
