@@ -12,6 +12,7 @@ import CharitySignupView from './views/CharitySignupView';
 import UserView from './views/UserView';
 import UserAddFundsView from './views/UserAddFundsView';
 import UserFollowingView from './views/UserFollowingView';
+import EditUserView from './views/EditUserView';
 import CharityView from './views/CharityView';
 import CharityEditView from './views/CharityEditView';
 import CampaignView from './views/CampaignView';
@@ -37,6 +38,7 @@ class App extends Component {
 					<Route path="/signup" component={SignupView} />
 					<Route path="/charitySignup/:charityToken" component={CharitySignupView} />
 					<Route path="/user/:guid" component={UserView} />
+					<Route path="/editUserView/:guid" component={EditUserView}/>
 					<Route path="/userAddFunds" component={UserAddFundsView} />
 					<Route path="/userFollowing/:guid" component={UserFollowingView}/>
 					<Route path="/charity/:guid" component={CharityView} />

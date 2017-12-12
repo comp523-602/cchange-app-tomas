@@ -9,6 +9,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import List from './../components/List';
 import Form from './../components/Form';
 import FormConfigs from './../modules/FormConfigs';
+import { Link } from 'react-router-dom';
 
 class UserView extends Component {
 
@@ -93,6 +94,7 @@ class UserView extends Component {
 			<div>
 				{this.state.user
 					?	<div className="container">
+						<img className="ProfilePicture" src={this.state.user.picture}/>
 						<h1>{this.state.user.name}</h1>
 						<p id="totalDonationAmt">{this.state.user.name} has donated ${this.state.user.totalDonationAmount/100.0}</p>
 						{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
@@ -101,14 +103,13 @@ class UserView extends Component {
 								: <button onClick={this.follow}>Follow</button>
 							: null
 						}
-
 						<Tabs>
 							<TabList>
 								<Tab>Posts</Tab>
 								<Tab>Donations</Tab>
 								<Tab>Following</Tab>
-								<Tab>Edit</Tab>
 							</TabList>
+							<Link to={"/editUserView/"+this.state.user.guid}><button>Edit Profile</button></Link>
 							<TabPanel>
 								<List config={{address: 'list.type', params: {type: "post", user: this.props.match.params.guid}}} />
 							</TabPanel>
@@ -118,12 +119,8 @@ class UserView extends Component {
 							<TabPanel>
 								<List config={{address: 'list.type', params: {type: "user", user:this.props.match.params.guid}}} />
 							</TabPanel>
-							<TabPanel>
-								<Form form={FormConfigs.editUser()} onSuccess={this.onSuccess()}/>
-							</TabPanel>
 						</Tabs>
-
-
+						<Link to={"/editUserView/"+this.state.user.guid}><button>Edit Profile</button></Link>
 						</div>
 					: <div className="loading">Loading...</div> }
 			</div>
@@ -141,10 +138,6 @@ class UserView extends Component {
 			return -1;
 		}
 		return 0;
-	}
-
-	onSuccess(response){
-		//window.location.href="/user/" + this.props.match.params.guid
 	}
 }
 

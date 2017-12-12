@@ -134,7 +134,7 @@ class List extends Component {
 		return (
 			<div className="list">
 				{ this.state.items.length
-					? this.state.items.map((item, index) => {
+					? this.state.items.sort(this.compare).map((item, index) => {
 						if (item.objectType === "post") return <Post post={item} key={index}/>;
 						if (item.objectType === "donation") return <Donation donation={item} key={index}/>;
 						if (item.objectType === "campaign") return <Campaign campaign={item} key={index}/>;
@@ -147,6 +147,15 @@ class List extends Component {
 				{ this.state.loading ? <div className="row">Loading...</div> : null}
 			</div>
 		)
+	}
+	compare (a, b) {
+		if (a.dateCreated < b.dateCreated) {
+			return 1;
+		}
+		if(a.dateCreated > b.dateCreated) {
+			return -1;
+		}
+		return 0;
 	}
 }
 

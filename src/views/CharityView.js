@@ -108,6 +108,7 @@ class CharityView extends Component {
 										: null}
 									<h1>{this.state.charity.name}</h1>
 									<h2>{this.state.charity.description}</h2>
+									<h3>Purpose: {this.state.charity.categories}</h3>
 								</div>
 							)
 							: <div className="loading">Loading...</div> }
