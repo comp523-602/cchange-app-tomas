@@ -88,7 +88,7 @@ class Field extends Component {
 	 * @memberof components/Field#
 	 */
 	handleCategorySelect(option) {
-		this.setState({value: option.value});
+		this.setState({value: option});
 	}
 
 	/**
@@ -112,8 +112,10 @@ class Field extends Component {
 						placeholder={this.props.field.placeholder} ></textarea>
 					: null }
 				{ this.props.field.type === 'categories'
-					? (<div className="selectDiv">
+					? (<div className="selectCategoryDiv">
 						<Select id="categorySelect"
+							autofocus
+							simpleValue
 							value={this.state.value}
 							onChange={this.handleCategorySelect}
 							options={this.props.field.options}
