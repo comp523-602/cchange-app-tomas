@@ -10,7 +10,6 @@ class User extends Component {
     render() {
         return(
 			<Link to={'/user/' + this.props.user.guid}>
-				{console.log(this.props.user.name)}
 				<div className="item update row">
 					<div className="inside">
 						<div className="time">Joined {Format.time(this.props.user.dateCreated)}</div>

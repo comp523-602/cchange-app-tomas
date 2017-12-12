@@ -63,7 +63,7 @@ class List extends Component {
     	const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     	const windowBottom = windowHeight + window.pageYOffset;
 
-    	if (windowBottom >= docHeight && !this.state.exhausted) this.pageObjects();
+    	if (windowBottom >= docHeight && !this.state.exhausted && !this.state.loading) this.pageObjects();
 	}
 
 	/**
@@ -86,7 +86,7 @@ class List extends Component {
 
 		// Add unprovided variables to request
 		if (!request.pageSize) request.pageSize = 20;
-		if (!request.sort) request.sort = "asc";
+		if (!request.sort) request.sort = "desc";
 		if (!request.pageNumber) request.pageNumber = this.state.pageNumber;
 
 		// Get items from server
@@ -130,9 +130,8 @@ class List extends Component {
 	render() {
 		return (
 			<div className="list">
-				{ this.state.loading ? <div>Loading...</div> : null}
 				{ this.state.items.length
-					? this.state.items.sort(this.compare).map((item, index) => {
+					? this.state.items.map((item, index) => {
 						if (item.objectType === "post") return <Post post={item} key={index}/>;
 						if (item.objectType === "donation") return <Donation donation={item} key={index}/>;
 						if (item.objectType === "campaign") return <Campaign campaign={item} key={index}/>;
@@ -141,10 +140,16 @@ class List extends Component {
 						if (item.objectType === "user") return <User user={item} key={index}/>;
 						return null;
 					})
-					: <div>No items</div>}
+					: null}
+				{ this.state.loading ? <div className="row">Loading...</div> : null}
 			</div>
 		)
 	}
+
+	/**
+	* Sorts list by date
+	* @memberof components/List#
+	*/
 	compare (a, b) {
 		if (a.dateCreated < b.dateCreated) {
 			return 1;
