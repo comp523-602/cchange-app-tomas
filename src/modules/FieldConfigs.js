@@ -45,8 +45,15 @@ var FieldConfigs = {
 	 * @param {String} label label showing on the dropdown menu
 	 * @return {Object} Category selection field configuration object
 	 */
-	categories: function(label) {
-		return {label: label, type: 'categories', value: ''};
+	categories: function(name) {
+		return {name: name, type: 'categories', value: null, options: [
+			{value: "Health", label: "Health"},
+			{value: "Environment", label: "Environment"},
+			{value: "Education", label: "Education"},
+			{value: "Social Justice", label: "Social Justice"},
+			{value: "Housing", label: "Housing"},
+			{value: "Animal Protection", label: "Animal Protection"}
+		]};
 	},
 
 	/**

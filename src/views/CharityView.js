@@ -22,11 +22,6 @@ class CharityView extends Component {
 		super(props)
 		this.state = {
 			'user': Authentication.getUser(),
-			'charity': null,
-			'editLink': null,
-			'updateLink': null,
-			'profilepictureURL': null,
-			'campaigns': null,
 		};
 		this.follow = this.follow.bind(this);
 		this.unfollow = this.unfollow.bind(this);
@@ -56,9 +51,6 @@ class CharityView extends Component {
 			// Add charity to state
 			this.setState({
 				'charity': charity,
-				'editLink': '/charityEdit/'+charity.guid,
-				'updateLink': '/update/'+charity.guid,
-				'profilepictureURL': charity.logo,
 			})
 		})
 	}
@@ -111,18 +103,20 @@ class CharityView extends Component {
 						{ this.state.charity
 							? (
 								<div className="profileHeading">
-									<img src={this.state.profilepictureURL} alt={this.state.charity.name} />
+									{ this.state.charity.logo
+										? <img src={this.state.charity.logo} alt={this.state.charity.name} />
+										: null}
 									<h1>{this.state.charity.name}</h1>
 									<h2>{this.state.charity.description}</h2>
 								</div>
 							)
 							: <div className="loading">Loading...</div> }
 						{ this.state.user && this.state.user.charity === this.props.match.params.guid
-							&& this.state.editLink
+							&& this.state.charity
 							? <div className="editLinks">
 									<Link to="/campaignCreate">Create a campaign</Link>
 									<Link to="/updateCreate">Create an update</Link>
-									<Link to={this.state.editLink}>Edit charity</Link>
+									<Link to={"/charityEdit/"+this.state.charity.guid}>Edit charity</Link>
 								</div>
 							: null }
 						{ this.state.charity && this.state.user && Authentication.status() === Authentication.USER

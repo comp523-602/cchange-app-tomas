@@ -40,6 +40,7 @@ class CampaignCreateEditView extends Component {
 				  campaignForm.fields.name.value = campaign.name;
 				  campaignForm.fields.description.value = campaign.description;
 				  campaignForm.fields.pictures.value = campaign.pictures;
+				  campaignForm.fields.category.value = campaign.category;
 
 				  self.setState({
 					  'campaignForm': campaignForm
