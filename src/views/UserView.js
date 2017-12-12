@@ -7,8 +7,6 @@ import Authentication from './../modules/Authentication';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import List from './../components/List';
-import Form from './../components/Form';
-import FormConfigs from './../modules/FormConfigs';
 import { Link } from 'react-router-dom';
 
 class UserView extends Component {
@@ -94,7 +92,9 @@ class UserView extends Component {
 			<div>
 				{this.state.user
 					?	<div className="container">
-						<img className="ProfilePicture" src={this.state.user.picture}/>
+						{ this.state.user.picture
+							? <img className="ProfilePicture" src={this.state.user.picture} alt={this.state.user.name} />
+							: null }
 						<h1>{this.state.user.name}</h1>
 						{ this.state.user.bio
 							? <h2>{this.state.user.bio}</h2>
@@ -111,16 +111,29 @@ class UserView extends Component {
 							<TabList>
 								<Tab>Posts</Tab>
 								<Tab>Donations</Tab>
-								<Tab>Following</Tab>
+								<Tab>Users Following</Tab>
+								<Tab>Charities Following</Tab>
+								<Tab>Followers</Tab>
 							</TabList>
 							<TabPanel>
-								<List config={{address: 'list.type', params: {type: "post", user: this.props.match.params.guid}}} />
+								<List config={{address: 'list.type',
+									params: {type: "post", user: this.props.match.params.guid}}} />
 							</TabPanel>
 							<TabPanel>
-								<List config={{address: 'list.type', params: {type: "donation", user: this.props.match.params.guid}}} />
+								<List config={{address: 'list.type',
+									params: {type: "donation", user: this.props.match.params.guid}}} />
 							</TabPanel>
 							<TabPanel>
-								<List config={{address: 'list.type', params: {type: "user", user:this.props.match.params.guid}}} />
+								<List config={{address: 'list.following',
+									params: {type: "user", user:this.props.match.params.guid}}} />
+							</TabPanel>
+							<TabPanel>
+								<List config={{address: 'list.following',
+									params: {type: "charity", user:this.props.match.params.guid}}} />
+							</TabPanel>
+							<TabPanel>
+								<List config={{address: 'list.followers',
+									params: {user:this.props.match.params.guid}}} />
 							</TabPanel>
 						</Tabs>
 						</div>
