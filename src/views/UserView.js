@@ -7,8 +7,6 @@ import Authentication from './../modules/Authentication';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import List from './../components/List';
-import Form from './../components/Form';
-import FormConfigs from './../modules/FormConfigs';
 import { Link } from 'react-router-dom';
 
 class UserView extends Component {
@@ -94,7 +92,7 @@ class UserView extends Component {
 			<div>
 				{this.state.user
 					?	<div className="container">
-						<img className="ProfilePicture" src={this.state.user.picture}/>
+						<img className="ProfilePicture" src={this.state.user.picture} alt={this.state.user.name} />
 						<h1>{this.state.user.name}</h1>
 						{ this.state.user.bio
 							? <h2>{this.state.user.bio}</h2>
