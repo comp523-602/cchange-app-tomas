@@ -253,7 +253,7 @@ var FormConfigs = {
 		}
 	},
 
-	editUser: function() {
+	userEdit: function() {
 		return {
 			title: "Edit your profile",
 			fields: {

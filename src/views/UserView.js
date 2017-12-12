@@ -96,6 +96,9 @@ class UserView extends Component {
 					?	<div className="container">
 						<img className="ProfilePicture" src={this.state.user.picture}/>
 						<h1>{this.state.user.name}</h1>
+						{ this.state.user.bio
+							? <h2>{this.state.user.bio}</h2>
+							: null }
 						<p id="totalDonationAmt">{this.state.user.name} has donated ${this.state.user.totalDonationAmount/100.0}</p>
 						{ Authentication.status() === Authentication.USER && this.state.user.guid !== Authentication.getUser().guid
 							? this.state.following
@@ -103,13 +106,13 @@ class UserView extends Component {
 								: <button onClick={this.follow}>Follow</button>
 							: null
 						}
+						<Link to={"/userEdit/"+this.state.user.guid}><button>Edit Profile</button></Link>
 						<Tabs>
 							<TabList>
 								<Tab>Posts</Tab>
 								<Tab>Donations</Tab>
 								<Tab>Following</Tab>
 							</TabList>
-							<Link to={"/editUserView/"+this.state.user.guid}><button>Edit Profile</button></Link>
 							<TabPanel>
 								<List config={{address: 'list.type', params: {type: "post", user: this.props.match.params.guid}}} />
 							</TabPanel>
@@ -120,7 +123,6 @@ class UserView extends Component {
 								<List config={{address: 'list.type', params: {type: "user", user:this.props.match.params.guid}}} />
 							</TabPanel>
 						</Tabs>
-						<Link to={"/editUserView/"+this.state.user.guid}><button>Edit Profile</button></Link>
 						</div>
 					: <div className="loading">Loading...</div> }
 			</div>
