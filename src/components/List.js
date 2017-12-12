@@ -101,9 +101,6 @@ class List extends Component {
 			// Get new items from response
 			var newItems = body.objects;
 
-			console.log(newItems.length);
-			console.log(request.pageSize);
-
 			// Check if items have been exhausted
 			if (newItems.length < request.pageSize) {
 				self.setState({'exhausted': true});
@@ -134,7 +131,7 @@ class List extends Component {
 		return (
 			<div className="list">
 				{ this.state.items.length
-					? this.state.items.sort(this.compare).map((item, index) => {
+					? this.state.items.map((item, index) => {
 						if (item.objectType === "post") return <Post post={item} key={index}/>;
 						if (item.objectType === "donation") return <Donation donation={item} key={index}/>;
 						if (item.objectType === "campaign") return <Campaign campaign={item} key={index}/>;
@@ -148,6 +145,11 @@ class List extends Component {
 			</div>
 		)
 	}
+
+	/**
+	* Sorts list by date
+	* @memberof components/List#
+	*/
 	compare (a, b) {
 		if (a.dateCreated < b.dateCreated) {
 			return 1;
