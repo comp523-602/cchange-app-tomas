@@ -63,7 +63,7 @@ class List extends Component {
     	const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     	const windowBottom = windowHeight + window.pageYOffset;
 
-    	if (windowBottom >= docHeight && !this.state.exhausted) this.pageObjects();
+    	if (windowBottom >= docHeight && !this.state.exhausted && !this.state.loading) this.pageObjects();
 	}
 
 	/**
@@ -86,7 +86,7 @@ class List extends Component {
 
 		// Add unprovided variables to request
 		if (!request.pageSize) request.pageSize = 20;
-		if (!request.sort) request.sort = "asc";
+		if (!request.sort) request.sort = "desc";
 		if (!request.pageNumber) request.pageNumber = this.state.pageNumber;
 
 		// Get items from server
@@ -100,6 +100,9 @@ class List extends Component {
 
 			// Get new items from response
 			var newItems = body.objects;
+
+			console.log(newItems.length);
+			console.log(request.pageSize);
 
 			// Check if items have been exhausted
 			if (newItems.length < request.pageSize) {
@@ -130,7 +133,6 @@ class List extends Component {
 	render() {
 		return (
 			<div className="list">
-				{ this.state.loading ? <div>Loading...</div> : null}
 				{ this.state.items.length
 					? this.state.items.map((item, index) => {
 						if (item.objectType === "post") return <Post post={item} key={index}/>;
@@ -141,7 +143,8 @@ class List extends Component {
 						if (item.objectType === "user") return <User user={item} key={index}/>;
 						return null;
 					})
-					: <div>No items</div>}
+					: null}
+				{ this.state.loading ? <div className="row">Loading...</div> : null}
 			</div>
 		)
 	}
