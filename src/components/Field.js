@@ -98,7 +98,7 @@ class Field extends Component {
 	render() {
 		return (
 			<div className="field">
-				<span>{this.props.field.name}</span>
+				<span className="title">{this.props.field.name}</span>
 				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password' ||
 					this.props.field.type === 'number'
 					? <input type={this.props.field.type}
@@ -177,7 +177,7 @@ class Field extends Component {
 								})
 								: null }
 							{ this.state.value instanceof Array && this.state.value.length
-								? <span>Click an image to remove it</span>
+								? <span className="instructions">Click an image to remove it</span>
 								: null }
 						</div>
 					)
