@@ -23,6 +23,7 @@ class List extends Component {
 			loading: false,
 			pageNumber: 0,
 			exhausted: false,
+			errorCount: 0,
 		};
 		this.pageObjects = this.pageObjects.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
@@ -72,6 +73,9 @@ class List extends Component {
 	 */
 	pageObjects () {
 
+		// Don't allow loops of errors
+		if (this.state.errorCount > 2) return;
+
 		// Initialize config object
 		var config = this.props.config;
 
@@ -94,7 +98,11 @@ class List extends Component {
 		Requests.makeRequest(config.address, request, function (error, body) {
 
 			if (error) {
-				self.setState({'loading': false});
+				var errorCount = self.state.errorCount + 1;
+				self.setState({
+					'loading': false,
+					'errorCount': errorCount
+				});
 				return;
 			}
 
@@ -130,6 +138,7 @@ class List extends Component {
 	render() {
 		return (
 			<div className="list">
+				{ !this.state.loading && !this.state.items.length ? <div className="row">Nothing to display</div> : null}
 				{ this.state.items.length
 					? this.state.items.map((item, index) => {
 						if (item.objectType === "post") return <Post post={item} key={index}/>;

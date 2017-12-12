@@ -136,15 +136,23 @@ class CharityView extends Component {
 							<Tab>Campaigns</Tab>
 							<Tab>Updates</Tab>
 							<Tab>Donations</Tab>
+							<Tab>Followers</Tab>
 						</TabList>
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: "campaign", charity: this.props.match.params.guid}}} />
+							<List config={{address: 'list.type',
+								params: {type: "campaign", charity: this.props.match.params.guid}}} />
 						</TabPanel>
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: "update", charity: this.props.match.params.guid}}} />
+							<List config={{address: 'list.type',
+								params: {type: "update", charity: this.props.match.params.guid}}} />
 						</TabPanel>
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: "donation", charity: this.props.match.params.guid}}} />
+							<List config={{address: 'list.type',
+								params: {type: "donation", charity: this.props.match.params.guid}}} />
+						</TabPanel>
+						<TabPanel>
+							<List config={{address: 'list.followers',
+								params: {charity: this.props.match.params.guid}}} />
 						</TabPanel>
 					</Tabs>
 				</div>
