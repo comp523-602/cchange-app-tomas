@@ -21,17 +21,18 @@ class Header extends Component {
 		this.getCharityUserMenu = this.getCharityUserMenu.bind(this);
 	}
 
-	received() {
-		console.log('received');
-	}
-
 	/**
 	 * Runs functions once component is ready
 	 * @memberof components/Header#
 	 */
 	componentWillMount () {
 		this.renderAuthMenu();
-		document.addEventListener('updateUser', this.received(), false);
+
+		// Setup update event listener
+		var self = this;
+		document.addEventListener('updateUser', function () {
+			self.renderAuthMenu();
+		}, false);
 	}
 
 	/**

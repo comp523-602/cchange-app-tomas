@@ -3,6 +3,9 @@
 // Import dependencies
 import Storage from './Storage';
 
+// Create event
+const updateUser = new Event('updateUser');
+
 var Authentication = {
 
 	VISITOR: "vistor",
@@ -79,12 +82,10 @@ var Authentication = {
 	 * @memberof modules/authentication
 	 */
 	 updateUser: function (body) {
-		 //console.log(body.user);
-		 if (this.status() === this.USER && body.user.guid === this.getUser().guid)
-		 	Storage.set('user', body.user);
-			var updateUser = new Event('updateUser');
-			document.dispatchEvent(updateUser);
-			console.log(document);
+		 if (this.status() === this.USER && body.user.guid === this.getUser().guid) {
+			 Storage.set('user', body.user);
+ 		 	 document.dispatchEvent(updateUser);
+		 }
 	 },
 };
 
