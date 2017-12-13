@@ -18,6 +18,7 @@ class SearchView extends Component {
 		super(props);
 		this.state = {
 			'dirty': false,
+			'showForm': true,
 			'showCategoryField': true,
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,15 +32,17 @@ class SearchView extends Component {
 	render() {
 		return (
 			<div>
-				<div className="gray"><div className="container">
-					<form className="searchform" onSubmit={this.handleSubmit}>
-						<Field field={FieldConfigs.text("Keyword", "Filter results by keyword")} ref="keyword" />
-						{ this.state.showCategoryField
-							? <Field field={FieldConfigs.categories("Category", "end")} ref="category" />
-							: null }
-						<input type="submit" className="submit" value="Search" />
-					</form>
-				</div></div>
+				{ this.state.showForm
+					? (<div className="gray"><div className="container">
+						<form className="searchform" onSubmit={this.handleSubmit}>
+							<Field field={FieldConfigs.text("Keyword", "Filter results by keyword")} ref="keyword" />
+							{ this.state.showCategoryField
+								? <Field field={FieldConfigs.categories("Category", "end")} ref="category" />
+								: null }
+							<input type="submit" className="submit" value="Search" />
+						</form>
+					</div></div>)
+					: null}
 				<Tabs onSelect={this.handleTabSelect}>
 					<div className="tabsection gray"><div className="container">
 						<TabList>
@@ -84,16 +87,24 @@ class SearchView extends Component {
 
 	handleSubmit (event) {
 		event.preventDefault();
+		var keyword = null;
+		if (this.refs.keyword) keyword = this.refs.keyword.state.value;
+		var category = null;
+		if (this.refs.category) category = this.refs.category.state.value;
 		this.setState({
-			'keyword': this.refs.keyword.state.value,
-			'category': this.refs.category.state.value,
+			'keyword': keyword,
+			'category': category,
 		});
 	}
 
 	handleTabSelect (index, lastIndex, event) {
-		if (index === 2 || index === 3 || index === 5)
-			this.setState({'showCategoryField': false});
-		else this.setState({'showCategoryField': true});
+		if (index === 5) {
+			this.setState({'showForm': false, 'keyword': null});
+		} else {
+			if (index === 2 || index === 3)
+				this.setState({'showCategoryField': false, 'showForm': true});
+			else this.setState({'showCategoryField': true, 'showForm': true});
+		}
 	}
 }
 

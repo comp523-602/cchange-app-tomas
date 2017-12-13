@@ -34,7 +34,7 @@ class Donation extends Component {
 					<Link to={"/campaign/" + this.props.donation.campaign}>{" "+this.props.donation.campaignName}</Link> by
 				</span>
             	: null}
-            <Link to={"/charity" + this.props.donation.charity}>{" "+this.props.donation.charityName}</Link>
+            <Link to={"/charity/" + this.props.donation.charity}>{" "+this.props.donation.charityName}</Link>
       </div>
     )
   }

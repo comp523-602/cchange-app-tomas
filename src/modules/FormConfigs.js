@@ -176,7 +176,7 @@ var FormConfigs = {
 				return {
 					'caption': refs.caption.state.value,
 					'campaign': campaignGUID,
-					'amount': refs.donation.state.value
+					'amount': parseInt(refs.donation.state.value*100, 10)
 				}
 			},
 			images: function (refs) {
