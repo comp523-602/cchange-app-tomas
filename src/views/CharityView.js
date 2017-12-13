@@ -115,9 +115,9 @@ class CharityView extends Component {
 						{ this.state.user && this.state.user.charity === this.props.match.params.guid
 							&& this.state.charity
 							? <div className="editLinks">
-									<Link to="/campaignCreate">Create a campaign</Link>
-									<Link to="/updateCreate">Create an update</Link>
-									<Link to={"/charityEdit/"+this.state.charity.guid}>Edit charity</Link>
+									<Link to="/campaignCreate"><button>Create a campaign</button></Link>
+									<Link to="/updateCreate"><button>Create an update</button></Link>
+									<Link to={"/charityEdit/"+this.state.charity.guid}><button>Edit charity</button></Link>
 								</div>
 							: null }
 						{ this.state.charity && this.state.user && Authentication.status() === Authentication.USER
