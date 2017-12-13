@@ -97,7 +97,7 @@ class Field extends Component {
 	 */
 	render() {
 		return (
-			<div className="field">
+			<div className={this.props.field.css ? "field "+this.props.field.css : "field"}>
 				<span className="title">{this.props.field.name}</span>
 				{ this.props.field.type === 'text' || this.props.field.type === 'email' || this.props.field.type === 'password' ||
 					this.props.field.type === 'number'

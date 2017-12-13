@@ -8,8 +8,8 @@ var FieldConfigs = {
 	 * @param {String} placeholder Placeholder for field
 	 * @return {Object} Text field configuration object
 	 */
-	text: function (name, placeholder) {
-		return {name: name, type: 'text', value: '', placeholder: placeholder}
+	text: function (name, placeholder, css) {
+		return {name: name, type: 'text', value: '', css: css, placeholder: placeholder}
 	},
 
 	/**
@@ -45,8 +45,8 @@ var FieldConfigs = {
 	 * @param {String} label label showing on the dropdown menu
 	 * @return {Object} Category selection field configuration object
 	 */
-	categories: function(name) {
-		return {name: name, type: 'categories', value: null, options: [
+	categories: function(name, css) {
+		var config =  {name: name, type: 'categories', value: null, options: [
 			{value: "Health", label: "Health"},
 			{value: "Environment", label: "Environment"},
 			{value: "Education", label: "Education"},
@@ -54,6 +54,9 @@ var FieldConfigs = {
 			{value: "Housing", label: "Housing"},
 			{value: "Animal Protection", label: "Animal Protection"}
 		]};
+		if (css) config.css = "select "+css;
+		else config.css = "select";
+		return config;
 	},
 
 	/**

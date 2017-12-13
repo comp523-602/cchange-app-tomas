@@ -2,14 +2,6 @@
 
 import FieldConfigs from './FieldConfigs';
 
-/*
-form config object:
-title: Name of form
-fields: keyed object for form fields
-address: string to append to API address
-base: initial JSON to send to server as body
-*/
-
 var FormConfigs = {
 
 	/**
