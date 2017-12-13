@@ -114,7 +114,7 @@ class Field extends Component {
 				{ this.props.field.type === 'categories'
 					? (<div className="selectCategoryDiv">
 						<Select id="categorySelect"
-							autofocus
+							autoFocus
 							simpleValue
 							value={this.state.value}
 							onChange={this.handleCategorySelect}

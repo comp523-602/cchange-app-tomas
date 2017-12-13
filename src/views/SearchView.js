@@ -16,8 +16,12 @@ class SearchView extends Component {
 	 */
 	constructor (props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			'dirty': false,
+			'showCategoryField': true,
+		};
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleTabSelect = this.handleTabSelect.bind(this);
 	}
 
 	/**
@@ -27,15 +31,17 @@ class SearchView extends Component {
 	render() {
 		return (
 			<div>
-				<div className="container row">
+				<div className="container">
 					<form className="searchform" onSubmit={this.handleSubmit}>
 						<Field field={FieldConfigs.text("Keyword", "Filter results by keyword")} ref="keyword" />
-						<Field field={FieldConfigs.categories("Category", "end")} ref="category" />
+						{ this.state.showCategoryField
+							? <Field field={FieldConfigs.categories("Category", "end")} ref="category" />
+							: null }
 						<input type="submit" className="submit" value="Search" />
 					</form>
 				</div>
 				<div className="container row">
-					<Tabs>
+					<Tabs onSelect={this.handleTabSelect}>
 
 						<TabList>
 							<Tab>Campaigns</Tab>
@@ -48,32 +54,32 @@ class SearchView extends Component {
 
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'campaign'},
-								dynamicParams:this.state.params}} />
+								dynamicParams:{keyword: this.state.keyword, category: this.state.category}}} />
 						</TabPanel>
 
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'charity'},
-								dynamicParams:this.state.params}} />
+								dynamicParams:{keyword: this.state.keyword, category: this.state.category}}} />
 						</TabPanel>
 
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'update'},
-								dynamicParams:this.state.params}} />
+								dynamicParams:{keyword: this.state.keyword}}} />
 						</TabPanel>
 
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'user'},
-								dynamicParams:this.state.params}} />
+								dynamicParams:{keyword: this.state.keyword}}} />
 						</TabPanel>
 
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'post'},
-								dynamicParams:this.state.params}} />
+								dynamicParams:{keyword: this.state.keyword, category: this.state.category}}} />
 						</TabPanel>
 
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'donation'},
-								dynamicParams:this.state.params}} />
+								dynamicParams:{keyword: this.state.keyword}}} />
 						</TabPanel>
 					</Tabs>
 				</div>
@@ -82,17 +88,17 @@ class SearchView extends Component {
   	}
 
 	handleSubmit (event) {
-
-		// Prevent default action
 		event.preventDefault();
-
-		// Update state params
 		this.setState({
-			params: {
-				'keyword': this.refs.keyword.state.value,
-				'category': this.refs.category.state.value,
-			},
+			'keyword': this.refs.keyword.state.value,
+			'category': this.refs.category.state.value,
 		});
+	}
+
+	handleTabSelect (index, lastIndex, event) {
+		if (index === 2 || index === 3 || index === 5)
+			this.setState({'showCategoryField': false});
+		else this.setState({'showCategoryField': true});
 	}
 }
 

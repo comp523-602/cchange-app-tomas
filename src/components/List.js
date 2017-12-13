@@ -10,6 +10,16 @@ import Update from './Update.js';
 import User from './User.js';
 import Donation from './Donation.js';
 
+var getBlankListState = function () {
+	return {
+		items: [],
+		loading: false,
+		pageNumber: 0,
+		exhausted: false,
+		errorCount: 0
+	};
+};
+
 class List extends Component {
 
 	/**
@@ -18,13 +28,7 @@ class List extends Component {
 	 */
 	constructor (props) {
 		super(props);
-		this.state = {
-			items: [],
-			loading: false,
-			pageNumber: 0,
-			exhausted: false,
-			errorCount: 0
-		};
+		this.state = getBlankListState();
 		this.pageObjects = this.pageObjects.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
 		this.componentWillMount = this.componentWillMount.bind(this);
@@ -61,14 +65,9 @@ class List extends Component {
 	 */
 	componentWillReceiveProps (props) {
 		this.props = props;
-		this.setState({
-			items: [],
-			loading: false,
-			pageNumber: 0,
-			exhausted: false,
-			errorCount: 0
+		this.setState(getBlankListState(), function () {
+			this.pageObjects();
 		});
-		this.pageObjects();
 	}
 
 	/**
@@ -109,8 +108,7 @@ class List extends Component {
 		// Add unprovided variables to request
 		if (!request.pageSize) request.pageSize = 20;
 		if (!request.sort) request.sort = "desc";
-		console.log(this.state);
-		if (!request.pageNumber) request.pageNumber = this.state.pageNumber;
+		request.pageNumber = this.state.pageNumber;
 
 		// Add dynamicParams to request
 		if (config.dynamicParams) {

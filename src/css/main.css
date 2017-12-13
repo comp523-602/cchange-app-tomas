@@ -78,6 +78,7 @@ form .errorMessage {margin-top:20px; font-style:italic;}
 .searchform {width:100%}
 .searchform .field {display:inline-block; width:48%; margin-right:3%; vertical-align:top;}
 .searchform .field.end {margin-right:0px;}
+.searchform .submit {display:block;}
 
 button {border:0px; margin-top:20px; background:#333; color:white; padding:8px 16px; font-size:16px;}
 button:active {transform: translateY(1px);}
