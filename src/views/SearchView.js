@@ -31,7 +31,7 @@ class SearchView extends Component {
 	render() {
 		return (
 			<div>
-				<div className="container">
+				<div className="gray"><div className="container">
 					<form className="searchform" onSubmit={this.handleSubmit}>
 						<Field field={FieldConfigs.text("Keyword", "Filter results by keyword")} ref="keyword" />
 						{ this.state.showCategoryField
@@ -39,10 +39,9 @@ class SearchView extends Component {
 							: null }
 						<input type="submit" className="submit" value="Search" />
 					</form>
-				</div>
-				<div className="container row">
-					<Tabs onSelect={this.handleTabSelect}>
-
+				</div></div>
+				<Tabs onSelect={this.handleTabSelect}>
+					<div className="tabsection gray"><div className="container">
 						<TabList>
 							<Tab>Campaigns</Tab>
 							<Tab>Charities</Tab>
@@ -51,38 +50,34 @@ class SearchView extends Component {
 							<Tab>Posts</Tab>
 							<Tab>Donations</Tab>
 						</TabList>
-
+					</div></div>
+					<div className="container">
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'campaign'},
 								dynamicParams:{keyword: this.state.keyword, category: this.state.category}}} />
 						</TabPanel>
-
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'charity'},
 								dynamicParams:{keyword: this.state.keyword, category: this.state.category}}} />
 						</TabPanel>
-
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'update'},
 								dynamicParams:{keyword: this.state.keyword}}} />
 						</TabPanel>
-
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'user'},
 								dynamicParams:{keyword: this.state.keyword}}} />
 						</TabPanel>
-
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'post'},
 								dynamicParams:{keyword: this.state.keyword, category: this.state.category}}} />
 						</TabPanel>
-
 						<TabPanel>
 							<List config={{address: 'list.type', params: {type: 'donation'},
 								dynamicParams:{keyword: this.state.keyword}}} />
 						</TabPanel>
-					</Tabs>
-				</div>
+					</div>
+				</Tabs>
 			</div>
 		);
   	}

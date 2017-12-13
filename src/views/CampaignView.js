@@ -3,12 +3,13 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Post from './../components/Post';
 import Authentication from './../modules/Authentication';
 import { Link } from 'react-router-dom';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
-import $ from 'jquery';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import List from './../components/List';
+import ReactModal from 'react-modal';
 
 class CampaignView extends Component {
 
@@ -19,13 +20,12 @@ class CampaignView extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			'campaign': null,
-			'posts': [],
+			'user': Authentication.getUser(),
+			'showModal': false,
 		};
-		//this.onSuccess = this.onSuccess.bind(this);
-		this.compare = this.compare.bind(this)
+		this.handleOpenModal = this.handleOpenModal.bind(this);
+    	this.handleCloseModal = this.handleCloseModal.bind(this);
 	}
-
 
 	/**
 	* Gets campaign object, updates state with campaign object
@@ -52,19 +52,6 @@ class CampaignView extends Component {
 				'campaign': campaign,
 			});
 		})
-
-		//Retrieve all posts made for this specific campaign
-		Requests.makeRequest('list.type', {
-			'type': "post",
-			'campaign': campaignGUID,
-		}, (error, body) => {
-			var posts = body.objects;
-			if (!posts) return;
-
-			this.setState({
-				'posts': posts
-			});
-		})
 	}
 	componentWillReceiveProps(newProps) {
 		this.componentWillMount(newProps);
@@ -76,76 +63,108 @@ class CampaignView extends Component {
 	render() {
 		return (
 			<div>
-				<div className="heading">
-					{ this.state.campaign
-						? <div className="profileHeading">
-							{this.state.campaign.pictures
-							? this.state.campaign.pictures.map((image, index) => {
-								return <img src={image} alt={this.state.campaign.title} key={index} />
-							})
-							: null}
-							<h1>{this.state.campaign.name}</h1>
-							<p>{this.state.campaign.description}</p>
-							<p>Purpose: {this.state.campaign.categories}</p>
-						</div>
-						: <div className="loading">Loading Campaign</div> }
-						{ this.state.campaign && Authentication.status() === Authentication.CHARITY && Authentication.getUser().charity === this.state.campaign.charity
-							?	<Link to={'/campaignEdit/' + this.props.match.params.guid} >
-									<p className="campaignName">
-										Edit {this.state.campaign.name}
-									</p>
-								</Link>
-							: null}
-						{ this.state.campaign && Authentication.status() === Authentication.USER
+				<div className="gray heading campaign">
+					{ this.state.campaign && this.state.campaign.pictures && this.state.campaign.pictures.length
+						? <div className="bg" style={{backgroundImage:"url("+this.state.campaign.pictures[0]+")"}}></div>
+						: null}
+					<div className="container">
+						{ this.state.campaign
+							? (
+								<div>
+									<Link to={"/charity/"+this.state.campaign.charity}><p>{this.state.campaign.charityName}</p></Link>
+									<h1>{this.state.campaign.name}</h1>
+									{ this.state.campaign.description
+										? <p>{this.state.campaign.description}</p>
+										: null}
+									{ this.state.campaign.category
+										? <span className="category">{this.state.campaign.category}</span>
+										: null}
+								</div>
+							)
+							: <div className="loading">Loading...</div> }
+						{ this.state.user && this.state.campaign && this.state.user.charity === this.state.campaign.charity
 							? <div>
-									<div className="donation">
-										<Form form={FormConfigs.donation(this.state.campaign.name, 'campaign', this.props.match.params.guid)} onSuccess={this.onDonate} />
-									</div>
-									<Link to={'/postCreate/' + this.props.match.params.guid} >
-											<p>Create a post for this campaign</p>
-									</Link>
+									<Link to={"/campaignEdit/"+this.props.match.params.guid}><button>Edit</button></Link>
+								</div>
+							: null }
+						{ this.state.user && this.state.campaign && Authentication.status() === Authentication.USER
+							? <div>
+									<Link to={'/postCreate/' + this.props.match.params.guid}><button>Support with a post</button></Link>
+									<button onClick={this.handleOpenModal}>Donate</button>
 								</div>
 							: null}
-					{this.state.posts[0]
-						?	this.state.posts.sort(this.compare).map((post, index) => {
-							return <Post post={post} key={index}/>
-						})
-						: null }
+					</div>
 				</div>
+				<Tabs>
+					<div className="gray tabsection"><div className="container">
+						<TabList>
+							<Tab>Posts</Tab>
+							<Tab>Donations</Tab>
+							<Tab>Pictures</Tab>
+						</TabList>
+					</div></div>
+					<div className="container">
+						<TabPanel>
+							<List config={{address: 'list.type',
+								params: {type: "post", campaign: this.props.match.params.guid}}} />
+						</TabPanel>
+						<TabPanel>
+							<List config={{address: 'list.type',
+								params: {type: "donation", campaign: this.props.match.params.guid}}} />
+						</TabPanel>
+						<TabPanel>
+							<div className="gallery">
+								{ this.state.campaign && this.state.campaign.pictures.length
+									? this.state.campaign.pictures.map((picture, index) => {
+										return <img src={picture} key={index} alt={this.state.campaign.name} />;
+									}) : null}
+							</div>
+						</TabPanel>
+					</div>
+				</Tabs>
+				{ this.state.campaign
+					? <ReactModal
+						style={{
+						  overlay: {
+						    position          : 'fixed',
+						    top               : 0,
+						    left              : 0,
+						    right             : 0,
+						    bottom            : 0,
+						    backgroundColor   : 'rgba(0,0,0,0.8)'
+						  },
+						  content: {
+						    position                   : 'absolute',
+						    top                        : '80px',
+							bottom					   : 'auto',
+						    left                       : '50%',
+						    marginLeft                 : '-180px',
+							width					   : '320px',
+						    boxShadow                  : '0px 0px 6px rgba(0,0,0,0.5)',
+						    background                 : '#fff',
+						    borderRadius               : '4px',
+						    padding                    : '0px 20px 30px'
+						  }
+					  	}}
+						ariaHideApp={false}
+			        	isOpen={this.state.showModal}
+			        	onRequestClose={this.handleCloseModal}
+			        	shouldCloseOnOverlayClick={true}>
+			    			<Form form={FormConfigs.donation(this.state.campaign.name, 'campaign', this.props.match.params.guid)} onSuccess={this.handleCloseModal} />
+			        </ReactModal>
+					: null}
 			</div>
-		);
+		)
+  	}
+
+	handleOpenModal () {
+		this.setState({'showModal':true});
 	}
 
-	/**
-	 * Sorting function for campaign posts
-	 * @memberof views/CampaignView#
-	*/
-	compare (a, b) {
-		if (a.dateCreated < b.dateCreated) {
-			return 1;
-		}
-		if(a.dateCreated > b.dateCreated) {
-			return -1;
-		}
-		return 0;
+	handleCloseModal () {
+		this.setState({'showModal':false});
 	}
 
-	onSuccess (response) {
-  	var posts = this.state.posts;
-		posts.push(response.post)
-		this.setState({
-			posts: posts
- 		});
-	}
-
-	/**
-	* Passed to components/Form to be exeuted on successful request
-	* @memberof views/CampaignView#
-	*/
-	onDonate (response) {
-		 var amount = response.donation.amount;
-		 $(".donation").append("<p>You just donated $" + amount + "!</p>");
-	}
 }
 
 export default CampaignView;

@@ -19,9 +19,9 @@ class Campaign extends Component {
 		  ? <img src={this.props.campaign.pictures[0]} alt={this.props.campaign.name} />
 		  : null }
 		  <div className="inside">
-		  	<div className="time">Started {Format.time(this.props.campaign.dateCreated)}</div>
 		    <h3>{this.props.campaign.name}</h3>
             <p>{this.props.campaign.description}</p>
+			<div className="time">Campaign &middot; Started {Format.time(this.props.campaign.dateCreated)}</div>
 		  </div>
 		  <div className="clear"></div>
       </div>

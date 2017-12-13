@@ -143,8 +143,8 @@ var FormConfigs = {
 		return {
 			title: GUID ? 'Edit update':'Create update',
 			fields: {
-				name: FieldConfigs.text('Name', 'Enter a name for your charity\'s update'),
-				description: FieldConfigs.text('Description', 'Enter a description for your charity\'s update')
+				name: FieldConfigs.text('Name'),
+				description: FieldConfigs.textarea('Description')
 			},
 			address: GUID ? 'update.edit':'update.create',
 			base: function(refs) {

@@ -20,7 +20,6 @@ import UpdateView from './views/UpdateView';
 import UpdateCreateEditView from './views/UpdateCreateEditView';
 import PostCreateView from './views/PostCreateView';
 import PostView from './views/PostView';
-import LogoutView from './views/LogoutView';
 
 // Import components
 import Header from './components/Header';
@@ -49,7 +48,6 @@ class App extends Component {
 					<Route path="/updateEdit/:guid" component={UpdateCreateEditView} />
 					<Route path="/post/:guid" component={PostView} />
 					<Route path="/postCreate/:guid" component={PostCreateView} />
-					<Route path="/logout" component={LogoutView} />
 				</div>
 			</div>
 		);

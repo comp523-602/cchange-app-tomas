@@ -4,8 +4,6 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Authentication from './../modules/Authentication';
-import Moment from 'moment';
-import Donation from './../components/Donation';
 import List from './../components/List';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +19,7 @@ class PostView extends Component {
 			'post': null,
 		};
 		this.donate = this.donate.bind(this);
-		
+
 	}
 
 	/**
@@ -88,11 +86,11 @@ class PostView extends Component {
 	 */
 	render() {
 		return (
-			<div className="container">
+			<div className="container row">
 				{ this.state.post && this.state.post.donations.length != null
 					? (
 						<div>
-							<h2><Link to={"/user/" + this.state.post.user}>{this.state.post.userName}</Link>'s post to  
+							<h2><Link to={"/user/" + this.state.post.user}>{this.state.post.userName+"'s"}</Link> post to
 								<Link to={"/campaign/" + this.state.post.campaign}> {this.state.post.campaignName}</Link></h2>
 
 							<h3>{this.state.post.caption}</h3>

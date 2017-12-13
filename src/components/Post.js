@@ -3,8 +3,8 @@
 // Import dependencies
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
-import Moment from 'moment';
 import Authentication from './../modules/Authentication';
+import Format from './../modules/Format';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 
@@ -16,7 +16,8 @@ class Post extends Component {
       'editing': false,
       'donations': this.props.post.donations.length,
       'buttonText': "Edit Post",
-      'caption': this.props.post.caption
+      'caption': this.props.post.caption,
+	  'donateText': "Donate 5¢"
   	};
     this.editPost = this.editPost.bind(this, this.props.post.guid);
     this.donate = this.donate.bind(this);
@@ -27,23 +28,29 @@ class Post extends Component {
      * @memberof components/Post#
      */
      donate(event) {
+		 this.setState({'donateText': "..."});
        var self = this;
        Requests.makeRequest('donation.create', {
          'post': self.props.post.guid,
          'amount': 5,
        }, function (error, body) {
          if(error){
-           $("#donateDiv").append("<p>Insufficient funds</p>");
+           this.setState({'donateText': "Insufficient funds"});
          }
          else{
             var donation = body.donation;
             var post = body.post;
             if (!donation || !post) return;
             self.setState({
-              'donations': self.state.donations + 1,
+				'donateText': "Success!",
+                'donations': self.state.donations + 1,
             });
          }
-
+		 window.setTimeout(function () {
+			 self.setState({
+				 'donateText': "Donate 5¢"
+			 })
+		 }, 2000);
        })
 
      }
@@ -79,13 +86,13 @@ class Post extends Component {
 
 
 					<div className="time">
-						<h3>{Moment(this.props.post.dateCreated*1000).fromNow()}</h3>
+						<h3>{Format.time(this.props.post.dateCreated)}</h3>
 					</div>
 					<h3>{this.state.donations} donations</h3>
 
 					<div className="buttons">
 	                    {Authentication.status() === Authentication.USER
-	                    	? <div id="donateDiv" onClick={this.donate}><button>Donate 5¢</button></div>
+	                    	? <div id="donateDiv" onClick={this.donate}><button>{this.state.donateText}</button></div>
 	                        : null}
 						{ Authentication.getUser() && Authentication.getUser().guid === this.props.post.user
 		                    ? <button id={"editPost_" + this.props.post.guid} onClick={()=> this.editPost(this.props.post.guid)}>{this.state.buttonText}</button>

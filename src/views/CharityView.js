@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
 import FormConfigs from './../modules/FormConfigs';
 import Form from './../components/Form';
-import $ from 'jquery';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import List from './../components/List';
+import ReactModal from 'react-modal';
 
 class CharityView extends Component {
 
@@ -25,6 +25,8 @@ class CharityView extends Component {
 		};
 		this.follow = this.follow.bind(this);
 		this.unfollow = this.unfollow.bind(this);
+		this.handleOpenModal = this.handleOpenModal.bind(this);
+    	this.handleCloseModal = this.handleCloseModal.bind(this);
 	}
 
 	/**
@@ -64,15 +66,14 @@ class CharityView extends Component {
 	 * @memberof views/CharityView#
 	 */
 	 follow() {
-		 Requests.makeRequest('user.followCharity', {
-			 	'charity': this.props.match.params.guid,
- 			}, (error, body) => {
-				var user = body.user;
-				if (!user) return;
-				this.setState({
-					'user': user
-				});
-			})
+	 	Requests.makeRequest('user.followCharity', {
+		 	'charity': this.props.match.params.guid,
+		}, (error, body) => {
+			var charity = body.charity;
+			if (charity) this.setState({
+				'charity': charity
+			});
+		})
 	 }
 
 	 /**
@@ -82,11 +83,10 @@ class CharityView extends Component {
 	 unfollow() {
 		 Requests.makeRequest('user.unfollowCharity', {
 			 	'charity': this.props.match.params.guid,
- 			}, (error, body) => {
-				var user = body.user;
-				if (!user) return;
-				this.setState({
-					'user': user
+			}, (error, body) => {
+				var charity = body.charity;
+				if (charity) this.setState({
+					'charity': charity
 				});
 			})
 	 }
@@ -98,46 +98,51 @@ class CharityView extends Component {
 	render() {
 		return (
 			<div>
-				<div className="heading">
-					<div className="container">
+				<div className="gray heading"><div className="container">
 						{ this.state.charity
 							? (
-								<div className="profileHeading">
+								<div>
 									{ this.state.charity.logo
 										? <img src={this.state.charity.logo} alt={this.state.charity.name} />
 										: null}
 									<h1>{this.state.charity.name}</h1>
-									<h2>{this.state.charity.description}</h2>
-									<h3>Purpose: {this.state.charity.categories}</h3>
+									{ this.state.charity.description
+										? <p>{this.state.charity.description}</p>
+										: null}
+									{ this.state.charity.categories.length
+										? this.state.charity.categories.map((category, index) => {
+											return <span className="category" key={index}>{category}</span>;
+										}) : null}
 								</div>
 							)
 							: <div className="loading">Loading...</div> }
 						{ this.state.user && this.state.user.charity === this.props.match.params.guid
 							&& this.state.charity
-							? <div className="editLinks">
+							? <div>
 									<Link to="/campaignCreate"><button>Create a campaign</button></Link>
 									<Link to="/updateCreate"><button>Create an update</button></Link>
 									<Link to={"/charityEdit/"+this.state.charity.guid}><button>Edit charity</button></Link>
 								</div>
 							: null }
 						{ this.state.charity && this.state.user && Authentication.status() === Authentication.USER
-							? <div className="user actions">
-									{ Authentication.getUser().followingCharities.indexOf(this.props.match.params.guid) > -1
+							? <div>
+									{ this.state.charity.currentUserFollows
 										? <button onClick={this.unfollow}>Unfollow</button>
 										: <button onClick={this.follow}>Follow</button> }
-									<Form form={FormConfigs.donation(this.state.charity.name, 'charity', this.props.match.params.guid)} onSuccess={this.onDonate} />
+									<button onClick={this.handleOpenModal}>Donate</button>
 								</div>
 							: null}
-					</div>
-				</div>
-				<div className="container row">
-					<Tabs>
+				</div></div>
+				<Tabs>
+					<div className="gray tabsection"><div className="container">
 						<TabList>
 							<Tab>Campaigns</Tab>
 							<Tab>Updates</Tab>
 							<Tab>Donations</Tab>
 							<Tab>Followers</Tab>
 						</TabList>
+					</div></div>
+					<div className="container">
 						<TabPanel>
 							<List config={{address: 'list.type',
 								params: {type: "campaign", charity: this.props.match.params.guid}}} />
@@ -154,20 +159,50 @@ class CharityView extends Component {
 							<List config={{address: 'list.followers',
 								params: {charity: this.props.match.params.guid}}} />
 						</TabPanel>
-					</Tabs>
-				</div>
+					</div>
+				</Tabs>
+				{ this.state.charity
+					? <ReactModal
+						style={{
+						  overlay: {
+						    position          : 'fixed',
+						    top               : 0,
+						    left              : 0,
+						    right             : 0,
+						    bottom            : 0,
+						    backgroundColor   : 'rgba(0,0,0,0.8)'
+						  },
+						  content: {
+						    position                   : 'absolute',
+						    top                        : '80px',
+							bottom					   : 'auto',
+						    left                       : '50%',
+						    marginLeft                 : '-180px',
+							width					   : '320px',
+						    boxShadow                  : '0px 0px 6px rgba(0,0,0,0.5)',
+						    background                 : '#fff',
+						    borderRadius               : '4px',
+						    padding                    : '0px 20px 30px'
+						  }
+					  	}}
+						ariaHideApp={false}
+			        	isOpen={this.state.showModal}
+			        	onRequestClose={this.handleCloseModal}
+			        	shouldCloseOnOverlayClick={true}>
+			    			<Form form={FormConfigs.donation(this.state.charity.name, 'charity', this.props.match.params.guid)} onSuccess={this.handleCloseModal} />
+			        </ReactModal>
+					: null}
 			</div>
 		)
   	}
 
-		/**
-		* Passed to components/Form to be exeuted on successful request
-		* @memberof views/CharityView#
-		*/
-		onDonate (response) {
-			 var amount = response.donation.amount;
-			 $(".donation").append("<p>You just donated " + amount + "!</p>");
-		}
+	handleOpenModal () {
+		this.setState({'showModal':true});
+	}
+
+	handleCloseModal () {
+		this.setState({'showModal':false});
+	}
 }
 
 export default CharityView;

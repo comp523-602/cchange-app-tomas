@@ -49,7 +49,7 @@ var Authentication = {
 	 */
 	logout: function () {
 		Storage.clear();
-		window.location.href = "/logout";
+		window.location.href = "/";
 	},
 
 	/**

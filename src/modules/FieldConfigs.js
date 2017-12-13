@@ -84,7 +84,7 @@ var FieldConfigs = {
 	 * @return {Object} Number field configuration object
 	 */
 	number: function (placeholder, instructions) {
-		return {name: 'Donation', type: 'number', value: '', placeholder: placeholder,
+		return {name: 'Donation', type: 'number', value: '', placeholder: "0.00",
 			instructions: instructions};
 	},
 };

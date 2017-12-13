@@ -4,9 +4,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import Format from './../modules/Format';
+import $ from 'jquery';
 
 class Header extends Component {
 
@@ -24,6 +23,8 @@ class Header extends Component {
 		this.getVisitorMenu = this.getVisitorMenu.bind(this);
 		this.getUserMenu = this.getUserMenu.bind(this);
 		this.getCharityUserMenu = this.getCharityUserMenu.bind(this);
+		this.openMenu = this.openMenu.bind(this);
+		this.closeMenu = this.closeMenu.bind(this);
 	}
 
 	/**
@@ -32,12 +33,26 @@ class Header extends Component {
 	 */
 	componentWillMount () {
 		this.renderAuthMenu();
+		this.setState({'user': Authentication.getUser()});
 
-		// Setup update event listener
 		var self = this;
 		document.addEventListener('updateUser', function () {
 			self.renderAuthMenu();
+			self.setState({'user': Authentication.getUser()});
 		}, false);
+	}
+
+	openMenu () {
+		if ($("#control").hasClass("show")) {
+			return this.closeMenu();
+		}
+		$("#control").addClass("show");
+		$("#underlay").addClass("show");
+	}
+
+	closeMenu() {
+		$("#control").removeClass("show");
+		$("#underlay").removeClass("show");
 	}
 
 	/**
@@ -46,24 +61,24 @@ class Header extends Component {
 	 */
 	render() {
 		return (
-			<Navbar inverse collapseOnSelect>
-				<Navbar.Header>
-					<LinkContainer exact to="/">
-						<Navbar.Brand>
-							cChange
-						</Navbar.Brand>
-					</LinkContainer>
-					<Navbar.Toggle />
-				</Navbar.Header>
-				<Navbar.Collapse>
-					<Nav>
-						<LinkContainer to="/search">
-							<NavItem eventKey={1}>Browse & Search</NavItem>
-						</LinkContainer>
-					</Nav>
-					{this.state.authmenu}
-				</Navbar.Collapse>
-			</Navbar>
+			<header>
+				<div className="container">
+					<div id="logo"><NavLink exact to="/" activeClassName="active">¢Change</NavLink></div>
+					<div id="control" onClick={this.closeMenu}>
+						<div className="navigation">
+							<NavLink to="/search" activeClassName="active">Browse & Search</NavLink>
+						</div>
+						{this.state.authmenu}
+					</div>
+					<div id="mobile">
+						{ this.state.user && !this.state.user.charity
+							? <NavLink to={"/userAddFunds"} activeClassName="active">{Format.currency(this.state.user.balance)}</NavLink>
+							: null}
+						<div id="open" onClick={this.openMenu}></div>
+						<div id="underlay" onClick={this.closeMenu}></div>
+					</div>
+				</div>
+			</header>
 		);
   	}
 
@@ -90,10 +105,10 @@ class Header extends Component {
 	 */
 	getVisitorMenu () {
 		return (
-			<Nav pullRight>
-				<LinkContainer to="/login"><NavItem eventKey={1}>Login</NavItem></LinkContainer>
-				<LinkContainer to="/signup"><NavItem eventKey={2}>Signup</NavItem></LinkContainer>
-			</Nav>
+			<div className="authmenu">
+				<NavLink to="/login" activeClassName="active">Login</NavLink>
+				<NavLink to="/signup" activeClassName="active">Sign Up</NavLink>
+			</div>
 		);
 	}
 
@@ -103,11 +118,11 @@ class Header extends Component {
 	 */
 	getUserMenu (user) {
 		return (
-			<Nav pullRight>
-				<LinkContainer to={"/user/"+user.guid}><NavItem eventKey={1}>{" " + user.name}</NavItem></LinkContainer>
-				<LinkContainer to={"/userAddFunds"}><NavItem eventKey={2}>{Format.currency(user.balance)}</NavItem></LinkContainer>
-				<NavItem eventKey={3} onClick={this.logout}>Log out</NavItem>
-			</Nav>
+			<div className="authmenu">
+				<NavLink to={"/user/"+user.guid} activeClassName="active">{" " + user.name}</NavLink>
+				<NavLink to={"/userAddFunds"} activeClassName="active">{Format.currency(this.state.user.balance)}</NavLink>
+				<a onClick={this.logout}>Log out</a>
+			</div>
 		);
 	}
 
@@ -117,10 +132,10 @@ class Header extends Component {
 	 */
 	getCharityUserMenu (user) {
 		return (
-			<Nav pullRight>
-				<LinkContainer to={"/charity/"+user.charity}><NavItem eventKey={1}>{user.charityName}</NavItem></LinkContainer>
-				<NavItem eventKey={2} onClick={this.logout}>Log out</NavItem>
-			</Nav>
+			<div className="authmenu">
+				<NavLink to={"/charity/"+user.charity} activeClassName="active">{user.charityName}</NavLink>
+				<a onClick={this.logout}>Log out</a>
+			</div>
 		);
 	}
 

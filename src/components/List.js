@@ -64,6 +64,7 @@ class List extends Component {
 	 * @memberof views/List#
 	 */
 	componentWillReceiveProps (props) {
+		if (this.state.loading) return;
 		this.props = props;
 		this.setState(getBlankListState(), function () {
 			this.pageObjects();

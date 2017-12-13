@@ -12,12 +12,12 @@ class User extends Component {
 			<Link to={'/user/' + this.props.user.guid}>
 				<div className="item update row">
 					{this.props.user.picture != null
-							? <img src={this.props.user.picture}/>
-							: null }
+						? <img src={this.props.user.picture} alt={this.props.user.name} />
+						: null }
 					<div className="inside">
-						<div className="time">Joined {Format.time(this.props.user.dateCreated)}</div>
 						<h3>{this.props.user.name}</h3>
 						<p>{this.props.user.bio}</p>
+						<div className="time">User &middot; Joined {Format.time(this.props.user.dateCreated)}</div>
 					</div>
 					<div className="clear">
 					</div>

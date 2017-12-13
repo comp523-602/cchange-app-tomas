@@ -4,6 +4,7 @@
 import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Authentication from './../modules/Authentication';
+import Format from './../modules/Format';
 import { Link } from 'react-router-dom';
 
 class UpdateView extends Component {
@@ -32,18 +33,25 @@ class UpdateView extends Component {
 	}
 	render() {
 		return (
-			<div className="heading">
-				<div className="container">
+			<div>
+				<div className="heading gray update"><div className="container">
 				{ this.state.update
-					? <div className="profileHeading">
-						<h1>{this.state.update.name}</h1>
-						<p>{this.state.update.description}</p>
-					</div>
-					: <div className="loading">Loading update...</div> }
-				{ this.state.update && Authentication.status() === Authentication.CHARITY && Authentication.getUser().charity === this.state.update.charity
-					?	<Link to={'/updateEdit/' + this.props.match.params.guid}>Edit update</Link>
-					: null}
-					</div>
+					? (
+						<div>
+							<Link to={"/charity/"+this.state.update.charity}><h3>{this.state.update.charityName}</h3></Link>
+							<h1>{this.state.update.name}</h1>
+							<span className="time">{Format.time(this.state.update.dateCreated)}</span>
+							{ this.state.update && Authentication.status() === Authentication.CHARITY
+								&& Authentication.getUser().charity === this.state.update.charity
+								? <div><Link to={'/updateEdit/' + this.props.match.params.guid}><button>Edit update</button></Link></div>
+								: null}
+						</div>
+					)
+					: <div className="loading">Loading...</div> }
+				</div></div>
+				<div className="row container">
+				{ this.state.update ? this.state.update.description : null}
+				</div>
 			</div>
 		);
 	}
