@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import Format from './../modules/Format';
 
 class Header extends Component {
 
@@ -15,7 +16,9 @@ class Header extends Component {
 	 */
 	constructor (props) {
 		super(props)
-		this.state = {};
+		this.state = {
+			'user': Authentication.getUser(),
+		};
 
 		this.renderAuthMenu = this.renderAuthMenu.bind(this);
 		this.getVisitorMenu = this.getVisitorMenu.bind(this);
@@ -102,7 +105,7 @@ class Header extends Component {
 		return (
 			<Nav pullRight>
 				<LinkContainer to={"/user/"+user.guid}><NavItem eventKey={1}>{" " + user.name}</NavItem></LinkContainer>
-				<LinkContainer to={"/userAddFunds"}><NavItem eventKey={2}>{this.returnBalance(user.balance)}</NavItem></LinkContainer>
+				<LinkContainer to={"/userAddFunds"}><NavItem eventKey={2}>{Format.currency(user.balance)}</NavItem></LinkContainer>
 				<NavItem eventKey={3} onClick={this.logout}>Log out</NavItem>
 			</Nav>
 		);
@@ -128,9 +131,6 @@ class Header extends Component {
 	logout (event) {
 		event.preventDefault();
 		Authentication.logout();
-	}
-	returnBalance(balance) {
-		return "$" + (balance/100).toFixed(2);
 	}
 }
 
