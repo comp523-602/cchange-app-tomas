@@ -4,6 +4,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
+import Format from './../modules/Format';
+import $ from 'jquery';
 
 class Header extends Component {
 
@@ -13,7 +15,9 @@ class Header extends Component {
 	 */
 	constructor (props) {
 		super(props)
-		this.state = {};
+		this.state = {
+			'user': Authentication.getUser(),
+		};
 
 		this.renderAuthMenu = this.renderAuthMenu.bind(this);
 		this.getVisitorMenu = this.getVisitorMenu.bind(this);
@@ -29,6 +33,17 @@ class Header extends Component {
 		this.renderAuthMenu();
 	}
 
+	openMenu () {
+		console.log("yooooo");
+		$("#control").addClass("show");
+		$("#underlay").addClass("show");
+	}
+
+	closeMenu() {
+		$("#control").removeClass("show");
+		$("#underlay").removeClass("show");
+	}
+
 	/**
 	 * Renders component
 	 * @memberof components/Header#
@@ -40,10 +55,19 @@ class Header extends Component {
 					<div className="logo">
 						<NavLink exact to="/" activeClassName="active">cChange</NavLink>
 					</div>
-					<div className="navigation">
-						<NavLink to="/search" activeClassName="active">Browse & Search</NavLink>
+					<div id="control" onClick={this.closeMenu}>
+						<div className="navigation">
+							<NavLink to="/search" activeClassName="active">Browse & Search</NavLink>
+						</div>
+						{this.state.authmenu}
 					</div>
-					{this.state.authmenu}
+					{ this.state.user
+						? <NavLink to={"/userAddFunds"} activeClassName="active">
+							{Format.currency(this.state.user.balance)}
+						</NavLink>
+						: null}
+					<div id="open" onClick={this.openMenu}>Menu</div>
+					<div id="underlay" onClick={this.closeMenu}></div>
 				</div>
 			</header>
 		);
@@ -87,7 +111,6 @@ class Header extends Component {
 		return (
 			<div className="authmenu">
 				<NavLink to={"/user/"+user.guid} activeClassName="active">{" " + user.name}</NavLink>
-				<NavLink to={"/userAddFunds"} activeClassName="active">{this.returnBalance(user.balance)}</NavLink>
 				<a onClick={this.logout}>Log out</a>
 			</div>
 		);

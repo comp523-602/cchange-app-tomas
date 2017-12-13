@@ -61,9 +61,13 @@ class List extends Component {
 	 */
 	componentWillReceiveProps (props) {
 		this.props = props;
-		this.setState(
-
-		);
+		this.setState({
+			items: [],
+			loading: false,
+			pageNumber: 0,
+			exhausted: false,
+			errorCount: 0
+		});
 		this.pageObjects();
 	}
 
@@ -105,6 +109,7 @@ class List extends Component {
 		// Add unprovided variables to request
 		if (!request.pageSize) request.pageSize = 20;
 		if (!request.sort) request.sort = "desc";
+		console.log(this.state);
 		if (!request.pageNumber) request.pageNumber = this.state.pageNumber;
 
 		// Add dynamicParams to request
