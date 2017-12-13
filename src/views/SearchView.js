@@ -16,6 +16,7 @@ class SearchView extends Component {
 	 */
 	constructor (props) {
 		super(props);
+		this.state = {};
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -45,29 +46,34 @@ class SearchView extends Component {
 							<Tab>Donations</Tab>
 						</TabList>
 
-
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: 'campaign'}}} />
+							<List config={{address: 'list.type', params: {type: 'campaign'},
+								dynamicParams:this.state.params}} />
 						</TabPanel>
 
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: 'charity'}}} />
+							<List config={{address: 'list.type', params: {type: 'charity'},
+								dynamicParams:this.state.params}} />
 						</TabPanel>
 
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: 'update'}}} />
+							<List config={{address: 'list.type', params: {type: 'update'},
+								dynamicParams:this.state.params}} />
 						</TabPanel>
 
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: 'user'}}} />
+							<List config={{address: 'list.type', params: {type: 'user'},
+								dynamicParams:this.state.params}} />
 						</TabPanel>
 
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: 'post'}}} />
+							<List config={{address: 'list.type', params: {type: 'post'},
+								dynamicParams:this.state.params}} />
 						</TabPanel>
 
 						<TabPanel>
-							<List config={{address: 'list.type', params: {type: 'donation'}}} />
+							<List config={{address: 'list.type', params: {type: 'donation'},
+								dynamicParams:this.state.params}} />
 						</TabPanel>
 					</Tabs>
 				</div>
@@ -80,10 +86,13 @@ class SearchView extends Component {
 		// Prevent default action
 		event.preventDefault();
 
-		// Get values from form
-		var keyword = this.refs.keyword.state.value;
-		var category = this.refs.category.state.value;
-
+		// Update state params
+		this.setState({
+			params: {
+				'keyword': this.refs.keyword.state.value,
+				'category': this.refs.category.state.value,
+			},
+		});
 	}
 }
 

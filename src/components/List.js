@@ -10,6 +10,16 @@ import Update from './Update.js';
 import User from './User.js';
 import Donation from './Donation.js';
 
+var getBlankState = function () {
+	return {
+		items: [],
+		loading: false,
+		pageNumber: 0,
+		exhausted: false,
+		errorCount: 0
+	};
+};
+
 class List extends Component {
 
 	/**
@@ -18,15 +28,11 @@ class List extends Component {
 	 */
 	constructor (props) {
 		super(props);
-		this.state = {
-			items: [],
-			loading: false,
-			pageNumber: 0,
-			exhausted: false,
-			errorCount: 0,
-		};
+		this.state = getBlankState();
 		this.pageObjects = this.pageObjects.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
+		this.componentWillMount = this.componentWillMount.bind(this);
+		this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
 	}
 
 	/**
@@ -54,6 +60,18 @@ class List extends Component {
  	}
 
 	/**
+	 * Updates list with new props
+	 * @memberof views/List#
+	 */
+	componentWillReceiveProps (props) {
+		this.props = props;
+		console.log(getBlankState());
+		this.setState(getBlankState());
+		console.log(this);
+		this.pageObjects();
+	}
+
+	/**
 	 * Handles scrolling
 	 * @memberof views/List#
 	 */
@@ -72,6 +90,9 @@ class List extends Component {
 	 * @memberof views/List#
 	 */
 	pageObjects () {
+
+		console.log("page object this");
+		console.log(this);
 
 		// Don't allow loops of errors
 		if (this.state.errorCount > 2) return;
@@ -92,6 +113,18 @@ class List extends Component {
 		if (!request.pageSize) request.pageSize = 20;
 		if (!request.sort) request.sort = "desc";
 		if (!request.pageNumber) request.pageNumber = this.state.pageNumber;
+
+		// Add dynamicParams to request
+		if (config.dynamicParams) {
+			if (config.dynamicParams.keyword && config.dynamicParams.keyword !== "") {
+				request.keyword = config.dynamicParams.keyword;
+			}
+			if (config.dynamicParams.category) {
+				request.category = config.dynamicParams.category;
+			}
+		}
+
+		console.log(request);
 
 		// Get items from server
 		var self = this;
