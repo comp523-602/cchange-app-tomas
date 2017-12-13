@@ -82,6 +82,9 @@ var Authentication = {
 		 //console.log(body.user);
 		 if (this.status() === this.USER && body.user.guid === this.getUser().guid)
 		 	Storage.set('user', body.user);
+			var updateUser = new Event('updateUser');
+			document.dispatchEvent(updateUser);
+			console.log(document);
 	 },
 };
 
