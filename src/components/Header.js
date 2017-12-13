@@ -4,6 +4,8 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import Authentication from './../modules/Authentication';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class Header extends Component {
 
@@ -41,17 +43,24 @@ class Header extends Component {
 	 */
 	render() {
 		return (
-			<header>
-				<div className="container">
-					<div className="logo">
-						<NavLink exact to="/" activeClassName="active">cChange</NavLink>
-					</div>
-					<div className="navigation">
-						<NavLink to="/search" activeClassName="active">Browse & Search</NavLink>
-					</div>
+			<Navbar inverse collapseOnSelect>
+				<Navbar.Header>
+					<LinkContainer exact to="/">
+						<Navbar.Brand>
+							cChange
+						</Navbar.Brand>
+					</LinkContainer>
+					<Navbar.Toggle />
+				</Navbar.Header>
+				<Navbar.Collapse>
+					<Nav>
+						<LinkContainer to="/search">
+							<NavItem eventKey={1}>Browse & Search</NavItem>
+						</LinkContainer>
+					</Nav>
 					{this.state.authmenu}
-				</div>
-			</header>
+				</Navbar.Collapse>
+			</Navbar>
 		);
   	}
 
@@ -78,10 +87,10 @@ class Header extends Component {
 	 */
 	getVisitorMenu () {
 		return (
-			<div className="authmenu">
-				<NavLink to="/login" activeClassName="active">Login</NavLink>
-				<NavLink to="/signup" activeClassName="active">Signup</NavLink>
-			</div>
+			<Nav pullRight>
+				<LinkContainer to="/login"><NavItem eventKey={1}>Login</NavItem></LinkContainer>
+				<LinkContainer to="/signup"><NavItem eventKey={2}>Signup</NavItem></LinkContainer>
+			</Nav>
 		);
 	}
 
@@ -91,11 +100,11 @@ class Header extends Component {
 	 */
 	getUserMenu (user) {
 		return (
-			<div className="authmenu">
-				<NavLink to={"/user/"+user.guid} activeClassName="active">{" " + user.name}</NavLink>
-				<NavLink to={"/userAddFunds"} activeClassName="active">{this.returnBalance(user.balance)}</NavLink>
-				<a onClick={this.logout}>Log out</a>
-			</div>
+			<Nav pullRight>
+				<LinkContainer to={"/user/"+user.guid}><NavItem eventKey={1}>{" " + user.name}</NavItem></LinkContainer>
+				<LinkContainer to={"/userAddFunds"}><NavItem eventKey={2}>{this.returnBalance(user.balance)}</NavItem></LinkContainer>
+				<NavItem eventKey={3} onClick={this.logout}>Log out</NavItem>
+			</Nav>
 		);
 	}
 
@@ -105,10 +114,10 @@ class Header extends Component {
 	 */
 	getCharityUserMenu (user) {
 		return (
-			<div className="authmenu">
-				<NavLink to={"/charity/"+user.charity} activeClassName="active">{user.charityName}</NavLink>
-				<a onClick={this.logout}>Log out</a>
-			</div>
+			<Nav pullRight>
+				<LinkContainer to={"/charity/"+user.charity}><NavItem eventKey={1}>{user.charityName}</NavItem></LinkContainer>
+				<NavItem eventKey={2} onClick={this.logout}>Log out</NavItem>
+			</Nav>
 		);
 	}
 
