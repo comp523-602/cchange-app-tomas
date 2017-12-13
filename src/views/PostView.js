@@ -5,6 +5,9 @@ import React, { Component } from 'react';
 import Requests from './../modules/Requests';
 import Authentication from './../modules/Authentication';
 import Moment from 'moment';
+import Donation from './../components/Donation';
+import List from './../components/List';
+import { Link } from 'react-router-dom';
 
 class PostView extends Component {
 
@@ -14,8 +17,11 @@ class PostView extends Component {
 	 */
 	constructor(props) {
 		super(props)
-		this.state = {};
+		this.state = {
+			'post': null,
+		};
 		this.donate = this.donate.bind(this);
+		
 	}
 
 	/**
@@ -43,22 +49,6 @@ class PostView extends Component {
 			this.setState({
 				'post': post,
 				'editLink': '/postEdit/'+post.guid,
-			})
-		})
-
-		// Get donations from server
-		Requests.makeRequest('list.type', {
-			'type': "donation",
-			'post': postGUID
-		}, (error, body) => {
-
-			// Get charity from response
-			var donations = body.donations;
-			if (!donations || !donations.length) return;
-
-			// Add charity to state
-			this.setState({
-				'donations': donations
 			})
 		})
 	}
@@ -102,28 +92,36 @@ class PostView extends Component {
 				{ this.state.post && this.state.post.donations.length != null
 					? (
 						<div>
-							<h1>{this.state.post.caption}</h1>
-							<h3>{this.state.post.donations.length} donations</h3>
+							<h2><Link to={"/user/" + this.state.post.user}>{this.state.post.userName}</Link>'s post to  
+								<Link to={"/campaign/" + this.state.post.campaign}> {this.state.post.campaignName}</Link></h2>
+
+							<h3>{this.state.post.caption}</h3>
 							<img src={this.state.post.shareableImage} alt={this.state.post.caption} /><br />
 							{Authentication.status() === Authentication.USER
 								? <div onClick={this.donate}><button>Donate 5¢</button></div>
 								: null}
-							<br /><br />
+							<br />
+							<h4>{this.state.post.donations.length} donations</h4>
+							<br />
 						</div>
 					)
 					: <div className="loading">Loading...</div>}
-				{ this.state.donations
-					? (
-						this.state.donations.sort(function (a, b) {return b.dateCreated-a.dateCreated}).map((donation, index) => {
-							return <div className="donation" key={index}>
-								{donation.amount} cents / {Moment(donation.dateCreated*1000).fromNow()}
-							</div>
-						})
-					)
-					: "" }
+				<List config={{address: 'list.type',
+					params: {type: "donation", post: this.props.match.params.guid}}}/>
 			</div>
 		)
-  	}
+	  }
+	  compare (a, b) {
+		if (a.dateCreated < b.dateCreated) {
+			return 1;
+		}
+		if(a.dateCreated > b.dateCreated) {
+			return -1;
+		}
+		return 0;
+	}
 }
+
+
 
 export default PostView;
