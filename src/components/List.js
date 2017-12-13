@@ -10,16 +10,6 @@ import Update from './Update.js';
 import User from './User.js';
 import Donation from './Donation.js';
 
-var getBlankState = function () {
-	return {
-		items: [],
-		loading: false,
-		pageNumber: 0,
-		exhausted: false,
-		errorCount: 0
-	};
-};
-
 class List extends Component {
 
 	/**
@@ -28,7 +18,13 @@ class List extends Component {
 	 */
 	constructor (props) {
 		super(props);
-		this.state = getBlankState();
+		this.state = {
+			items: [],
+			loading: false,
+			pageNumber: 0,
+			exhausted: false,
+			errorCount: 0
+		};
 		this.pageObjects = this.pageObjects.bind(this);
 		this.handleScroll = this.handleScroll.bind(this);
 		this.componentWillMount = this.componentWillMount.bind(this);
@@ -65,9 +61,9 @@ class List extends Component {
 	 */
 	componentWillReceiveProps (props) {
 		this.props = props;
-		console.log(getBlankState());
-		this.setState(getBlankState());
-		console.log(this);
+		this.setState(
+
+		);
 		this.pageObjects();
 	}
 
@@ -90,9 +86,6 @@ class List extends Component {
 	 * @memberof views/List#
 	 */
 	pageObjects () {
-
-		console.log("page object this");
-		console.log(this);
 
 		// Don't allow loops of errors
 		if (this.state.errorCount > 2) return;
@@ -123,8 +116,6 @@ class List extends Component {
 				request.category = config.dynamicParams.category;
 			}
 		}
-
-		console.log(request);
 
 		// Get items from server
 		var self = this;
