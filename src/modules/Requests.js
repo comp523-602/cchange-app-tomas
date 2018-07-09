@@ -5,7 +5,7 @@ import RequestLibrary from 'request';
 import Authentication from './Authentication';
 
 // Setup constants
-const API = 'http://api.cchange.ga/';
+const API = 'http://localhost:4001/';
 
 var Requests = {
 
